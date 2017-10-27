@@ -1,4 +1,4 @@
-# Project Name #
+# TableCRM #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -16,29 +16,28 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+## TableCRM ##
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+## Powerful Features, Easy to Use ##
+  > The CRM for small businesses and sales teams that makes it easy to close more deals.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > The simple CRM for small businesses. It’s a easy-to-use Customer Relationship Management (CRM) software specifically designed for small businesses to track sales and leads efficiently, with everything you need to close more deals with less effort.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Many of the leading CRM's have a steep learning curve and are bloated with features that smaller businesses simply do not need.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > TableCRM uses an intuitive, spreadsheet style design and a powerful set of features designed specifically for small businesses.
 
-## Quote from You ##
-  > A quote from a spokesperson in your company.
+## Masato Miura, TableCRM Founder: ##
+  > "TableCRM was designed to help small businesses close more deals.  Period."
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Sign up.  Load customer and lead data into TableCRM's familiar spreadsheet format.  Analyze performance and generate powerful sales reports with just a few clicks.  
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "Our team was able to put TableCRM to work on Day 1.  After 3 months, we've quadrupled our sales!" —Table CRM Client
 
-## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+## Get Started Today! ##
+  > We designed TableCRM for You.  Sign up today and take your sales to the next level.
