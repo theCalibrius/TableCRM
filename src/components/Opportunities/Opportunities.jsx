@@ -1,4 +1,6 @@
 import React from 'react';
+import HotTable from 'react-handsontable';
+import 'handsontable-pro/dist/handsontable.full.js';
 
 class Opportunities extends React.Component {
   constructor(props) {
@@ -7,7 +9,22 @@ class Opportunities extends React.Component {
   }
 
   render() {
-    return <div>Opportunities</div>;
+    return (
+      <div>
+        Opportunities
+        <div id="table">
+          <HotTable
+            root="hot"
+            ref="hot"
+            settings={{
+              licenseKey: '58e7f6926ee806184e95a749',
+              colHeaders: true,
+              rowHeaders: true
+            }}
+          />
+        </div>
+      </div>
+    );
   }
 }
 export default Opportunities;

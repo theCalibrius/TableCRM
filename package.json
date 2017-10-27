@@ -4,15 +4,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev":
-      "webpack-dev-server --hot --port 8080 --host 127.0.0.1 --open --config webpack.dev.js",
+    "dev": "webpack-dev-server --hot --port 8080 --host 127.0.0.1 --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "compile": "webpack -p --config webpack.dev.js"
   },
   "dependencies": {
+    "dotenv": "^4.0.0",
     "handsontable-pro": "^1.14.3",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-handsontable": "^0.3.1",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
