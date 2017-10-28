@@ -20,7 +20,6 @@ class Opportunities extends React.Component {
   render() {
     return (
       <div>
-        Opportunities
         <div id="table">
           <HotTable
             root="hot"
@@ -28,12 +27,20 @@ class Opportunities extends React.Component {
             settings={{
               licenseKey: '58e7f6926ee806184e95a749',
               data: this.props.opportunities,
-              colHeaders: true,
-              rowHeaders: true
+              dataSchema: {
+                id: null,
+                name: null,
+                expCloseDate: null,
+                createdAt: null
+              },
+              colHeaders: ['id', 'Name', 'Expected Close Date', 'Created Date'],
+              rowHeaders: true,
+              minSpareRows: 1,
+              stretchH: 'all'
             }}
           />
         </div>
-        <p>opp data</p>
+        <p>opp data via redux</p>
         {JSON.stringify(this.props.opportunities)}
       </div>
     );
