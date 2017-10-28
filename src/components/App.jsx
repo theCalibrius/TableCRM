@@ -1,10 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Dashboard from './Dashboard/Dashboard.jsx';
-import Leads from './Leads/Leads.jsx';
-import Opportunities from './Opportunities/Opportunities.jsx';
-import People from './People/People.jsx';
-import Companies from './Companies/Companies.jsx';
+import Dashboard from './Dashboard.jsx';
+import Leads from './Leads.jsx';
+import Opportunities from '../container/Opportunities.jsx';
+import People from './People.jsx';
+import Companies from './Companies.jsx';
 
 class App extends React.Component {
   render() {

@@ -28,6 +28,7 @@ const Opportunities = sequelize.define('opportunities', {
   expCloseDate: Sequelize.DATE
 });
 
+// dummy data
 sequelize
   .sync({ force: true })
   .then(() =>
@@ -36,13 +37,28 @@ sequelize
       expCloseDate: new Date()
     })
   )
-  .then(opp1 => {
-    console.log(
-      opp1.get({
-        plain: true
+  .then(() =>
+    Opportunities.create({
+      name: 'opp2',
+      expCloseDate: new Date()
+    })
+  );
+
+// api endpoints
+app.get('/api/opportunities', (req, res) => {
+  console.log();
+  sequelize.sync().then(() => {
+    Opportunities.findAll({ raw: true })
+      .then(opportunities => {
+        console.log(opportunities);
+        res.json(opportunities);
       })
-    );
+      .catch(err => {
+        res.sendStatus(404).send();
+        console.log(err);
+      });
   });
+});
 
 // port
 const port = process.env.PORT || 5000;
