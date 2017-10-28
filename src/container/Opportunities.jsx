@@ -45,7 +45,23 @@ class Opportunities extends React.Component {
                 'filter_by_value',
                 'filter_action_bar'
               ],
-              columnSorting: true
+              columnSorting: true,
+              afterChange: (change, source) => {
+                console.log(
+                  `afterChange: change: ${change}, source: ${source}`
+                );
+              },
+              beforeRemoveRow: (index, amount) => {
+                console.log(
+                  `beforeRemoveRow: index: ${index}, amount: ${amount}`
+                );
+              },
+              afterCopy: (index, amount) => {
+                console.log(`afterCopy: index: ${index}, amount: ${amount}`);
+              },
+              afterPaste: (index, amount) => {
+                console.log(`afterPaste: index: ${index}, amount: ${amount}`);
+              }
             }}
           />
         </div>
