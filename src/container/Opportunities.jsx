@@ -8,6 +8,7 @@ import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
+import 'handsontable-pro/dist/handsontable.full.css';
 
 class Opportunities extends React.Component {
   constructor(props) {
@@ -36,7 +37,15 @@ class Opportunities extends React.Component {
               colHeaders: ['id', 'Name', 'Expected Close Date', 'Created Date'],
               rowHeaders: true,
               minSpareRows: 1,
-              stretchH: 'all'
+              stretchH: 'all',
+              contextMenu: ['remove_row', 'copy', 'cut'],
+              filters: true,
+              dropdownMenu: [
+                'filter_by_condition',
+                'filter_by_value',
+                'filter_action_bar'
+              ],
+              columnSorting: true
             }}
           />
         </div>

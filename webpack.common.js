@@ -19,8 +19,26 @@ module.exports = {
             'transform-object-rest-spread'
           ]
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false
+            }
+          }
+        ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.json'],
+    alias: {
+      handsontable: path.resolve(__dirname, 'node_modules/handsontable-pro')
+    }
   },
   node: {
     fs: 'empty'
