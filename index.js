@@ -38,12 +38,24 @@ app.post('/api/leads', (req, res) => {
   for (let row of newRows) {
     row.ownerId = 1; // placeholder for now
     delete row.createdDate; // placeholder for now;
+    connection.query('INSERT INTO leads SET ?', row, (err, rows, fields) => {
+      if (err) console.log(err);
+      console.log('new lead created');
+    });
+  }
+});
+
+app.put('/api/leads', (req, res) => {
+  let existingRows = req.body.existingRows;
+  for (let row of existingRows) {
+    delete row.createdDate; // placeholder for now;
+    let id = row.id;
     connection.query(
-      'INSERT INTO leads SET ? ON DUPLICATE KEY UPDATE id = NULL',
+      `UPDATE leads SET ? WHERE id=${id}`,
       row,
       (err, rows, fields) => {
         if (err) console.log(err);
-        console.log('new lead created');
+        console.log('lead is updated');
       }
     );
   }

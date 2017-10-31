@@ -52,13 +52,11 @@ export function afterChange(change, source) {
         });
       }
 
-      // if (existingRows.length !== 0) {
-      //   if (resultRows.length !== 0) {
-      //     axios.put('/api/leads', {
-      //       resultRows: resultRows
-      //     });
-      //   }
-      // }
+      if (existingRows.length !== 0) {
+        axios.put('/api/leads', {
+          existingRows: existingRows
+        });
+      }
     }
   };
 }
