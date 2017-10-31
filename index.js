@@ -1,62 +1,61 @@
 // sudo chown -R _mysql:_mysql /usr/local/var/mysql
 // sudo mysql.server start
+// mysql -u root table_crm < schema.sql
+
 require('dotenv').config();
 const express = require('express');
-const Sequelize = require('sequelize');
+const mysql = require('mysql');
+// const Sequelize = require('sequelize');
 
 // app init
 const app = express();
 
 // db
-const sequelize = new Sequelize('table_crm', 'root', '', {
+const connection = mysql.createConnection({
   host: 'localhost',
-  dialect: 'mysql'
+  user: 'root',
+  password: '',
+  database: 'table_crm'
 });
 
-// test connection
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
-const Opportunities = sequelize.define('opportunities', {
-  name: Sequelize.STRING,
-  expCloseDate: Sequelize.DATE
+connection.connect(err => {
+  if (err) throw err;
+  console.log('You are now connected...');
 });
 
-// dummy data
-sequelize
-  .sync({ force: true })
-  .then(() =>
-    Opportunities.create({
-      name: 'opp1',
-      expCloseDate: new Date()
-    })
-  )
-  .then(() =>
-    Opportunities.create({
-      name: 'opp2',
-      expCloseDate: new Date()
-    })
-  );
+// const Opportunities = sequelize.define('opportunities', {
+//   name: Sequelize.STRING,
+//   expCloseDate: Sequelize.DATE
+// });
+
+// // dummy data
+// sequelize
+//   .sync({ force: true })
+//   .then(() =>
+//     Opportunities.create({
+//       name: 'opp1',
+//       expCloseDate: new Date()
+//     })
+//   )
+//   .then(() =>
+//     Opportunities.create({
+//       name: 'opp2',
+//       expCloseDate: new Date()
+//     })
+//   );
 
 // api endpoints
 app.get('/api/opportunities', (req, res) => {
-  console.log();
-  sequelize.sync().then(() => {
-    Opportunities.findAll({ raw: true })
-      .then(opportunities => {
-        console.log(opportunities);
-        res.json(opportunities);
-      })
-      .catch(err => {
-        res.sendStatus(404).send();
-        console.log(err);
-      });
+  connection.query('SELECT * from opportunities', (err, rows, fields) => {
+    if (err) throw err;
+    res.json(rows);
+  });
+});
+
+app.get('/api/leads', (req, res) => {
+  connection.query('SELECT * from leads', (err, rows, fields) => {
+    if (err) throw err;
+    res.json(rows);
   });
 });
 
