@@ -1,5 +1,6 @@
 -- sudo chown -R _mysql:_mysql /usr/local/var/mysql
 -- sudo mysql.server start
+-- mysql -u root -p
 -- mysql -u root table_crm < schema.sql
 
 DROP DATABASE table_crm;

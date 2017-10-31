@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
-// const Sequelize = require('sequelize');
-
+const bodyParser = require('body-parser');
+const cors = require('cors');
 // app init
 const app = express();
 
@@ -15,44 +15,38 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(err => {
-  if (err) throw err;
+  if (err) console.log(err);
   console.log('You are now connected...');
 });
 
-// const Opportunities = sequelize.define('opportunities', {
-//   name: Sequelize.STRING,
-//   expCloseDate: Sequelize.DATE
-// });
+// allow cross domain request
+app.use(cors());
+app.options('*', cors());
 
-// // dummy data
-// sequelize
-//   .sync({ force: true })
-//   .then(() =>
-//     Opportunities.create({
-//       name: 'opp1',
-//       expCloseDate: new Date()
-//     })
-//   )
-//   .then(() =>
-//     Opportunities.create({
-//       name: 'opp2',
-//       expCloseDate: new Date()
-//     })
-//   );
+// use body parser to use req.body
+app.use(bodyParser.json());
 
-// api endpoints
-app.get('/api/opportunities', (req, res) => {
-  connection.query('SELECT * from opportunities', (err, rows, fields) => {
-    if (err) throw err;
+app.get('/api/leads', (req, res) => {
+  connection.query('SELECT * from leads', (err, rows, fields) => {
+    if (err) console.log(err);
     res.json(rows);
   });
 });
 
-app.get('/api/leads', (req, res) => {
-  connection.query('SELECT * from leads', (err, rows, fields) => {
-    if (err) throw err;
-    res.json(rows);
-  });
+app.post('/api/leads', (req, res) => {
+  let newRows = req.body.newRows;
+  for (let row of newRows) {
+    row.ownerId = 1; // placeholder for now
+    delete row.createdDate; // placeholder for now;
+    connection.query(
+      'INSERT INTO leads SET ? ON DUPLICATE KEY UPDATE id = NULL',
+      row,
+      (err, rows, fields) => {
+        if (err) console.log(err);
+        console.log('new lead created');
+      }
+    );
+  }
 });
 
 // port

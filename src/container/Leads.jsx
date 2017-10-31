@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getLeads } from '../actions/leadsActions';
+import { getLeads, afterChange } from '../actions/leadsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -38,8 +38,7 @@ class Leads extends React.Component {
                 value: null,
                 email: null,
                 phoneNumber: null,
-                createdDate: null,
-                updatedDate: null
+                createdDate: null
               },
               colHeaders: [
                 `id`,
@@ -52,8 +51,7 @@ class Leads extends React.Component {
                 `value`,
                 `email`,
                 `phoneNumber`,
-                `createdDate`,
-                `updatedDate`
+                `createdDate`
               ],
 
               rowHeaders: true,
@@ -68,20 +66,18 @@ class Leads extends React.Component {
               columnSorting: true,
               minSpareRows: 1,
               afterChange: (change, source) => {
-                console.log(
-                  `afterChange: change: ${change}, source: ${source}`
-                );
+                this.props.dispatch(afterChange(change, source).bind(this));
               },
               beforeRemoveRow: (index, amount) => {
-                console.log(
-                  `beforeRemoveRow: index: ${index}, amount: ${amount}`
-                );
+                // console.log(
+                //   `beforeRemoveRow: index: ${index}, amount: ${amount}`
+                // );
               },
               afterCopy: (index, amount) => {
-                console.log(`afterCopy: index: ${index}, amount: ${amount}`);
+                // console.log(`afterCopy: index: ${index}, amount: ${amount}`);
               },
               afterPaste: (index, amount) => {
-                console.log(`afterPaste: index: ${index}, amount: ${amount}`);
+                // console.log(`afterPaste: index: ${index}, amount: ${amount}`);
               }
             }}
           />
