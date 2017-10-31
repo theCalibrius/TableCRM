@@ -7,9 +7,9 @@ USE table_crm;
 DROP TABLE IF EXISTS `leads`;
 
 CREATE TABLE `leads` (
-  `leadId` INTEGER NOT NULL AUTO_INCREMENT,
-  `OwnerId` INTEGER NOT NULL,
-  `Description` VARCHAR(255),
+  `id` INTEGER NOT NULL AUTO_INCREMENT,
+  `ownerId` INTEGER NOT NULL,
+  `description` VARCHAR(255),
   `firstName` VARCHAR(255),
   `lastName` VARCHAR(255),
   `suffix` VARCHAR(255),

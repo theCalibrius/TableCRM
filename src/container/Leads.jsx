@@ -19,7 +19,56 @@ class Leads extends React.Component {
     this.props.dispatch(getLeads());
   }
   render() {
-    return <div>Leads</div>;
+    return (
+      <div>
+        <div id="table">
+          <HotTable
+            root="hot"
+            ref="hot"
+            settings={{
+              licenseKey: '58e7f6926ee806184e95a749',
+              data: this.props.leads,
+              dataSchema: {
+                id: null,
+                firstName: null,
+                lastName: null,
+                createdDate: null
+              },
+              colHeaders: ['id', 'firstName', 'lastName', 'Created Date'],
+              rowHeaders: true,
+              minSpareRows: 1,
+              stretchH: 'all',
+              contextMenu: ['remove_row', 'copy', 'cut'],
+              filters: true,
+              dropdownMenu: [
+                'filter_by_condition',
+                'filter_by_value',
+                'filter_action_bar'
+              ],
+              columnSorting: true,
+              afterChange: (change, source) => {
+                console.log(
+                  `afterChange: change: ${change}, source: ${source}`
+                );
+              },
+              beforeRemoveRow: (index, amount) => {
+                console.log(
+                  `beforeRemoveRow: index: ${index}, amount: ${amount}`
+                );
+              },
+              afterCopy: (index, amount) => {
+                console.log(`afterCopy: index: ${index}, amount: ${amount}`);
+              },
+              afterPaste: (index, amount) => {
+                console.log(`afterPaste: index: ${index}, amount: ${amount}`);
+              }
+            }}
+          />
+        </div>
+        <p>opp data via redux</p>
+        {JSON.stringify(this.props.leads)}
+      </div>
+    );
   }
 }
 
