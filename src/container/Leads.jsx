@@ -8,7 +8,6 @@ import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
-import 'handsontable-pro/dist/handsontable.full.css';
 
 class Leads extends React.Component {
   constructor(props) {
@@ -30,13 +29,34 @@ class Leads extends React.Component {
               data: this.props.leads,
               dataSchema: {
                 id: null,
+                ownerId: null,
+                description: null,
                 firstName: null,
                 lastName: null,
-                createdDate: null
+                suffix: null,
+                title: null,
+                value: null,
+                email: null,
+                phoneNumber: null,
+                createdDate: null,
+                updatedDate: null
               },
-              colHeaders: ['id', 'firstName', 'lastName', 'Created Date'],
+              colHeaders: [
+                `id`,
+                `ownerId`,
+                `description`,
+                `firstName`,
+                `lastName`,
+                `suffix`,
+                `title`,
+                `value`,
+                `email`,
+                `phoneNumber`,
+                `createdDate`,
+                `updatedDate`
+              ],
+
               rowHeaders: true,
-              minSpareRows: 1,
               stretchH: 'all',
               contextMenu: ['remove_row', 'copy', 'cut'],
               filters: true,
@@ -46,6 +66,7 @@ class Leads extends React.Component {
                 'filter_action_bar'
               ],
               columnSorting: true,
+              minSpareRows: 1,
               afterChange: (change, source) => {
                 console.log(
                   `afterChange: change: ${change}, source: ${source}`
@@ -65,8 +86,6 @@ class Leads extends React.Component {
             }}
           />
         </div>
-        <p>opp data via redux</p>
-        {JSON.stringify(this.props.leads)}
       </div>
     );
   }

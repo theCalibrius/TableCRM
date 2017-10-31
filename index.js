@@ -1,7 +1,3 @@
-// sudo chown -R _mysql:_mysql /usr/local/var/mysql
-// sudo mysql.server start
-// mysql -u root table_crm < schema.sql
-
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
