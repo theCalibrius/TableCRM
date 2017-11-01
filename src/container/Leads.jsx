@@ -25,64 +25,63 @@ class Leads extends React.Component {
     return (
       <div>
         <div id="table">
-          <HotTable
-            root="hot"
-            ref="hot"
-            settings={{
-              licenseKey: '58e7f6926ee806184e95a749',
-              data: this.props.leads,
-              dataSchema: {
-                id: null,
-                ownerId: null,
-                description: null,
-                firstName: null,
-                lastName: null,
-                suffix: null,
-                title: null,
-                value: null,
-                email: null,
-                phoneNumber: null,
-                createdDate: null
-              },
-              colHeaders: [
-                `id`,
-                `ownerId`,
-                `description`,
-                `firstName`,
-                `lastName`,
-                `suffix`,
-                `title`,
-                `value`,
-                `email`,
-                `phoneNumber`,
-                `createdDate`
-              ],
-
-              rowHeaders: true,
-              stretchH: 'all',
-              contextMenu: ['remove_row', 'copy', 'cut'],
-              filters: true,
-              dropdownMenu: [
-                'filter_by_condition',
-                'filter_by_value',
-                'filter_action_bar'
-              ],
-              columnSorting: true,
-              minSpareRows: 1,
-              afterChange: (change, source) => {
-                this.props.dispatch(afterChange(change, source).bind(this));
-              },
-              beforeRemoveRow: (index, amount) => {
-                this.props.dispatch(beforeRemoveRow(index, amount).bind(this));
-              },
-              afterCopy: (index, amount) => {
-                // console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-              },
-              afterPaste: (index, amount) => {
-                // console.log(`afterPaste: index: ${index}, amount: ${amount}`);
-              }
-            }}
-          />
+          {!this.props.leads ? (
+            <p>loading...</p>
+          ) : (
+            <HotTable
+              root="hot"
+              ref="hot"
+              settings={{
+                licenseKey: '58e7f6926ee806184e95a749',
+                data: this.props.leads,
+                dataSchema: {
+                  id: null,
+                  ownerId: null,
+                  description: null,
+                  firstName: null,
+                  lastName: null,
+                  suffix: null,
+                  title: null,
+                  value: null,
+                  email: null,
+                  phoneNumber: null,
+                  createdDate: null
+                },
+                colHeaders: [
+                  `id`,
+                  `ownerId`,
+                  `description`,
+                  `firstName`,
+                  `lastName`,
+                  `suffix`,
+                  `title`,
+                  `value`,
+                  `email`,
+                  `phoneNumber`,
+                  `createdDate`
+                ],
+                rowHeaders: true,
+                stretchH: 'all',
+                contextMenu: ['remove_row', 'copy', 'cut'],
+                filters: true,
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
+                columnSorting: true,
+                minSpareRows: 1,
+                afterChange: (change, source) => {
+                  this.props.dispatch(afterChange(change, source).bind(this));
+                },
+                beforeRemoveRow: (index, amount) => {
+                  this.props.dispatch(
+                    beforeRemoveRow(index, amount).bind(this)
+                  );
+                }
+              }}
+            />
+          )}
         </div>
       </div>
     );
