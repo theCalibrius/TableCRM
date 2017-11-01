@@ -2,7 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getLeads, afterChange } from '../actions/leadsActions';
+import {
+  getLeads,
+  afterChange,
+  beforeRemoveRow
+} from '../actions/leadsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -69,9 +73,7 @@ class Leads extends React.Component {
                 this.props.dispatch(afterChange(change, source).bind(this));
               },
               beforeRemoveRow: (index, amount) => {
-                // console.log(
-                //   `beforeRemoveRow: index: ${index}, amount: ${amount}`
-                // );
+                this.props.dispatch(beforeRemoveRow(index, amount).bind(this));
               },
               afterCopy: (index, amount) => {
                 // console.log(`afterCopy: index: ${index}, amount: ${amount}`);

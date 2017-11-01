@@ -61,6 +61,19 @@ app.put('/api/leads', (req, res) => {
   }
 });
 
+app.delete('/api/leads', (req, res) => {
+  console.log(req.body.removedIds);
+  let removedIds = req.body.removedIds;
+  connection.query(
+    `DELETE FROM leads WHERE (id) IN (?)`,
+    [removedIds],
+    function(err, results) {
+      if (err) return console.log(err);
+      else console.log('sended');
+    }
+  );
+});
+
 // port
 const port = process.env.PORT || 5000;
 app.listen(port);
