@@ -42,6 +42,7 @@ app.post('/api/leads', (req, res) => {
       if (err) console.log(err);
       console.log('new lead created');
     });
+    res.status(200).send();
   }
 });
 
@@ -58,6 +59,7 @@ app.put('/api/leads', (req, res) => {
         console.log('lead is updated');
       }
     );
+    res.status(200).send();
   }
 });
 
@@ -72,6 +74,7 @@ app.delete('/api/leads', (req, res) => {
       else console.log('sended');
     }
   );
+  res.status(200).send();
 });
 
 // port

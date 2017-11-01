@@ -44,9 +44,24 @@ export function afterChange(change, source) {
       }
 
       if (newRows.length !== 0) {
-        axios.post('/api/leads', {
-          newRows: newRows
-        });
+        axios
+          .post('/api/leads', {
+            newRows: newRows
+          })
+          .then(() => {
+            axios
+              .get(`/api/leads`)
+              .then(response => {
+                console.log(response);
+                dispatch({
+                  type: 'GET_ALL_LEADS',
+                  payload: response.data
+                });
+              })
+              .catch(err => {
+                console.error.bind(err);
+              });
+          });
       }
 
       if (existingRows.length !== 0) {
