@@ -2,7 +2,8 @@
 -- sudo mysql.server start
 -- mysql -u root -p
 -- mysql -u root table_crm < schema.sql
-
+-- \. schema.sql
+-- mysql -u root < schema.sql
 DROP DATABASE table_crm;
 
 CREATE DATABASE table_crm;
