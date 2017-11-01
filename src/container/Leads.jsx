@@ -32,7 +32,7 @@ class Leads extends React.Component {
               root="hot"
               ref="hot"
               settings={{
-                licenseKey: '58e7f6926ee806184e95a749',
+                licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.leads,
                 dataSchema: {
                   id: null,
