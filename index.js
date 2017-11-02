@@ -1,33 +1,34 @@
 require('dotenv').config();
 const express = require('express');
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-// app init
 const app = express();
 
-// db
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'table_crm'
-});
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Database
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-connection.connect(err => {
-  if (err) console.log(err);
-  console.log('You are now connected...');
-});
+const db = require('./db/config');
 
-// allow cross domain request
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  CORS
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+const cors = require('cors');
 app.use(cors());
 app.options('*', cors());
 
-// use body parser to use req.body
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Parser
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Router
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 app.get('/api/leads', (req, res) => {
-  connection.query('SELECT * from leads', (err, rows, fields) => {
+  db.db.query('SELECT * from leads', (err, rows, fields) => {
     if (err) console.log(err);
     res.json(rows);
   });
@@ -38,7 +39,7 @@ app.post('/api/leads', (req, res) => {
   for (let row of newRows) {
     row.ownerId = 1; // placeholder for now
     delete row.createdDate; // placeholder for now;
-    connection.query('INSERT INTO leads SET ?', row, (err, rows, fields) => {
+    db.db.query('INSERT INTO leads SET ?', row, (err, rows, fields) => {
       if (err) console.log(err);
       console.log('new lead created');
     });
@@ -51,7 +52,7 @@ app.put('/api/leads', (req, res) => {
   for (let row of existingRows) {
     delete row.createdDate; // placeholder for now;
     let id = row.id;
-    connection.query(
+    db.db.query(
       `UPDATE leads SET ? WHERE id=${id}`,
       row,
       (err, rows, fields) => {
@@ -66,7 +67,7 @@ app.put('/api/leads', (req, res) => {
 app.delete('/api/leads', (req, res) => {
   console.log(req.body.removedIds);
   let removedIds = req.body.removedIds;
-  connection.query(
+  db.db.query(
     `DELETE FROM leads WHERE (id) IN (?)`,
     [removedIds],
     function(err, results) {
@@ -77,7 +78,11 @@ app.delete('/api/leads', (req, res) => {
   res.status(200).send();
 });
 
-// port
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Server
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 const port = process.env.PORT || 5000;
-app.listen(port);
-console.log(`listening on ${port}`);
+app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}`);
+});
