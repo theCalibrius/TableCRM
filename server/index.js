@@ -1,27 +1,21 @@
 require('dotenv').config();
 const express = require('express');
+/* * * CORS * * */
+const cors = require('cors');
+/* * * Parser * * */
+const bodyParser = require('body-parser');
+/* * * Database * * */
+const leads = require('./db/leads');
+
 const app = express();
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
-  CORS
+  Middleware
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-const cors = require('cors');
 app.use(cors());
 app.options('*', cors());
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * *
-  Parser
-* * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * *
-  Database
-* * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-const leads = require('./db/leads');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Router
