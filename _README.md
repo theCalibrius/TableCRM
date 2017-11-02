@@ -32,14 +32,27 @@
 
 ## Development
 
-### Installing Dependencies
+### Install Dependencies
 
 From within the root directory:
-
 ```sh
-sudo npm install -g bower
 npm install
-bower install
+```
+
+### Start Database Server
+
+From within the root directory:
+```sh
+mysql.server start
+mysql -u root < schema.sql
+```
+
+### Start the App
+
+From within the root directory:
+```sh
+npm start
+npm run dev
 ```
 
 ### Roadmap

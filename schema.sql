@@ -1,13 +1,10 @@
--- sudo chown -R _mysql:_mysql /usr/local/var/mysql
--- sudo mysql.server start
--- mysql -u root -p
--- mysql -u root table_crm < schema.sql
--- \. schema.sql
--- mysql -u root < schema.sql
-
 DROP DATABASE IF EXISTS table_crm;
 CREATE DATABASE table_crm;
 USE table_crm;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Schema
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 DROP TABLE IF EXISTS leads;
 CREATE TABLE leads (
@@ -25,6 +22,10 @@ CREATE TABLE leads (
   updatedDate date,
   PRIMARY KEY (ID)
 );
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Dummy Data
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 INSERT INTO leads (description, firstName, lastName, suffix, title, value, email, phoneNumber, ownerId) VALUES ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1);
 INSERT INTO leads (description, firstName, lastName, suffix, title, value, email, phoneNumber, ownerId) VALUES ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1);
