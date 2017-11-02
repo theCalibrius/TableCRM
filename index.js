@@ -1,63 +1,80 @@
-// sudo chown -R _mysql:_mysql /usr/local/var/mysql
-// sudo mysql.server start
 require('dotenv').config();
 const express = require('express');
-const Sequelize = require('sequelize');
-
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 // app init
 const app = express();
 
 // db
-const sequelize = new Sequelize('table_crm', 'root', '', {
+const connection = mysql.createConnection({
   host: 'localhost',
-  dialect: 'mysql'
+  user: 'root',
+  password: '',
+  database: 'table_crm'
 });
 
-// test connection
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+connection.connect(err => {
+  if (err) console.log(err);
+  console.log('You are now connected...');
+});
+
+// allow cross domain request
+app.use(cors());
+app.options('*', cors());
+
+// use body parser to use req.body
+app.use(bodyParser.json());
+
+app.get('/api/leads', (req, res) => {
+  connection.query('SELECT * from leads', (err, rows, fields) => {
+    if (err) console.log(err);
+    res.json(rows);
   });
-
-const Opportunities = sequelize.define('opportunities', {
-  name: Sequelize.STRING,
-  expCloseDate: Sequelize.DATE
 });
 
-// dummy data
-sequelize
-  .sync({ force: true })
-  .then(() =>
-    Opportunities.create({
-      name: 'opp1',
-      expCloseDate: new Date()
-    })
-  )
-  .then(() =>
-    Opportunities.create({
-      name: 'opp2',
-      expCloseDate: new Date()
-    })
+app.post('/api/leads', (req, res) => {
+  let newRows = req.body.newRows;
+  for (let row of newRows) {
+    row.ownerId = 1; // placeholder for now
+    delete row.createdDate; // placeholder for now;
+    connection.query('INSERT INTO leads SET ?', row, (err, rows, fields) => {
+      if (err) console.log(err);
+      console.log('new lead created');
+    });
+    res.status(200).send();
+  }
+});
+
+app.put('/api/leads', (req, res) => {
+  let existingRows = req.body.existingRows;
+  for (let row of existingRows) {
+    delete row.createdDate; // placeholder for now;
+    let id = row.id;
+    connection.query(
+      `UPDATE leads SET ? WHERE id=${id}`,
+      row,
+      (err, rows, fields) => {
+        if (err) console.log(err);
+        console.log('lead is updated');
+      }
+    );
+    res.status(200).send();
+  }
+});
+
+app.delete('/api/leads', (req, res) => {
+  console.log(req.body.removedIds);
+  let removedIds = req.body.removedIds;
+  connection.query(
+    `DELETE FROM leads WHERE (id) IN (?)`,
+    [removedIds],
+    function(err, results) {
+      if (err) return console.log(err);
+      else console.log('sended');
+    }
   );
-
-// api endpoints
-app.get('/api/opportunities', (req, res) => {
-  console.log();
-  sequelize.sync().then(() => {
-    Opportunities.findAll({ raw: true })
-      .then(opportunities => {
-        console.log(opportunities);
-        res.json(opportunities);
-      })
-      .catch(err => {
-        res.sendStatus(404).send();
-        console.log(err);
-      });
-  });
+  res.status(200).send();
 });
 
 // port
