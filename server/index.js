@@ -5,6 +5,7 @@ const cors = require('cors');
 /* * * Parser * * */
 const bodyParser = require('body-parser');
 /* * * Database * * */
+const opportunities = require('./db/opportunities');
 const leads = require('./db/leads');
 
 const app = express();
@@ -20,6 +21,8 @@ app.use(bodyParser.json());
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Router
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+app.get('/api/opportunities', opportunities.getAllOpportunities);
 
 app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createLeads);
