@@ -13,7 +13,8 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["format", "eslint", "git add"]
+    "*.js": ["format", "eslint", "git add"],
+    "*.jsx": ["format", "eslint", "git add"]
   },
   "precommit": "lint-staged",
   "dependencies": {
