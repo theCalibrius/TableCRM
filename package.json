@@ -13,8 +13,8 @@
   },
   "lint-staged": {
     "*.js": [
-      "format",
-      "eslint",
+      "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
+      "eslint --quiet --fix . — ext .js — ext .jsx — cache — format ‘node_modules/eslint-friendly-formatter’ || true",
       "git add"
     ],
     "*.jsx": [
