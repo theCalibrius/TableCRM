@@ -7,11 +7,14 @@
     "dev": "webpack-dev-server --hot --port 8080 --host 127.0.0.1 --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "compile": "webpack -p --config webpack.dev.js",
+    "precommit": "lint-staged",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
     "eslint":
       "eslint --fix --quiet . — ext .js — ext .jsx — cache — format ‘node_modules/eslint-friendly-formatter’ || true"
   },
-  "pre-commit": ["format", "eslint"],
+  "lint-staged": {
+    "*.js": ["format", "eslint", "git add"]
+  },
   "dependencies": {
     "axios": "^0.17.0",
     "body-parser": "^1.18.2",
@@ -50,6 +53,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.4.0",
+    "lint-staged": "^4.3.0",
     "pre-commit": "^1.2.2",
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.0.1",
