@@ -7,5 +7,5 @@ const getAllOpportunities = (req, res) => {
 };
 
 module.exports = {
-  getAllOpportunities: getAllOpportunities
+  getAllOpportunities
 };

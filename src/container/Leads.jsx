@@ -15,7 +15,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getLeads());
+    this.props.dispatch(getLeads())
   }
   render() {
     return (
