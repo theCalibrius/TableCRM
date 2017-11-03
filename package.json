@@ -8,13 +8,13 @@
     "build": "webpack --config webpack.prod.js",
     "compile": "webpack -p --config webpack.dev.js",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
-    "eslint":
+    "lint":
       "eslint . — ext .js — ext .jsx — cache — format ‘node_modules/eslint-friendly-formatter’ || true",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["format", "eslint", "git add"],
-    "*.jsx": ["format", "eslint", "git add"]
+    "*.js": ["format", "lint", "git add"],
+    "*.jsx": ["format", "lint", "git add"]
   },
   "precommit": "lint-staged",
   "dependencies": {
