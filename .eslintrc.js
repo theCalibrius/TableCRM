@@ -11,5 +11,8 @@ module.exports = {
     'no-useless-concat': 'warn',
     'block-scoped-var': 'error',
     'consistent-return': 'error'
+  },
+  settings: {
+    'import/resolver': 'node'
   }
 };
