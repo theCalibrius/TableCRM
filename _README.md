@@ -36,7 +36,7 @@
 
 From within the root directory:
 ```sh
-npm install
+yarn
 ```
 
 ### Start Database Server
