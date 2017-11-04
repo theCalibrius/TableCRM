@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: ['./src/main.js'],
+  entry: ['./client/src/main.js'],
   output: {
     filename: 'bundle/bundle.js',
     path: __dirname
