@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getOpportunities(e) {
   return function(dispatch) {
     axios
-      .get(`/api/opportunities`)
+      .get('/api/opportunities')
       .then(response => {
         console.log(response);
         dispatch({

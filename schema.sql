@@ -56,5 +56,3 @@ INSERT INTO leads (description, firstName, lastName, suffix, title, value, email
 INSERT INTO opportunities (name, description, estimatedValue, winProbability, expectedCloseDate) VALUES ('retail pricing app', 'Entrepreneur Rachel just got funding and is looking to add more features to her app.', 50000, 80, '2017-12-31');
 INSERT INTO opportunities (name, description, estimatedValue, winProbability, expectedCloseDate) VALUES ('contractor work with Apple', 'Their design team is looking to outsource for a period of 2-3 months.', 60000, 50, '2017-11-15');
 INSERT INTO opportunities (name, description, estimatedValue, winProbability, expectedCloseDate) VALUES ('recruitment app', 'Steve is looking for a technical cofounder. Prior experience with two startups that got sold.', 210000, 75, '2017-12-1');
-
-

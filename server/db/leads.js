@@ -8,8 +8,8 @@ const getAllLeads = (req, res) => {
 };
 
 const createLeads = (req, res) => {
-  let newRows = req.body.newRows;
-  for (let row of newRows) {
+  const newRows = req.body.newRows;
+  for (const row of newRows) {
     row.ownerId = 1; // placeholder for now
     delete row.createdDate; // placeholder for now;
     db.query('INSERT INTO leads SET ?', row, (err, rows, fields) => {
@@ -21,10 +21,10 @@ const createLeads = (req, res) => {
 };
 
 const updateLeads = (req, res) => {
-  let existingRows = req.body.existingRows;
-  for (let row of existingRows) {
+  const existingRows = req.body.existingRows;
+  for (const row of existingRows) {
     delete row.createdDate; // placeholder for now;
-    let id = row.id;
+    const id = row.id;
     db.query(
       `UPDATE leads SET ? WHERE id=${id}`,
       row,
@@ -39,21 +39,21 @@ const updateLeads = (req, res) => {
 
 const deleteLead = (req, res) => {
   console.log(req.body.removedIds);
-  let removedIds = req.body.removedIds;
+  const removedIds = req.body.removedIds;
   db.query(
-    `DELETE FROM leads WHERE (id) IN (?)`,
+    'DELETE FROM leads WHERE (id) IN (?)',
     [removedIds],
-    function(err, results) {
+    (err, results) => {
       if (err) return console.log(err);
-      else console.log('sended');
+      console.log('sended');
     }
   );
   res.status(200).send();
 };
 
 module.exports = {
-  getAllLeads: getAllLeads,
-  createLeads: createLeads,
-  updateLeads: updateLeads,
-  deleteLead: deleteLead
+  getAllLeads,
+  createLeads,
+  updateLeads,
+  deleteLead
 };

@@ -3,6 +3,6 @@ import opportunitiesReducer from './opportunitiesReducer';
 import leadsReducer from './leadsReducer';
 
 export default combineReducers({
-  opportunitiesReducer: opportunitiesReducer,
-  leadsReducer: leadsReducer
+  opportunitiesReducer,
+  leadsReducer
 });

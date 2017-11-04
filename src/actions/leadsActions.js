@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getLeads(e) {
   return function(dispatch) {
     axios
-      .get(`/api/leads`)
+      .get('/api/leads')
       .then(response => {
         console.log(response.data);
         dispatch({
@@ -28,17 +28,17 @@ export function afterChange(change, source) {
         }
       }
       // get changed rows as array
-      let changedRows = {};
-      for (let i of change) {
+      const changedRows = {};
+      for (const i of change) {
         changedRows[i[0]] = true;
       }
       const changedRowsArray = Object.keys(changedRows);
 
-      let newRows = [];
-      let existingRows = [];
+      const newRows = [];
+      const existingRows = [];
 
-      for (let i of changedRowsArray) {
-        let rowData = this.refs.hot.hotInstance.getSourceDataAtRow(i);
+      for (const i of changedRowsArray) {
+        const rowData = this.refs.hot.hotInstance.getSourceDataAtRow(i);
         if (rowData.id === null) newRows.push(rowData);
         else existingRows.push(rowData);
       }
@@ -46,11 +46,11 @@ export function afterChange(change, source) {
       if (newRows.length !== 0) {
         axios
           .post('/api/leads', {
-            newRows: newRows
+            newRows
           })
           .then(() => {
             axios
-              .get(`/api/leads`)
+              .get('/api/leads')
               .then(response => {
                 console.log(response);
                 dispatch({
@@ -66,7 +66,7 @@ export function afterChange(change, source) {
 
       if (existingRows.length !== 0) {
         axios.put('/api/leads', {
-          existingRows: existingRows
+          existingRows
         });
       }
     }
@@ -97,7 +97,7 @@ export function beforeRemoveRow(index, amount) {
       biggestRowIndex = startRow;
     }
     // get list of deleted index
-    let removedIds = [];
+    const removedIds = [];
     for (let i = smallestRowIndex; i <= biggestRowIndex; i++) {
       removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
     }
@@ -107,7 +107,7 @@ export function beforeRemoveRow(index, amount) {
       method: 'DELETE',
       url: '/api/leads',
       data: {
-        removedIds: removedIds
+        removedIds
       }
     });
   };
