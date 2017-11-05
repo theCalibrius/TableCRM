@@ -47,7 +47,7 @@ export function afterChange(change, source) {
             newRows
           })
           .then(() => {
-            this.props.dispatch(getLeads);
+            dispatch(getLeads);
           });
       }
 
