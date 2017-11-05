@@ -8,7 +8,7 @@ export default function(
     case 'GET_ALL_LEADS':
       return {
         ...state,
-        leads: [...action.payload]
+        leads: action.payload
       };
   }
   return state;
