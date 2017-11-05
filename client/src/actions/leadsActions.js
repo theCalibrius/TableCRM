@@ -47,18 +47,7 @@ export function afterChange(change, source, dispatch) {
             newRows
           })
           .then(() => {
-            axios
-              .get('/api/leads')
-              .then(response => {
-                console.log(response);
-                dispatch({
-                  type: 'GET_ALL_LEADS',
-                  payload: response.data
-                });
-              })
-              .catch(err => {
-                console.error.bind(err);
-              });
+            this.props.dispatch(getLeads);
           });
       }
 
