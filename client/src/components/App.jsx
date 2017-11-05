@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
 import Leads from '../container/Leads.jsx';
 import Opportunities from '../container/Opportunities.jsx';
+import Contacts from '../container/Contacts.jsx';
 import People from './People.jsx';
 import Companies from './Companies.jsx';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
           <Route exact path="/companies" component={Companies} />
           <Route exact path="/leads" component={Leads} />
           <Route exact path="/opportunities" component={Opportunities} />
+          <Route exact path="/contacts" component={Contacts} />
         </Switch>
       </div>
     );
