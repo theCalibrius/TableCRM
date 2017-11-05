@@ -1,5 +1,4 @@
 export default function(
-  // state = [],
   state = {
     leads: null
   },
@@ -7,7 +6,6 @@ export default function(
 ) {
   switch (action.type) {
     case 'GET_ALL_LEADS':
-      // return action.payload;
       return {
         ...state,
         leads: action.payload
