@@ -1,23 +1,20 @@
-// react & redux
 import React from 'react';
 import { connect } from 'react-redux';
-// redux actions
-import { getOpportunities } from '../actions/opportunitiesActions';
-// api call
+import { getAllOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
-// handsontable
+
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
 import 'handsontable-pro/dist/handsontable.full.css';
 
+// start of class
 class Opportunities extends React.Component {
-  // start of class
   constructor(props) {
     super(props);
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getOpportunities());
+    this.props.dispatch(getAllOpportunities());
   }
   render() {
     return (
@@ -38,14 +35,15 @@ class Opportunities extends React.Component {
                     winProbability: null,
                     expectedCloseDate: null
                   },
-                  colHeaders: ['Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date'],
-                  rowHeaders: true,
-                  minSpareRows: 1,
-                  stretchH: 'all',
-                  contextMenu: ['remove_row', 'copy', 'cut'],
+                  colHeaders: ['Opportunity Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date'],
+                  colWidths: [50, 80, 15, 22, 25],
+                  columnSorting: true,
                   filters: true,
                   dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
-                  columnSorting: true,
+                  rowHeaders: true,
+                  stretchH: 'all',
+                  minSpareRows: 1,
+                  contextMenu: ['remove_row', 'copy', 'cut'],
                   afterChange: (change, source) => {
                     console.log(`afterChange: change: ${change}, source: ${source}`);
                   },
