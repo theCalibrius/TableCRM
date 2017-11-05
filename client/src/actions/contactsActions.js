@@ -5,7 +5,8 @@ export function getContacts(dispatch) {
   axios
     .get('/api/contacts')
     .then(response => {
-      console.log(response);
+      //console.log(response);
+      //console.log(new Date(response.data['createdDate']));
       dispatch({
         type: 'GET_ALL_CONTACTS',
         payload: response.data

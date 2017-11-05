@@ -34,9 +34,30 @@ class Contacts extends React.Component {
                 data: this.props.contacts,
                 dataSchema: {
                   firstName: null,
-                  lastName: null
+                  lastName: null,
+                  suffix: null,
+                  title: null,
+                  department: null,
+                  description: null,
+                  email: null,
+                  workPhoneNumber: null,
+                  personalPhoneNumber: null,
+                  createdDate: null,
+                  updatedDate: null
                 },
-                colHeaders: ['First Name', 'Last Name', '', '', ''],
+                colHeaders: [
+                  'First Name',
+                  'Last Name',
+                  'Suffix',
+                  'Title',
+                  'Department',
+                  'Description',
+                  'Email',
+                  'Work Phone Number',
+                  'Personal Phone Number',
+                  'Created Date',
+                  'Updated Date'
+                ],
                 rowHeaders: true,
                 minSpareRows: 1,
                 stretchH: 'all',

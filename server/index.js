@@ -5,6 +5,7 @@ const cors = require('cors');
 /* * * Parser * * */
 const bodyParser = require('body-parser');
 /* * * Database * * */
+const contacts = require('./db/contacts');
 const opportunities = require('./db/opportunities');
 const leads = require('./db/leads');
 
@@ -21,6 +22,8 @@ app.use(bodyParser.json());
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Router
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+app.get('/api/contacts', contacts.getAllContacts);
 
 app.get('/api/opportunities', opportunities.getAllOpportunities);
 
