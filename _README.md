@@ -44,7 +44,7 @@ yarn
 From within the root directory:
 ```sh
 mysql.server start
-mysql -u root < schema.sql
+mysql -u root < server/db/schema.sql
 ```
 
 ### Start the App
