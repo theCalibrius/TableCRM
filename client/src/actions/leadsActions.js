@@ -15,7 +15,7 @@ export function getLeads(dispatch) {
     });
 }
 
-export function afterChange(change, source, dispatch) {
+export function afterChange(change, source) {
   // changes contains [row, prop, oldVal, newVal]
   return function(dispatch) {
     if (change !== null) {
