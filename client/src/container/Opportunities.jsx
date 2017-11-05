@@ -1,11 +1,8 @@
-// react & redux
 import React from 'react';
 import { connect } from 'react-redux';
-// redux actions
-import { getOpportunities } from '../actions/opportunitiesActions';
-// api call
+import { getAllOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
-// handsontable
+
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
 import 'handsontable-pro/dist/handsontable.full.css';
@@ -17,7 +14,7 @@ class Opportunities extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getOpportunities());
+    this.props.dispatch(getAllOpportunities());
   }
   render() {
     return (
