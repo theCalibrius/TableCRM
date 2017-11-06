@@ -9,6 +9,7 @@
     "compile": "webpack -p --config webpack.dev.js",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
     "lint": "eslint --quiet --fix . --ext .js --ext .jsx --cache --format node_modules/eslint-friendly-formatter || true",
+    "flow": "flow",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
@@ -48,10 +49,12 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
     "eslint": "^4.10.0",
