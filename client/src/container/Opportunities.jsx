@@ -52,12 +52,6 @@ class Opportunities extends React.Component {
                   },
                   beforeRemoveRow: (index, amount) => {
                     console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
-                  },
-                  afterCopy: (index, amount) => {
-                    console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-                  },
-                  afterPaste: (index, amount) => {
-                    console.log(`afterPaste: index: ${index}, amount: ${amount}`);
                   }
                 }}
               />}
