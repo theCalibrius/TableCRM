@@ -1,4 +1,5 @@
 const db = require('./config');
+const lib = require('../lib/helper');
 
 const getAllOpportunities = (req, res) => {
   db.query('SELECT * from opportunities', (err, rows) => {
@@ -7,10 +8,12 @@ const getAllOpportunities = (req, res) => {
 };
 
 const createOpportunities = (req, res) => {
-  const newRows = req.body.newRows;
+  let newRows = req.body.newRows;
 
-  for (let row of newRows) {
-    db.query('INSERT INTO opportunities SET ?', row, (err, rows) => {
+  for (let newRow of newRows) {
+    let fields = lib.getFields(newRow);
+    let values = lib.getValues(newRow);
+    db.query(`INSERT INTO opportunities (${fields}) VALUES (${values});`, (err) => {
       if (!err) { res.sendStatus(201); }
     });
   }
