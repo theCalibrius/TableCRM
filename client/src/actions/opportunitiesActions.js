@@ -24,6 +24,9 @@ export function createOrUpdateOpportunities(changes, source) {
           newRows.push(row);
         // otherwise, if the row where the cell locates was NOT empty prior to change
         } else {
+          // ???????? to be resolved later ????????
+          row.createdAt = null;
+          row.updatedAt = null;
           // push the row to updatedRows array
           updatedRows.push(row);
         }
