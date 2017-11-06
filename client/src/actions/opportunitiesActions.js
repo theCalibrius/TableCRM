@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getNewOrUpdatedRows } from '../lib/helper.js';
+import { getNewAndUpdatedRows } from '../lib/helper.js';
 
 export function getAllOpportunities() {
   let request = axios.get('/api/opportunities');
@@ -24,7 +24,7 @@ export function createOrUpdateOpportunities(changes, source) {
       //   .then(() => { dispatch(getAllOpportunities()); });
     };
 
-    let getNewOrUpdatedRowsBound = getNewOrUpdatedRows.bind(this);
+    let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
     getNewOrUpdatedRowsBound(changes, source, postCallback, putCallback);
   };
 }
