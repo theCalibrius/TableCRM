@@ -1,6 +1,6 @@
 module.exports = {
-  extends: ['airbnb', 'prettier', 'prettier/react'],
-  plugins: ['prettier', 'react'],
+  extends: ['plugin:flowtype/recommended', 'airbnb', 'prettier', 'prettier/react'],
+  plugins: ['flowtype', 'prettier', 'react'],
   rules: {
     'comma-dangle': ['warn', 'never'],
     indent: ['warn', 2],
