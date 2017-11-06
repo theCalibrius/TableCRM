@@ -10,7 +10,7 @@ export function getAllOpportunities() {
   };
 }
 
-export function createOrUpdateOpportunities(changes, source) {
+export function createAndUpdateOpportunities(changes, source) {
   return function(dispatch) {
     let postCallback = function(newRows) {
       axios.post('/api/opportunities', {newRows})
