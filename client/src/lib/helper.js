@@ -16,7 +16,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       let field = cell[1];
       let newValue = cell[3];
 
-      // if cell's row id is null
+      // if cell was empty prior to change i.e. cell's row id is null
       if (rowId === null) {
         // create a variable to check whether row number is found in newRows array & set its initial value to false
         let found = false;
@@ -44,7 +44,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
           newRows.push(newRow);
         }
 
-      // otherwise, if cell's row id is not null
+      // otherwise, if cell was not empty prior to change i.e. cell's row id is not null
       } else {
         // create a variable to check whether row id is found in updatedRows array & set its initial value to false
         let found = false;
