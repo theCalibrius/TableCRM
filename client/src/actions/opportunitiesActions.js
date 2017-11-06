@@ -14,10 +14,14 @@ export function createOrUpdateOpportunities(changes, source) {
   return function(dispatch) {
     let postCallback = function(newRows) {
       console.log('newRows->', newRows);
+      // axios.post('/api/opportunities', {newRows})
+      //   .then(() => { dispatch(getAllOpportunities()); });
     };
 
     let putCallback = function(updatedRows) {
       console.log('updatedRows->',updatedRows);
+      // axios.put('/api/opportunities', {updatedRows})
+      //   .then(() => { dispatch(getAllOpportunities()); });
     };
 
     let getNewOrUpdatedRowsBound = getNewOrUpdatedRows.bind(this);
