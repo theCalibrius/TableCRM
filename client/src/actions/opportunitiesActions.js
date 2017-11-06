@@ -12,11 +12,15 @@ export function getAllOpportunities() {
 
 export function createOrUpdateOpportunities(changes, source) {
   return function(dispatch) {
-    let getNewOrUpdatedRowsBound = getNewOrUpdatedRows.bind(this);
+    let postCallback = function(newRows) {
+      console.log('newRows->', newRows);
+    };
 
-    getNewOrUpdatedRowsBound(changes, source,
-      function(newRows) { console.log('newRows->', newRows); },
-      function(updatedRows) { console.log('updatedRows->',updatedRows); }
-    );
+    let putCallback = function(updatedRows) {
+      console.log('updatedRows->',updatedRows);
+    };
+
+    let getNewOrUpdatedRowsBound = getNewOrUpdatedRows.bind(this);
+    getNewOrUpdatedRowsBound(changes, source, postCallback, putCallback);
   };
 }
