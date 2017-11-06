@@ -18,9 +18,8 @@ export function createAndUpdateOpportunities(changes, source) {
     };
 
     let putCallback = function(updatedRows) {
-      console.log('updatedRows->',updatedRows);
-      // axios.put('/api/opportunities', {updatedRows})
-      //   .then(() => { dispatch(getAllOpportunities()); });
+      axios.put('/api/opportunities', {updatedRows})
+        .then(() => { dispatch(getAllOpportunities()); });
     };
 
     let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);

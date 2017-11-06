@@ -24,7 +24,22 @@ const getValues = (row) => {
   return values;
 };
 
+const getUpdateQuery = (row) => {
+  if ('num' in row) {
+    delete row.num;
+  }
+
+  let fields = Object.keys(row);
+  for (let i = 0; i < fields.length; i++) {
+    fields[i] = `${fields[i]}=VALUES(${fields[i]})`;
+  }
+  let updateQuery = fields.join(', ');
+
+  return updateQuery;
+};
+
 module.exports = {
   getFields,
-  getValues
+  getValues,
+  getUpdateQuery
 };

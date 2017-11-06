@@ -13,21 +13,23 @@ const createOpportunities = (req, res) => {
   for (let newRow of newRows) {
     let fields = lib.getFields(newRow);
     let values = lib.getValues(newRow);
-    db.query(`INSERT INTO opportunities (${fields}) VALUES (${values});`);
+    db.query(`INSERT INTO opportunities(${fields}) VALUES (${values});`);
   }
 
   res.sendStatus(201);
 };
 
 const updateOpportunities = (req, res) => {
-  const updatedRows = req.body.updatedRows;
+  let updatedRows = req.body.updatedRows;
 
-  for (let row of updatedRows) {
-    const id = row.id;
-    db.query(`UPDATE opportunities SET ? WHERE id=${id}`, row, (err, rows) => {
-      if (!err) { res.sendStatus(201); }
-    });
+  for (let updatedRow of updatedRows) {
+    let fields = lib.getFields(updatedRow);
+    let values = lib.getValues(updatedRow);
+    let updateQuery = lib.getUpdateQuery(updatedRow);
+    db.query(`INSERT INTO opportunities(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
   }
+
+  res.sendStatus(201);
 };
 
 module.exports = {
