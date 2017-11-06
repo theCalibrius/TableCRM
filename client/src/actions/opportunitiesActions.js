@@ -31,11 +31,12 @@ export function createOrUpdateOpportunities(changes, source) {
 
       if (newRows.length !== 0) {
         axios.post('/api/opportunities', {newRows})
-        .then(() => { getAllOpportunities(); });
+        .then(() => { dispatch(getAllOpportunities()); });
       }
 
       if (updatedRows.length !== 0) {
-
+        axios.put('/api/opportunities', {updatedRows})
+        .then(() => { dispatch(getAllOpportunities()); });
       }
     }
   };

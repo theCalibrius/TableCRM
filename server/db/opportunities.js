@@ -16,7 +16,20 @@ const createOpportunities = (req, res) => {
   }
 };
 
+const updateOpportunities = (req, res) => {
+  const updatedRows = req.body.updatedRows;
+
+  for (let row of updatedRows) {
+    delete row.createdDate;
+    const id = row.id;
+    db.query(`UPDATE opportunities SET ? WHERE id=${id}`, row, (err, rows) => {
+      if (!err) { res.sendStatus(201); }
+    });
+  }
+};
+
 module.exports = {
   getAllOpportunities,
-  createOpportunities
+  createOpportunities,
+  updateOpportunities
 };
