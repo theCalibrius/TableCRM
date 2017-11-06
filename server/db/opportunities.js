@@ -13,10 +13,10 @@ const createOpportunities = (req, res) => {
   for (let newRow of newRows) {
     let fields = lib.getFields(newRow);
     let values = lib.getValues(newRow);
-    db.query(`INSERT INTO opportunities (${fields}) VALUES (${values});`, (err) => {
-      if (!err) { res.sendStatus(201); }
-    });
+    db.query(`INSERT INTO opportunities (${fields}) VALUES (${values});`);
   }
+
+  res.sendStatus(201);
 };
 
 const updateOpportunities = (req, res) => {
