@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getAllOpportunities } from '../actions/opportunitiesActions';
+import { getAllOpportunities, createOrUpdateOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
 
 import HotTable from 'react-handsontable';
@@ -29,14 +29,17 @@ class Opportunities extends React.Component {
                   licenseKey: '',
                   data: this.props.opportunities,
                   dataSchema: {
+                    id: null,
                     name: null,
                     description: null,
                     estimatedValue: null,
                     winProbability: null,
-                    expectedCloseDate: null
+                    expectedCloseDate: null,
+                    createdAt: null,
+                    updatedAt: null
                   },
-                  colHeaders: ['Opportunity Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date'],
-                  colWidths: [50, 80, 15, 22, 25],
+                  colHeaders: ['id', 'Opportunity Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date', 'Created At', 'Updated At'],
+                  colWidths: [10, 50, 80, 15, 22, 25, 25, 25],
                   columnSorting: true,
                   filters: true,
                   dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
@@ -44,8 +47,8 @@ class Opportunities extends React.Component {
                   stretchH: 'all',
                   minSpareRows: 1,
                   contextMenu: ['remove_row', 'copy', 'cut'],
-                  afterChange: (change, source) => {
-                    console.log(`afterChange: change: ${change}, source: ${source}`);
+                  afterChange: (changes, source) => {
+                    this.props.dispatch(createOrUpdateOpportunities(changes, source).bind(this));
                   },
                   beforeRemoveRow: (index, amount) => {
                     console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
@@ -59,7 +62,6 @@ class Opportunities extends React.Component {
                 }}
               />}
         </div>
-        {JSON.stringify(this.props.opportunities)}
       </div>
     );
   }
@@ -69,4 +71,4 @@ const mapStateToProps = state => ({
   opportunities: state.opportunitiesReducer.opportunities
 });
 
-export default connect(mapStateToProps, null)(Opportunities);
+export default connect(mapStateToProps)(Opportunities);

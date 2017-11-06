@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 app.get('/api/contacts', contacts.getAllContacts);
 
 app.get('/api/opportunities', opportunities.getAllOpportunities);
+app.post('/api/opportunities', opportunities.createOpportunities);
+app.put('/api/opportunities', opportunities.updateOpportunities);
 
 app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createLeads);
