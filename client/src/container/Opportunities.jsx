@@ -34,10 +34,12 @@ class Opportunities extends React.Component {
                     description: null,
                     estimatedValue: null,
                     winProbability: null,
-                    expectedCloseDate: null
+                    expectedCloseDate: null,
+                    createdAt: null,
+                    updatedAt: null
                   },
-                  colHeaders: ['id', 'Opportunity Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date'],
-                  colWidths: [10, 50, 80, 15, 22, 25],
+                  colHeaders: ['id', 'Opportunity Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date', 'Created At', 'Updated At'],
+                  colWidths: [10, 50, 80, 15, 22, 25, 25, 25],
                   columnSorting: true,
                   filters: true,
                   dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],

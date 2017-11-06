@@ -14,8 +14,8 @@ CREATE TABLE opportunities (
   winProbability int,
   expectedCloseDate date,
   closeDate date,
-  createdDate timestamp,
-  updatedDate date,
+  createdAt timestamp DEFAULT NOW(),
+  updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
   PRIMARY KEY (id)
 );
 
