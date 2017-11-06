@@ -17,6 +17,10 @@ export function getLeads(dispatch) {
 
 export function afterChange(change, source) {
   // changes contains [row, prop, oldVal, newVal]
+  console.log('change');
+  console.log(change);
+  console.log('source');
+  console.log(source);
   return function(dispatch) {
     if (change !== null) {
       // remove row from change if old√al and newVal are false value
