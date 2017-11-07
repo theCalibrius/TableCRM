@@ -74,6 +74,13 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       }
     }
 
+    // for each new row in newRows array, remove row number before ajax call
+    for (let newRow of newRows) {
+      if ('num' in newRow) {
+        delete newRow.num;
+      }
+    }
+
     if (newRows.length > 0) {
       postCallback(newRows);
     }
