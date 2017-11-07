@@ -7,26 +7,25 @@ const getAllOpportunities = (req, res) => {
   });
 };
 
-const createOpportunities = (req, res) => {
-  let newRows = req.body.newRows;
-
-  for (let newRow of newRows) {
-    let fields = lib.getFields(newRow);
-    let values = lib.getValues(newRow);
-    db.query(`INSERT INTO opportunities(${fields}) VALUES (${values});`);
+const createAndUpdateOpportunities = (req, res) => {
+  let rows;
+  if (req.method === 'POST') {
+    rows = req.body.newRows;
+  } else if (req.method === 'PUT') {
+    rows = req.body.updatedRows;
   }
 
-  res.sendStatus(201);
-};
+  for (let row of rows) {
+    let fields = lib.getFields(row);
+    let values = lib.getValues(row);
 
-const updateOpportunities = (req, res) => {
-  let updatedRows = req.body.updatedRows;
+    if (req.method === 'POST') {
+      db.query(`INSERT INTO opportunities(${fields}) VALUES (${values});`);
 
-  for (let updatedRow of updatedRows) {
-    let fields = lib.getFields(updatedRow);
-    let values = lib.getValues(updatedRow);
-    let updateQuery = lib.getUpdateQuery(updatedRow);
-    db.query(`INSERT INTO opportunities(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
+    } else if (req.method === 'PUT') {
+      let updateQuery = lib.getUpdateQuery(row);
+      db.query(`INSERT INTO opportunities(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
+    }
   }
 
   res.sendStatus(201);
@@ -34,6 +33,5 @@ const updateOpportunities = (req, res) => {
 
 module.exports = {
   getAllOpportunities,
-  createOpportunities,
-  updateOpportunities
+  createAndUpdateOpportunities
 };
