@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getAllOpportunities, createOrUpdateOpportunities } from '../actions/opportunitiesActions';
+import { getAllOpportunities, createAndUpdateOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
 
 import HotTable from 'react-handsontable';
@@ -48,16 +48,10 @@ class Opportunities extends React.Component {
                   minSpareRows: 1,
                   contextMenu: ['remove_row', 'copy', 'cut'],
                   afterChange: (changes, source) => {
-                    this.props.dispatch(createOrUpdateOpportunities(changes, source).bind(this));
+                    this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
                   },
                   beforeRemoveRow: (index, amount) => {
                     console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
-                  },
-                  afterCopy: (index, amount) => {
-                    console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-                  },
-                  afterPaste: (index, amount) => {
-                    console.log(`afterPaste: index: ${index}, amount: ${amount}`);
                   }
                 }}
               />}
