@@ -1,13 +1,13 @@
 const db = require('./config');
 const lib = require('../lib/helper');
 
-const getAllOpportunities = (req, res) => {
+module.exports.getAllOpportunities = (req, res) => {
   db.query('SELECT * from opportunities', (err, rows) => {
     if (!err) { res.json(rows); }
   });
 };
 
-const createAndUpdateOpportunities = (req, res) => {
+module.exports.createAndUpdateOpportunities = (req, res) => {
   let rows;
   if (req.method === 'POST') {
     rows = req.body.newRows;
@@ -29,9 +29,4 @@ const createAndUpdateOpportunities = (req, res) => {
   }
 
   res.sendStatus(201);
-};
-
-module.exports = {
-  getAllOpportunities,
-  createAndUpdateOpportunities
 };
