@@ -37,6 +37,22 @@ CREATE TABLE contacts (
   /*FOREIGN KEY (accountId) REFERENCES opportunities (contactPersonId)*/
 );
 
+CREATE TABLE accounts (
+  id int NOT NULL AUTO_INCREMENT,
+  description text(255),
+  email varchar(255),
+  phoneNumber varchar(255),
+  street varchar(255),
+  city varchar(255),
+  state varchar(255),
+  postalCode varchar(255),
+  country varchar(255),
+  website varchar(255),
+  createdDate timestamp,
+  updatedDate date,
+  PRIMARY KEY (id)
+);
+
 DROP TABLE IF EXISTS leads;
 CREATE TABLE leads (
   id int NOT NULL AUTO_INCREMENT,
@@ -87,3 +103,16 @@ INSERT INTO contacts (firstName, lastName, suffix, title, department, descriptio
 ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
 ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
+
+INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');

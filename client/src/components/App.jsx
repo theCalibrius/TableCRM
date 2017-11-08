@@ -6,6 +6,7 @@ import Opportunities from '../container/Opportunities.jsx';
 import Contacts from '../container/Contacts.jsx';
 import People from './People.jsx';
 import Companies from './Companies.jsx';
+import Accounts from '../container/Accounts.jsx';
 
 class App extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Route exact path="/leads" component={Leads} />
           <Route exact path="/opportunities" component={Opportunities} />
           <Route exact path="/contacts" component={Contacts} />
+          <Route exact path="/accounts" component={Accounts} />
         </Switch>
       </div>
     );

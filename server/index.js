@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const contacts = require('./db/contacts');
 const opportunities = require('./db/opportunities');
 const leads = require('./db/leads');
+const accounts = require('./db/accounts');
 
 const app = express();
 
@@ -29,6 +30,8 @@ app.delete('/api/contacts', contacts.deleteContacts);
 app.get('/api/opportunities', opportunities.getAllOpportunities);
 app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.put('/api/opportunities', opportunities.createAndUpdateOpportunities);
+
+app.get('/api/accounts', accounts.getAllAccounts);
 
 app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createLeads);
