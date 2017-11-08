@@ -1,11 +1,17 @@
-const getFields = (row) => {
-  let fields = Object.keys(row).join(', ');
+module.exports.getFieldsArr = (row) => {
+  let fieldsArr = Object.keys(row);
+
+  return fieldsArr;
+};
+
+module.exports.getFields = (fieldsArr) => {
+  let fields = fieldsArr.join(', ');
 
   return fields;
 };
 
-const getValues = (row) => {
-  let values = Object.keys(row).map((key) => { return row[key]; });
+module.exports.getValues = (row, fieldsArr) => {
+  let values = fieldsArr.map((field) => { return row[field]; });
   for (let i = 0; i < values.length; i++) {
     if (typeof(values[i]) === 'string') {
       values[i] = `"${values[i]}"`;
@@ -16,7 +22,7 @@ const getValues = (row) => {
   return values;
 };
 
-const getUpdateQuery = (row) => {
+module.exports.getUpdateQuery = (row) => {
   let fields = Object.keys(row);
   for (let i = 0; i < fields.length; i++) {
     fields[i] = `${fields[i]}=VALUES(${fields[i]})`;
@@ -26,8 +32,3 @@ const getUpdateQuery = (row) => {
   return updateQuery;
 };
 
-module.exports = {
-  getFields,
-  getValues,
-  getUpdateQuery
-};
