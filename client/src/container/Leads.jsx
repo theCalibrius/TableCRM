@@ -21,55 +21,79 @@ class Leads extends React.Component {
     return (
       <div>
         <div id="table">
-          {!this.props.leads
-            ? <p>loading...</p>
-            : <HotTable
-                root="hot"
-                ref="hot"
-                settings={{
-                  licenseKey: '',
-                  data: this.props.leads,
-                  dataSchema: {
-                    id: null,
-                    ownerId: null,
-                    description: null,
-                    firstName: null,
-                    lastName: null,
-                    suffix: null,
-                    title: null,
-                    value: null,
-                    email: null,
-                    phoneNumber: null,
-                    createdDate: null
+          {!this.props.leads ? (
+            <p>loading...</p>
+          ) : (
+            <HotTable
+              root="hot"
+              ref="hot"
+              settings={{
+                licenseKey: '',
+                data: this.props.leads,
+                dataSchema: {
+                  id: null,
+                  ownerId: null,
+                  description: null,
+                  firstName: null,
+                  lastName: null,
+                  suffix: null,
+                  title: null,
+                  value: null,
+                  email: null,
+                  phoneNumber: null,
+                  createdDate: null
+                },
+                colHeaders: [
+                  'id',
+                  'ownerId',
+                  'description',
+                  'firstName',
+                  'lastName',
+                  'suffix',
+                  'title',
+                  'value',
+                  'email',
+                  'phoneNumber',
+                  'createdDate'
+                ],
+                columns: [
+                  { data: 'id' },
+                  { data: 'ownerId' },
+                  { data: 'description' },
+                  { data: 'firstName' },
+                  { data: 'lastName' },
+                  { data: 'suffix' },
+                  { data: 'title' },
+                  {
+                    data: 'value',
+                    type: 'numeric',
+                    format: '$0,0.00'
                   },
-                  colHeaders: [
-                    'id',
-                    'ownerId',
-                    'description',
-                    'firstName',
-                    'lastName',
-                    'suffix',
-                    'title',
-                    'value',
-                    'email',
-                    'phoneNumber',
-                    'createdDate'
-                  ],
-                  rowHeaders: true,
-                  stretchH: 'all',
-                  contextMenu: ['remove_row', 'copy', 'cut'],
-                  filters: true,
-                  dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
-                  columnSorting: true,
-                  minSpareRows: 1,
-                  afterChange: (change, source) => {
-                    this.props.dispatch(afterChange(change, source).bind(this));
-                  },
-                  beforeRemoveRow: (index, amount) => {
-                    this.props.dispatch(beforeRemoveRow(index, amount).bind(this));
+                  { data: 'email' },
+                  { data: 'phoneNumber' },
+                  {
+                    data: 'createdDate',
+                    type: 'date',
+                    dateFormat: 'MM/DD/YYYY',
+                    correctFormat: false
                   }
-                }}
-              />}
+                ],
+                rowHeaders: true,
+                stretchH: 'all',
+                contextMenu: ['remove_row', 'copy', 'cut'],
+                filters: true,
+                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                columnSorting: true,
+                minSpareRows: 1,
+                afterChange: (change, source) => {
+                  this.props.dispatch(afterChange(change, source).bind(this));
+                },
+                beforeRemoveRow: (index, amount) => {
+                  this.props.dispatch(beforeRemoveRow(index, amount).bind(this));
+                }
+              }}
+            />
+          )}
         </div>
       </div>
     );
