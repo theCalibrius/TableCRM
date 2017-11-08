@@ -8,8 +8,6 @@ import 'handsontable-pro/dist/handsontable.full.css';
 
 import { getAccounts } from '../actions/accountsActions';
 
-
-
 class Accounts extends React.Component {
   constructor(props) {
     super(props);
