@@ -16,8 +16,9 @@ module.exports.createAndUpdateOpportunities = (req, res) => {
   }
 
   for (let row of rows) {
-    let fields = lib.getFields(row);
-    let values = lib.getValues(row);
+    let fieldsArr = lib.getFieldsArr(row);
+    let fields = lib.getFields(fieldsArr);
+    let values = lib.getValues(row, fieldsArr);
 
     if (req.method === 'POST') {
       db.query(`INSERT INTO opportunities(${fields}) VALUES (${values});`);
