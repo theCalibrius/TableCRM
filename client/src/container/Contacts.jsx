@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getContacts } from '../actions/contactsActions';
+import { getContacts, beforeRemoveContact } from '../actions/contactsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -33,6 +33,7 @@ class Contacts extends React.Component {
                 licenseKey: '',
                 data: this.props.contacts,
                 dataSchema: {
+                  id: null,
                   firstName: null,
                   lastName: null,
                   suffix: null,
@@ -42,10 +43,11 @@ class Contacts extends React.Component {
                   email: null,
                   workPhoneNumber: null,
                   personalPhoneNumber: null,
-                  createdDate: null,
-                  updatedDate: null
+                  createdAt: null,
+                  updatedAt: null
                 },
                 colHeaders: [
+                  'ID',
                   'First Name',
                   'Last Name',
                   'Suffix',
@@ -58,6 +60,34 @@ class Contacts extends React.Component {
                   'Created Date',
                   'Updated Date'
                 ],
+                columns: [
+                  { data: 'id' },
+                  { data: 'firstName' },
+                  { data: 'lastName' },
+                  { data: 'suffix' },
+                  { data: 'title' },
+                  { data: 'department' },
+                  { data: 'description' },
+                  { data: 'email' },
+                  { data: 'workPhoneNumber' },
+                  { data: 'personalPhoneNumber' },
+                  {
+                    data: 'createdAt',
+                    type: 'date',
+                    dateFormat: 'MM/DD/YYYY',
+                    correctFormat: false
+                  },
+                  {
+                    data: 'updatedAt',
+                    type: 'date',
+                    dateFormat: 'MM/DD/YYYY',
+                    correctFormat: false
+                  }
+                ],
+                hiddenColumns: {
+                  columns: [0],
+                  indicators: false
+                },
                 rowHeaders: true,
                 minSpareRows: 1,
                 stretchH: 'all',
@@ -70,6 +100,7 @@ class Contacts extends React.Component {
                 },
                 beforeRemoveRow: (index, amount) => {
                   console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
+                  this.props.dispatch(beforeRemoveContact(index, amount).bind(this));
                 },
                 afterCopy: (index, amount) => {
                   console.log(`afterCopy: index: ${index}, amount: ${amount}`);

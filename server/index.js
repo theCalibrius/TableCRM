@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 app.get('/api/contacts', contacts.getAllContacts);
+app.delete('/api/contacts', contacts.deleteContacts);
 
 app.get('/api/opportunities', opportunities.getAllOpportunities);
 app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
