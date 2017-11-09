@@ -14,6 +14,7 @@ class Accounts extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    // console.log('Component Did Mount!');
     this.props.dispatch(getAccounts());
   }
   render() {
@@ -80,13 +81,13 @@ class Accounts extends React.Component {
             />
           )}
         </div>
-        {JSON.stringify(this.props.accounts)}
       </div>
     );
   }
 } // end of class
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => (
+{
   accounts: state.accountsReducer.accounts
 });
 

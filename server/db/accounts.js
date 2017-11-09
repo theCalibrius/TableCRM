@@ -5,7 +5,7 @@ const getAllAccounts = (req, res) => {
   db.query('SELECT * from accounts', (err, rows) => {
     if (!err) {
       res.json(rows);
-    }
+    } 
   });
 };
 
