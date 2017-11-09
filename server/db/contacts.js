@@ -7,6 +7,17 @@ const getAllContacts = (req, res) => {
   });
 };
 
+// delete contact(s)
+const deleteContacts = (req, res) => {
+  const removedIds = req.body.removedIds;
+  console.log(removedIds);
+  db.query(`DELETE FROM contacts WHERE id IN (${removedIds});`, err => {
+    if (err) return console.log(err);
+    res.sendStatus(200);
+  });
+};
+
 module.exports = {
-  getAllContacts
+  getAllContacts,
+  deleteContacts
 };

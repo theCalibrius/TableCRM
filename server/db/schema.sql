@@ -20,7 +20,7 @@ CREATE TABLE opportunities (
 );
 
 CREATE TABLE contacts (
-  contactId int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   firstName varchar(50),
   lastName varchar(50),
   suffix varchar(20),
@@ -30,9 +30,9 @@ CREATE TABLE contacts (
   email varchar(255),
   workPhoneNumber varchar(25),
   personalPhoneNumber varchar(25),
-  createdDate timestamp,
-  updatedDate date,
-  PRIMARY KEY (contactId)
+  createdAt timestamp DEFAULT NOW(),
+  updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
+  PRIMARY KEY (id)
   /*,accountId int,*/
   /*FOREIGN KEY (accountId) REFERENCES opportunities (contactPersonId)*/
 );
@@ -80,7 +80,7 @@ INSERT INTO opportunities (name, description, estimatedValue, winProbability, ex
 ('contractor work with Google', 'Started conversation with Debby. Pending response from Jessica.', 200000, 30, '2017-12-9'),
 ('teaching assistance application', 'software engineering role', 15000, 30, '2017-11-30');
 
-INSERT INTO contacts (firstName, lastName, suffix, title, department, description, email, workPhoneNumber, personalPhoneNumber, createdDate) VALUES
+INSERT INTO contacts (firstName, lastName, suffix, title, department, description, email, workPhoneNumber, personalPhoneNumber, createdAt) VALUES
 ('John','Jones','Mr.','Sales Manager','Sales','text1','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 02:18:22'),
 ('Sarah','Jones','Mrs.','Sales Coordinator','Sales','text2','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:20:22'),
 ('Larry','David','Mr.','Sales Manager','Sales','text3','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:22'),

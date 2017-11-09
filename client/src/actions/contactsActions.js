@@ -1,12 +1,10 @@
 import axios from 'axios';
+import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
 export function getContacts(dispatch) {
-  // return function(dispatch) {
   axios
     .get('/api/contacts')
     .then(response => {
-      //console.log(response);
-      //console.log(new Date(response.data['createdDate']));
       dispatch({
         type: 'GET_ALL_CONTACTS',
         payload: response.data
@@ -15,5 +13,25 @@ export function getContacts(dispatch) {
     .catch(err => {
       console.error.bind(err);
     });
-  // };
+}
+
+export function beforeRemoveContacts(index, amount) {
+  return function(dispatch) {
+    console.log('index ->', index);
+    console.log('amount ->', amount);
+    // [startRow, startCol, endRow, endCol]
+    console.log('selected ->', this.refs.hot.hotInstance.getSelected());
+    // selected rows
+    const selectedRows = this.refs.hot.hotInstance.getSelected();
+    // get deleted row ID(s)
+    const getRemovedIdsBound = getRemovedIds.bind(this);
+    const removedIds = getRemovedIdsBound(selectedRows);
+    axios({
+      method: 'DELETE',
+      url: '/api/contacts',
+      data: {
+        removedIds
+      }
+    });
+  };
 }
