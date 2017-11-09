@@ -24,7 +24,7 @@ export function beforeRemoveContacts(index, amount) {
     // selected rows
     const selectedRows = this.refs.hot.hotInstance.getSelected();
     // get deleted row ID(s)
-    let getDeletedIdsBound = getDeletedIds.bind(this);
+    const getDeletedIdsBound = getDeletedIds.bind(this);
     const removedIds = getDeletedIdsBound(selectedRows);
     axios({
       method: 'DELETE',
