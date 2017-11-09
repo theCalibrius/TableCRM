@@ -4,9 +4,10 @@ import Dashboard from './Dashboard.jsx';
 import Leads from '../container/Leads.jsx';
 import Opportunities from '../container/Opportunities.jsx';
 import Contacts from '../container/Contacts.jsx';
+import Accounts from '../container/Accounts.jsx';
 import People from './People.jsx';
 import Companies from './Companies.jsx';
-import Accounts from '../container/Accounts.jsx';
+
 
 class App extends React.Component {
   render() {

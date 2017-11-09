@@ -37,22 +37,6 @@ CREATE TABLE contacts (
   /*FOREIGN KEY (accountId) REFERENCES opportunities (contactPersonId)*/
 );
 
-CREATE TABLE accounts (
-  id int NOT NULL AUTO_INCREMENT,
-  description text(255),
-  email varchar(255),
-  phoneNumber varchar(255),
-  street varchar(255),
-  city varchar(255),
-  state varchar(255),
-  postalCode varchar(255),
-  country varchar(255),
-  website varchar(255),
-  createdDate timestamp,
-  updatedDate date,
-  PRIMARY KEY (id)
-);
-
 DROP TABLE IF EXISTS leads;
 CREATE TABLE leads (
   id int NOT NULL AUTO_INCREMENT,
@@ -70,9 +54,38 @@ CREATE TABLE leads (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE accounts (
+  id int NOT NULL AUTO_INCREMENT,
+  description text(255),
+  email varchar(255),
+  phoneNumber varchar(255),
+  street varchar(255),
+  city varchar(255),
+  state varchar(255),
+  postalCode varchar(255),
+  country varchar(255),
+  website varchar(255),
+  createdDate timestamp,
+  updatedDate date,
+  PRIMARY KEY (id)
+);
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
 
 INSERT INTO leads (description, firstName, lastName, suffix, title, value, email, phoneNumber, ownerId) VALUES
 ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1),
@@ -103,16 +116,3 @@ INSERT INTO contacts (firstName, lastName, suffix, title, department, descriptio
 ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
 ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
-
-INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
