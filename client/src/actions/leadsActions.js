@@ -14,13 +14,13 @@ export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
     const postCallback = function(newRows) {
       axios.post('/api/leads', { newRows }).then(() => {
-        dispatch(getAllOpportunities());
+        dispatch(getAllLeads());
       });
     };
 
     const putCallback = function(updatedRows) {
       axios.put('/api/leads', { updatedRows }).then(() => {
-        dispatch(getAllOpportunities());
+        dispatch(getAllLeads());
       });
     };
 
@@ -39,7 +39,7 @@ export function removeLeads(index, amount) {
     const removedIds = getRemovedIdsBound(selectedRows);
     axios({
       method: 'DELETE',
-      url: '/api/contacts',
+      url: '/api/leads',
       data: {
         removedIds
       }

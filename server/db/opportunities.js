@@ -3,7 +3,9 @@ const lib = require('../lib/helper');
 
 module.exports.getAllOpportunities = (req, res) => {
   db.query('SELECT * from opportunities', (err, rows) => {
-    if (!err) { res.json(rows); }
+    if (!err) {
+      res.json(rows);
+    }
   });
 };
 
@@ -15,16 +17,15 @@ module.exports.createAndUpdateOpportunities = (req, res) => {
     rows = req.body.updatedRows;
   }
 
-  for (let row of rows) {
-    let fieldsArr = lib.getFieldsArr(row);
-    let fields = lib.getFields(fieldsArr);
-    let values = lib.getValues(row, fieldsArr);
+  for (const row of rows) {
+    const fieldsArr = lib.getFieldsArr(row);
+    const fields = lib.getFields(fieldsArr);
+    const values = lib.getValues(row, fieldsArr);
 
     if (req.method === 'POST') {
       db.query(`INSERT INTO opportunities(${fields}) VALUES (${values});`);
-
     } else if (req.method === 'PUT') {
-      let updateQuery = lib.getUpdateQuery(row);
+      const updateQuery = lib.getUpdateQuery(row);
       db.query(`INSERT INTO opportunities(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
     }
   }

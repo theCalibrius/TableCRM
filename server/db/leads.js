@@ -1,4 +1,5 @@
 const db = require('./config');
+const lib = require('../lib/helper');
 
 const getAllLeads = (req, res) => {
   db.query('SELECT * from leads', (err, rows) => {
@@ -7,45 +8,40 @@ const getAllLeads = (req, res) => {
   });
 };
 
-const createLeads = (req, res) => {
-  const newRows = req.body.newRows;
-  for (const row of newRows) {
-    row.ownerId = 1; // placeholder for now
-    delete row.createdDate; // placeholder for now;
-    db.query('INSERT INTO leads SET ?', row, (err, rows, fields) => {
-      if (err) console.log(err);
-      console.log('new lead created');
-    });
-    res.status(200).send();
+const createAndUpdateLeads = (req, res) => {
+  let rows;
+  if (req.method === 'POST') {
+    rows = req.body.newRows;
+  } else if (req.method === 'PUT') {
+    rows = req.body.updatedRows;
   }
+
+  for (const row of rows) {
+    const fieldsArr = lib.getFieldsArr(row);
+    const fields = lib.getFields(fieldsArr);
+    const values = lib.getValues(row, fieldsArr);
+
+    if (req.method === 'POST') {
+      db.query(`INSERT INTO leads(${fields}) VALUES (${values});`);
+    } else if (req.method === 'PUT') {
+      const updateQuery = lib.getUpdateQuery(row);
+      db.query(`INSERT INTO leads(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
+    }
+  }
+
+  res.sendStatus(201);
 };
 
-const updateLeads = (req, res) => {
-  const existingRows = req.body.existingRows;
-  for (const row of existingRows) {
-    delete row.createdDate; // placeholder for now;
-    const id = row.id;
-    db.query(`UPDATE leads SET ? WHERE id=${id}`, row, (err, rows, fields) => {
-      if (err) console.log(err);
-      console.log('lead is updated');
-    });
-    res.status(200).send();
-  }
-};
-
-const deleteLead = (req, res) => {
-  console.log(req.body.removedIds);
+const deleteLeads = (req, res) => {
   const removedIds = req.body.removedIds;
   db.query('DELETE FROM leads WHERE (id) IN (?)', [removedIds], (err, results) => {
     if (err) return console.log(err);
-    console.log('sended');
   });
   res.status(200).send();
 };
 
 module.exports = {
   getAllLeads,
-  createLeads,
-  updateLeads,
-  deleteLead
+  createAndUpdateLeads,
+  deleteLeads
 };
