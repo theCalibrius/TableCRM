@@ -8,6 +8,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
 
     // for each cell array in changes array
     for (let cell of changes) {
+
       // get cell's corresponding row's number (per spreadsheet) and id (per database)
       let rowNum = cell[0];
       let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowNum).id;
@@ -36,14 +37,14 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         // subsquent to loop, if check variable is false
         if (!found) {
           // create an object with key-value pair: {num: cell's row number}
-          let newRow = { num: rowNum };
+          let newRow = {num: rowNum};
           // add cell's field-newValue pair to the object
           newRow[field] = newValue;
           // push the object to newRows array
           newRows.push(newRow);
         }
 
-        // otherwise, if cell's corresponding row was not empty prior to change
+      // otherwise, if cell's corresponding row was not empty prior to change
       } else {
         // create a variable to check whether row id is found in updatedRows array & set its initial value to false
         let found = false;
@@ -64,7 +65,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         // subsquent to loop, if check variable is false
         if (!found) {
           // create an object with key-value pair: {id: cell's row id}
-          let updatedRow = { id: rowId };
+          let updatedRow = {id: rowId};
           // add cell's field-newValue pair to the object
           updatedRow[field] = newValue;
           // push the object to updatedRows array
@@ -88,20 +89,4 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       putCallback(updatedRows);
     }
   }
-}
-
-// helper function to return deleted Row ID(s)
-export function getDeletedIds(selectedRows) {
-  const startRow = selectedRows[0];
-  const endRow = selectedRows[2];
-  // smallest and biggest Row ID
-  const smallestRowIndex = Math.min(startRow, endRow);
-  const biggestRowIndex = Math.max(startRow, endRow);
-  // get list of deleted row IDs
-  const removedIds = [];
-  for (let i = smallestRowIndex; i <= biggestRowIndex; i++) {
-    removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
-  }
-  console.log(removedIds);
-  return removedIds;
-}
+};

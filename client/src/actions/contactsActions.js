@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getDeletedIds } from '../lib/helper.js';
+import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
 export function getContacts(dispatch) {
   axios
@@ -24,8 +24,8 @@ export function beforeRemoveContacts(index, amount) {
     // selected rows
     const selectedRows = this.refs.hot.hotInstance.getSelected();
     // get deleted row ID(s)
-    const getDeletedIdsBound = getDeletedIds.bind(this);
-    const removedIds = getDeletedIdsBound(selectedRows);
+    const getRemovedIdsBound = getRemovedIds.bind(this);
+    const removedIds = getRemovedIdsBound(selectedRows);
     axios({
       method: 'DELETE',
       url: '/api/contacts',
