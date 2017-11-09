@@ -9,13 +9,9 @@
     "compile": "webpack -p --config webpack.dev.js",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
     "lint": "eslint --quiet --fix . --ext .js --ext .jsx --cache --format node_modules/eslint-friendly-formatter || true",
-<<<<<<< HEAD
     "flow": "flow",
-    "lint-staged": "lint-staged"
-=======
     "lint-staged": "lint-staged",
     "test": "jest"
->>>>>>> "Set up testing framework and add preliminary test files - CONFLICT with HandsonTable, test not running"
   },
   "lint-staged": {
     "*.js": [
