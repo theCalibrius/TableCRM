@@ -3,17 +3,17 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
   // if changes array is not null
   if (changes) {
     // create empty arrays to store new rows and updated rows as objects, respectively
-    const newRows = [];
-    const updatedRows = [];
+    let newRows = [];
+    let updatedRows = [];
 
     // for each cell array in changes array
-    for (const cell of changes) {
+    for (let cell of changes) {
       // get cell's corresponding row's number (per spreadsheet) and id (per database)
-      const rowNum = cell[0];
-      const rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowNum).id;
+      let rowNum = cell[0];
+      let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowNum).id;
       // get cell's field-newValue pair
-      const field = cell[1];
-      const newValue = cell[3];
+      let field = cell[1];
+      let newValue = cell[3];
 
       // if cell's corresponding row was empty prior to change
       if (rowId === null) {
@@ -21,7 +21,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         let found = false;
 
         // for each row object in newRows array
-        for (const newRow of newRows) {
+        for (let newRow of newRows) {
           // if row object's num value is equal to row number
           if (newRow.num === rowNum) {
             // add cell's field-newValue pair to row object
@@ -36,7 +36,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         // subsquent to loop, if check variable is false
         if (!found) {
           // create an object with key-value pair: {num: cell's row number}
-          const newRow = { num: rowNum };
+          let newRow = { num: rowNum };
           // add cell's field-newValue pair to the object
           newRow[field] = newValue;
           // push the object to newRows array
@@ -49,7 +49,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         let found = false;
 
         // for each row object in updatedRows array
-        for (const updatedRow of updatedRows) {
+        for (let updatedRow of updatedRows) {
           // if row object's id value is equal to row id
           if (updatedRow.id === rowId) {
             // add cell's field-newValue pair to row object
@@ -64,7 +64,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         // subsquent to loop, if check variable is false
         if (!found) {
           // create an object with key-value pair: {id: cell's row id}
-          const updatedRow = { id: rowId };
+          let updatedRow = { id: rowId };
           // add cell's field-newValue pair to the object
           updatedRow[field] = newValue;
           // push the object to updatedRows array
@@ -74,7 +74,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
     }
 
     // for each new row in newRows array, remove row number before ajax call
-    for (const newRow of newRows) {
+    for (let newRow of newRows) {
       if ('num' in newRow) {
         delete newRow.num;
       }
