@@ -1,8 +1,8 @@
 import axios from 'axios';
-
 import { getNewAndUpdatedRows } from '../lib/helper.js';
+import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
-export function getAllLeads() {
+export function getAllLeads(dispatch) {
   const request = axios.get('/api/leads');
   return {
     type: 'GET_ALL_LEADS',
@@ -29,39 +29,17 @@ export function createAndUpdateLeads(changes, source) {
   };
 }
 
-export function beforeRemoveRow(index, amount) {
+export function removeLeads(index, amount) {
   return function(dispatch) {
-    console.log('index ->', index);
-    console.log('amount ->', amount);
-    console.log('selected ->', this.refs.hot.hotInstance.getSelected());
     // [startRow, startCol, endRow, endCol]
-    const removedId = this.refs.hot.hotInstance.getDataAtRow(index)[0];
-    // indexs
-    const startRow = this.refs.hot.hotInstance.getSelected()[0];
-    const endRow = this.refs.hot.hotInstance.getSelected()[2];
-    // smallest and biggest index
-    let smallestRowIndex;
-    let biggestRowIndex;
-    if (startRow < endRow) {
-      smallestRowIndex = startRow;
-      biggestRowIndex = endRow;
-    } else if (startRow > endRow) {
-      smallestRowIndex = endRow;
-      biggestRowIndex = startRow;
-    } else {
-      smallestRowIndex = endRow;
-      biggestRowIndex = startRow;
-    }
-    // get list of deleted index
-    const removedIds = [];
-    for (let i = smallestRowIndex; i <= biggestRowIndex; i++) {
-      removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
-    }
-    console.log(removedIds);
-
+    // selected rows
+    const selectedRows = this.refs.hot.hotInstance.getSelected();
+    // get deleted row ID(s)
+    const getRemovedIdsBound = getRemovedIds.bind(this);
+    const removedIds = getRemovedIdsBound(selectedRows);
     axios({
       method: 'DELETE',
-      url: '/api/leads',
+      url: '/api/contacts',
       data: {
         removedIds
       }

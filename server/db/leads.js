@@ -1,7 +1,7 @@
 const db = require('./config');
 
 const getAllLeads = (req, res) => {
-  db.query('SELECT * from leads', (err, rows, fields) => {
+  db.query('SELECT * from leads', (err, rows) => {
     if (err) console.log(err);
     res.json(rows);
   });
@@ -25,14 +25,10 @@ const updateLeads = (req, res) => {
   for (const row of existingRows) {
     delete row.createdDate; // placeholder for now;
     const id = row.id;
-    db.query(
-      `UPDATE leads SET ? WHERE id=${id}`,
-      row,
-      (err, rows, fields) => {
-        if (err) console.log(err);
-        console.log('lead is updated');
-      }
-    );
+    db.query(`UPDATE leads SET ? WHERE id=${id}`, row, (err, rows, fields) => {
+      if (err) console.log(err);
+      console.log('lead is updated');
+    });
     res.status(200).send();
   }
 };
@@ -40,14 +36,10 @@ const updateLeads = (req, res) => {
 const deleteLead = (req, res) => {
   console.log(req.body.removedIds);
   const removedIds = req.body.removedIds;
-  db.query(
-    'DELETE FROM leads WHERE (id) IN (?)',
-    [removedIds],
-    (err, results) => {
-      if (err) return console.log(err);
-      console.log('sended');
-    }
-  );
+  db.query('DELETE FROM leads WHERE (id) IN (?)', [removedIds], (err, results) => {
+    if (err) return console.log(err);
+    console.log('sended');
+  });
   res.status(200).send();
 };
 

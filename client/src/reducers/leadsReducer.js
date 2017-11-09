@@ -5,11 +5,11 @@ export default function(
   action
 ) {
   switch (action.type) {
-    case 'GET_ALL_LEADS':
-      return {
-        ...state,
-        leads: action.payload
-      };
+  case 'GET_ALL_LEADS':
+    return {
+      ...state,
+      leads: action.payload.data
+    };
   }
   return state;
 }

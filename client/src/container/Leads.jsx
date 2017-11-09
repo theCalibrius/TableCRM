@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getAllLeads, createAndUpdateLeads, beforeRemoveRow } from '../actions/leadsActions';
+import { getAllLeads, createAndUpdateLeads, removeLeads } from '../actions/leadsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -15,7 +15,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getAllLeads);
+    this.props.dispatch(getAllLeads());
   }
   render() {
     return (
@@ -86,14 +86,14 @@ class Leads extends React.Component {
                 columnSorting: true,
                 minSpareRows: 1,
                 afterChange: (change, source) => {
-                  this.props.dispatch(getAllLeads(change, source).bind(this));
+                  this.props.dispatch(createAndUpdateLeads(change, source).bind(this));
                 },
                 beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(createAndUpdateLeads(index, amount).bind(this));
-                },
-                onAfterInit() {
-                  this.validateCells();
+                  this.props.dispatch(removeLeads(index, amount).bind(this));
                 }
+                // onAfterInit() {
+                //   this.validateCells();
+                // }
               }}
             />
           )}
