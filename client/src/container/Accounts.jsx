@@ -86,8 +86,7 @@ class Accounts extends React.Component {
   }
 } // end of class
 
-const mapStateToProps = state => (
-{
+const mapStateToProps = state => ({
   accounts: state.accountsReducer.accounts
 });
 

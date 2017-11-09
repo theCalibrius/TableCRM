@@ -20,41 +20,52 @@ class Opportunities extends React.Component {
     return (
       <div>
         <div id="table">
-          {!this.props.opportunities
-            ? <p>loading...</p>
-            : <HotTable
-                root="hot"
-                ref="hot"
-                settings={{
-                  licenseKey: '',
-                  data: this.props.opportunities,
-                  dataSchema: {
-                    id: null,
-                    name: null,
-                    description: null,
-                    estimatedValue: null,
-                    winProbability: null,
-                    expectedCloseDate: null,
-                    createdAt: null,
-                    updatedAt: null
-                  },
-                  colHeaders: ['id', 'Opportunity Name', 'Description', 'Est Value ($)', 'Win Probability (%)', 'Expected Close Date', 'Created At', 'Updated At'],
-                  colWidths: [10, 50, 80, 15, 22, 25, 25, 25],
-                  columnSorting: true,
-                  filters: true,
-                  dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
-                  rowHeaders: true,
-                  stretchH: 'all',
-                  minSpareRows: 1,
-                  contextMenu: ['remove_row', 'copy', 'cut'],
-                  afterChange: (changes, source) => {
-                    this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
-                  },
-                  beforeRemoveRow: (index, amount) => {
-                    console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
-                  }
-                }}
-              />}
+          {!this.props.opportunities ? (
+            <p>loading...</p>
+          ) : (
+            <HotTable
+              root="hot"
+              ref="hot"
+              settings={{
+                licenseKey: '',
+                data: this.props.opportunities,
+                dataSchema: {
+                  id: null,
+                  name: null,
+                  description: null,
+                  estimatedValue: null,
+                  winProbability: null,
+                  expectedCloseDate: null,
+                  createdAt: null,
+                  updatedAt: null
+                },
+                colHeaders: [
+                  'id',
+                  'Opportunity Name',
+                  'Description',
+                  'Est Value ($)',
+                  'Win Probability (%)',
+                  'Expected Close Date',
+                  'Created At',
+                  'Updated At'
+                ],
+                colWidths: [10, 50, 80, 15, 22, 25, 25, 25],
+                columnSorting: true,
+                filters: true,
+                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                rowHeaders: true,
+                stretchH: 'all',
+                minSpareRows: 1,
+                contextMenu: ['remove_row', 'copy', 'cut'],
+                afterChange: (changes, source) => {
+                  this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
+                },
+                beforeRemoveRow: (index, amount) => {
+                  console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
+                }
+              }}
+            />
+          )}
         </div>
       </div>
     );
