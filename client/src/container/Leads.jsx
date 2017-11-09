@@ -91,9 +91,6 @@ class Leads extends React.Component {
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(removeLeads(index, amount).bind(this));
                 }
-                // onAfterInit() {
-                //   this.validateCells();
-                // }
               }}
             />
           )}

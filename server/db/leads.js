@@ -1,5 +1,6 @@
 const db = require('./config');
 const lib = require('../lib/helper');
+const moment = require('moment');
 
 const getAllLeads = (req, res) => {
   db.query('SELECT * from leads', (err, rows) => {
@@ -17,6 +18,7 @@ const createAndUpdateLeads = (req, res) => {
   }
 
   for (const row of rows) {
+    if (row.createdDate) row.createdDate = moment(row.createdDate).format('YYYY-MM-DD HH:mm:ss');
     const fieldsArr = lib.getFieldsArr(row);
     const fields = lib.getFields(fieldsArr);
     const values = lib.getValues(row, fieldsArr);
