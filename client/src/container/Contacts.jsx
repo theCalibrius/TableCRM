@@ -8,7 +8,7 @@ import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
-import 'handsontable-pro/dist/handsontable.full.css';
+// import 'handsontable-pro/dist/handsontable.full.css';
 
 class Contacts extends React.Component {
   // start of class

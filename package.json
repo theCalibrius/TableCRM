@@ -31,6 +31,10 @@
       "es2015"
     ]
   },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/__test__/setupTests.js"
+  },
+
   "precommit": "lint-staged",
   "dependencies": {
     "axios": "^0.17.0",

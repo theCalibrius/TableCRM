@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
-import 'handsontable-pro/dist/handsontable.full.css';
+// import 'handsontable-pro/dist/handsontable.full.css';
 
 // start of class
 class Opportunities extends React.Component {
