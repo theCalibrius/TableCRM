@@ -54,9 +54,38 @@ CREATE TABLE leads (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE accounts (
+  id int NOT NULL AUTO_INCREMENT,
+  description text(255),
+  email varchar(255),
+  phoneNumber varchar(255),
+  street varchar(255),
+  city varchar(255),
+  state varchar(255),
+  postalCode varchar(255),
+  country varchar(255),
+  website varchar(255),
+  createdDate timestamp,
+  updatedDate date,
+  PRIMARY KEY (id)
+);
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
 
 INSERT INTO leads (description, firstName, lastName, suffix, title, value, email, phoneNumber, ownerId) VALUES
 ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1),
