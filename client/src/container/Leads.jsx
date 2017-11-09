@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getLeads, afterChange, beforeRemoveRow } from '../actions/leadsActions';
+import { getAllLeads, createAndUpdateLeads, beforeRemoveRow } from '../actions/leadsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -15,7 +15,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getLeads);
+    this.props.dispatch(getAllLeads);
   }
   render() {
     return (
@@ -75,7 +75,7 @@ class Leads extends React.Component {
                     data: 'createdDate',
                     type: 'date',
                     dateFormat: 'MM/DD/YYYY',
-                    correctFormat: false
+                    correctFormat: true
                   }
                 ],
                 rowHeaders: true,
@@ -86,10 +86,13 @@ class Leads extends React.Component {
                 columnSorting: true,
                 minSpareRows: 1,
                 afterChange: (change, source) => {
-                  this.props.dispatch(afterChange(change, source).bind(this));
+                  this.props.dispatch(getAllLeads(change, source).bind(this));
                 },
                 beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(beforeRemoveRow(index, amount).bind(this));
+                  this.props.dispatch(createAndUpdateLeads(index, amount).bind(this));
+                },
+                onAfterInit() {
+                  this.validateCells();
                 }
               }}
             />

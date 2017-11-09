@@ -1,62 +1,31 @@
 import axios from 'axios';
 
-export function getLeads(dispatch) {
-  axios
-    .get('/api/leads')
-    .then(response => {
-      console.log(response.data);
-      dispatch({
-        type: 'GET_ALL_LEADS',
-        payload: response.data
-      });
-    })
-    .catch(err => {
-      console.error.bind(err);
-    });
+import { getNewAndUpdatedRows } from '../lib/helper.js';
+
+export function getAllLeads() {
+  const request = axios.get('/api/leads');
+  return {
+    type: 'GET_ALL_LEADS',
+    payload: request
+  };
 }
 
-export function afterChange(change, source) {
-  // changes contains [row, prop, oldVal, newVal]
+export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
-    if (change !== null) {
-      // remove row from change if old√al and newVal are false value
-      for (let i = 0; i < change.length; i++) {
-        if (!change[i][2] && !change[i][3]) {
-          change.splice(i, 1);
-        }
-      }
-      // get changed rows as array
-      const changedRows = {};
-      for (const i of change) {
-        changedRows[i[0]] = true;
-      }
-      const changedRowsArray = Object.keys(changedRows);
+    const postCallback = function(newRows) {
+      axios.post('/api/leads', { newRows }).then(() => {
+        dispatch(getAllOpportunities());
+      });
+    };
 
-      const newRows = [];
-      const existingRows = [];
+    const putCallback = function(updatedRows) {
+      axios.put('/api/leads', { updatedRows }).then(() => {
+        dispatch(getAllOpportunities());
+      });
+    };
 
-      for (const i of changedRowsArray) {
-        const rowData = this.refs.hot.hotInstance.getSourceDataAtRow(i);
-        if (rowData.id === null) newRows.push(rowData);
-        else existingRows.push(rowData);
-      }
-
-      if (newRows.length !== 0) {
-        axios
-          .post('/api/leads', {
-            newRows
-          })
-          .then(() => {
-            dispatch(getLeads);
-          });
-      }
-
-      if (existingRows.length !== 0) {
-        axios.put('/api/leads', {
-          existingRows
-        });
-      }
-    }
+    const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+    getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
   };
 }
 
