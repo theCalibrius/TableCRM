@@ -27,13 +27,13 @@ export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
     const postCallback = function(newRows) {
       axios.post('/api/leads', { newRows }).then(() => {
-        dispatch(getAllLeads());
+        dispatch(getAllLeads);
       });
     };
 
     const putCallback = function(updatedRows) {
       axios.put('/api/leads', { updatedRows }).then(() => {
-        dispatch(getAllLeads());
+        dispatch(getAllLeads);
       });
     };
 
