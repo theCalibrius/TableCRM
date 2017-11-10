@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HotTable from 'react-handsontable';
 
 import 'handsontable-pro/dist/handsontable.full.js';
-import 'handsontable-pro/dist/handsontable.full.css';
+// import 'handsontable-pro/dist/handsontable.full.css';
 
 import { getAccounts } from '../actions/accountsActions';
 
@@ -86,8 +86,7 @@ class Accounts extends React.Component {
   }
 } // end of class
 
-const mapStateToProps = state => (
-{
+const mapStateToProps = state => ({
   accounts: state.accountsReducer.accounts
 });
 
