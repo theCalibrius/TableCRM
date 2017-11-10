@@ -18,7 +18,7 @@ const createAndUpdateLeads = (req, res) => {
   }
 
   for (const row of rows) {
-    if (row.createdDate) row.createdDate = moment(row.createdDate).format('YYYY-MM-DD HH:mm:ss');
+    if (row.createdDate) row.createdDate = moment(new Date(row.createdDate)).format('YYYY-MM-DD HH:mm:ss');
     const fieldsArr = lib.getFieldsArr(row);
     const fields = lib.getFields(fieldsArr);
     const values = lib.getValues(row, fieldsArr);

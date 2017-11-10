@@ -7,7 +7,7 @@ import { getAllLeads, createAndUpdateLeads, removeLeads } from '../actions/leads
 import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
-import 'handsontable-pro/dist/handsontable.full.js';
+import Handsontable from 'handsontable-pro/dist/handsontable.full.js';
 
 class Leads extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getAllLeads());
+    this.props.dispatch(getAllLeads);
   }
   render() {
     return (

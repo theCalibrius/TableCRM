@@ -8,7 +8,6 @@ import Accounts from '../container/Accounts.jsx';
 import People from './People.jsx';
 import Companies from './Companies.jsx';
 
-
 class App extends React.Component {
   render() {
     return (
@@ -16,8 +15,6 @@ class App extends React.Component {
         <div>Header</div>
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/people" component={People} />
-          <Route exact path="/companies" component={Companies} />
           <Route exact path="/leads" component={Leads} />
           <Route exact path="/opportunities" component={Opportunities} />
           <Route exact path="/contacts" component={Contacts} />

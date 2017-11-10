@@ -1,13 +1,26 @@
 import axios from 'axios';
+import moment from 'moment';
 import { getNewAndUpdatedRows } from '../lib/helper.js';
 import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
 export function getAllLeads(dispatch) {
-  const request = axios.get('/api/leads');
-  return {
-    type: 'GET_ALL_LEADS',
-    payload: request
-  };
+  axios
+    .get('/api/leads')
+    .then(response => {
+      for (let row of response.data) {
+        if (row.createdDate) row.createdDate = moment(new Date(row.createdDate)).format('MM/DD/YYYY');
+      }
+      return response;
+    })
+    .then(response => {
+      dispatch({
+        type: 'GET_ALL_LEADS',
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
+    });
 }
 
 export function createAndUpdateLeads(changes, source) {
