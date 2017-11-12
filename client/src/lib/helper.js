@@ -102,7 +102,6 @@ export function validateCellData(changes, callback) {
         hot.hotInstance.getDataAtCell(rowIndex, colIndex),
         hot.hotInstance.getCellMeta(rowIndex, colIndex),
         result => {
-          const returnResult = !result ? false : true;
           pushResult(result)
         },
         'validateCells'
