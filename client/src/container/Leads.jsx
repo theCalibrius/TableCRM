@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
   getAllLeads,
   createAndUpdateLeads,
-  removeLeads
+  deleteLeads
 } from '../actions/leadsActions';
 // api call
 import axios from 'axios';
@@ -101,14 +101,14 @@ class Leads extends React.Component {
                 ],
                 columnSorting: true,
                 minSpareRows: 1,
-                afterChange: (change, source) => {
+                afterChange: (changes, source) => {
                   if (source !== 'loadData')
                     this.props.dispatch(
-                      createAndUpdateLeads(change, source).bind(this)
+                      createAndUpdateLeads(changes, source).bind(this)
                     );
                 },
                 beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(removeLeads(index, amount).bind(this));
+                  this.props.dispatch(deleteLeads(index, amount).bind(this));
                 }
               }}
             />

@@ -48,7 +48,7 @@ export function createAndUpdateLeads(changes, source) {
   };
 }
 
-export function removeLeads(index, amount) {
+export function deleteLeads(index, amount) {
   return function(dispatch) {
     // [startRow, startCol, endRow, endCol]
     // selected rows
