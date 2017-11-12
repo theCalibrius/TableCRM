@@ -1,31 +1,31 @@
 // given changes array
 export function getNewAndUpdatedRows(changes, source, postCallback, putCallback) {
   // if changes array is not null
-  if (changes) {
+  if (changes && source !== 'loadData') {
     // create empty arrays to store new rows and updated rows as objects, respectively
     let newRows = [];
     let updatedRows = [];
 
-    // for each cell array in changes array
-    for (let cell of changes) {
+    // for each change array in changes array
+    for (let change of changes) {
 
-      // get cell's corresponding row's number (per spreadsheet) and id (per database)
-      let rowNum = cell[0];
-      let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowNum).id;
-      // get cell's field-newValue pair
-      let field = cell[1];
-      let newValue = cell[3];
+      // get change's corresponding row's index (per spreadsheet) and id (per database)
+      let rowIndex = change[0];
+      let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+      // get change's field-newValue pair
+      let field = change[1];
+      let newValue = change[3];
 
-      // if cell's corresponding row was empty prior to change
+      // if change's corresponding row was empty prior to change
       if (rowId === null) {
-        // create a variable to check whether row number is found in newRows array & set its initial value to false
+        // create a variable to check whether row index is found in newRows array & set its initial value to false
         let found = false;
 
         // for each row object in newRows array
         for (let newRow of newRows) {
-          // if row object's num value is equal to row number
-          if (newRow.num === rowNum) {
-            // add cell's field-newValue pair to row object
+          // if row object's index value is equal to row index
+          if (newRow.index === rowIndex) {
+            // add change's field-newValue pair to row object
             newRow[field] = newValue;
             // set check variable to true
             found = true;
@@ -36,15 +36,15 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
 
         // subsquent to loop, if check variable is false
         if (!found) {
-          // create an object with key-value pair: {num: cell's row number}
-          let newRow = {num: rowNum};
-          // add cell's field-newValue pair to the object
+          // create an object with key-value pair: {index: change's row index}
+          let newRow = {index: rowIndex};
+          // add change's field-newValue pair to the object
           newRow[field] = newValue;
           // push the object to newRows array
           newRows.push(newRow);
         }
 
-      // otherwise, if cell's corresponding row was not empty prior to change
+      // otherwise, if change's corresponding row was not empty prior to change
       } else {
         // create a variable to check whether row id is found in updatedRows array & set its initial value to false
         let found = false;
@@ -53,7 +53,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
         for (let updatedRow of updatedRows) {
           // if row object's id value is equal to row id
           if (updatedRow.id === rowId) {
-            // add cell's field-newValue pair to row object
+            // add change's field-newValue pair to row object
             updatedRow[field] = newValue;
             // set check variable to true
             found = true;
@@ -64,9 +64,9 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
 
         // subsquent to loop, if check variable is false
         if (!found) {
-          // create an object with key-value pair: {id: cell's row id}
+          // create an object with key-value pair: {id: change's row id}
           let updatedRow = {id: rowId};
-          // add cell's field-newValue pair to the object
+          // add change's field-newValue pair to the object
           updatedRow[field] = newValue;
           // push the object to updatedRows array
           updatedRows.push(updatedRow);
@@ -74,10 +74,10 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       }
     }
 
-    // for each new row in newRows array, remove row number before ajax call
+    // for each new row in newRows array, remove row index before ajax call
     for (let newRow of newRows) {
-      if ('num' in newRow) {
-        delete newRow.num;
+      if ('index' in newRow) {
+        delete newRow.index;
       }
     }
 
@@ -91,39 +91,39 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
   }
 };
 
-export function validateCellData(changes, callback) {
-  const hot = this.refs.hot
-  if (hot) {
+// export function validateCellData(changes, callback) {
+//   const hot = this.refs.hot
+//   if (hot) {
 
-    let resultArray = [];
+//     let resultArray = [];
 
-    const validateCell = (rowIndex, colIndex) => {
-      hot.hotInstance.validateCell(
-        hot.hotInstance.getDataAtCell(rowIndex, colIndex),
-        hot.hotInstance.getCellMeta(rowIndex, colIndex),
-        result => {
-          pushResult(result)
-        },
-        'validateCells'
-      );
-    }
+//     const validateCell = (rowIndex, colIndex) => {
+//       hot.hotInstance.validateCell(
+//         hot.hotInstance.getDataAtCell(rowIndex, colIndex),
+//         hot.hotInstance.getCellMeta(rowIndex, colIndex),
+//         result => {
+//           pushResult(result)
+//         },
+//         'validateCells'
+//       );
+//     }
 
-    const pushResult = (result) => {
-      resultArray.push(result)
-      if(resultArray.length === changes.length){
-        if(resultArray.includes(false)){
-          callback(false)
-        } else {
-          callback(true)
-        }
-      }
-    }
+//     const pushResult = (result) => {
+//       resultArray.push(result)
+//       if(resultArray.length === changes.length){
+//         if(resultArray.includes(false)){
+//           callback(false)
+//         } else {
+//           callback(true)
+//         }
+//       }
+//     }
 
-    for(let row of changes){
-      let rowIndex = row[0]
-      let colIndex = hot.hotInstance.propToCol(row[1])
-      validateCell(rowIndex, colIndex);
-    }
+//     for(let row of changes){
+//       let rowIndex = row[0]
+//       let colIndex = hot.hotInstance.propToCol(row[1])
+//       validateCell(rowIndex, colIndex);
+//     }
 
-  }
-}
+//   }
+// }
