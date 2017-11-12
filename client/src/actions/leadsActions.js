@@ -26,27 +26,25 @@ export function getAllLeads(dispatch) {
 
 export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
-    // validate
     const validateCellDataBound = validateCellData.bind(this);
-    validateCellDataBound(changes);
-    // if (!validateionResult) {
-    //   return false;
-    // }
+    validateCellDataBound(changes, (result) => {
+      if(result){
+        const postCallback = function(newRows) {
+          axios.post('/api/leads', { newRows }).then(() => {
+            dispatch(getAllLeads);
+          });
+        };
 
-    const postCallback = function(newRows) {
-      axios.post('/api/leads', { newRows }).then(() => {
-        dispatch(getAllLeads);
-      });
-    };
+        const putCallback = function(updatedRows) {
+          axios.put('/api/leads', { updatedRows }).then(() => {
+            dispatch(getAllLeads);
+          });
+        };
 
-    const putCallback = function(updatedRows) {
-      axios.put('/api/leads', { updatedRows }).then(() => {
-        dispatch(getAllLeads);
-      });
-    };
-
-    const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
-    getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+        const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+        getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+      }
+    });
   };
 }
 
