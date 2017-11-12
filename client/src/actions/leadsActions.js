@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { getNewAndUpdatedRows } from '../lib/helper.js';
+import { getNewAndUpdatedRows, validateCellData } from '../lib/helper.js';
 import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
 export function getAllLeads(dispatch) {
@@ -8,8 +8,8 @@ export function getAllLeads(dispatch) {
     .get('/api/leads')
     .then(response => {
       for (const row of response.data) {
-        if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
-        console.log(row.createdAt);
+        if (row.createdAt)
+          row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
       }
       return response;
     })
@@ -26,6 +26,13 @@ export function getAllLeads(dispatch) {
 
 export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
+    // validate
+    const validateCellDataBound = validateCellData.bind(this);
+    validateCellDataBound(changes);
+    // if (!validateionResult) {
+    //   return false;
+    // }
+
     const postCallback = function(newRows) {
       axios.post('/api/leads', { newRows }).then(() => {
         dispatch(getAllLeads);

@@ -2,7 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getAllLeads, createAndUpdateLeads, removeLeads } from '../actions/leadsActions';
+import {
+  getAllLeads,
+  createAndUpdateLeads,
+  removeLeads
+} from '../actions/leadsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -90,24 +94,18 @@ class Leads extends React.Component {
                 stretchH: 'all',
                 contextMenu: ['remove_row', 'copy', 'cut'],
                 filters: true,
-                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
                 columnSorting: true,
                 minSpareRows: 1,
                 afterChange: (change, source) => {
-                  if (this.refs.hot) {
-                    this.refs.hot.hotInstance.validateCell(
-                      this.refs.hot.hotInstance.getDataAtCell(0, 7), // <-- has to be dynamic
-                      this.refs.hot.hotInstance.getCellMeta(0, 7), // <-- has to be dynamic
-                      result => {
-                        console.log(result);
-                        if (result === false) {
-                          return false;
-                        }
-                        this.props.dispatch(createAndUpdateLeads(change, source).bind(this));
-                      },
-                      'validateCells'
+                  if (source !== 'loadData')
+                    this.props.dispatch(
+                      createAndUpdateLeads(change, source).bind(this)
                     );
-                  }
                 },
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(removeLeads(index, amount).bind(this));

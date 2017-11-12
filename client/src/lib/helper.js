@@ -90,3 +90,21 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
     }
   }
 };
+
+export function validateCellData(changes) {
+  console.log(this);
+}
+
+// if (this.refs.hot) {
+//   this.refs.hot.hotInstance.validateCell(
+//     this.refs.hot.hotInstance.getDataAtCell(0, 7), // <-- has to be dynamic
+//     this.refs.hot.hotInstance.getCellMeta(0, 7), // <-- has to be dynamic
+//     result => {
+//       console.log(result);
+//       if (result === false) {
+//         return false;
+//       }
+//     },
+//     'validateCells'
+//   );
+// }
