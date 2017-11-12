@@ -15,61 +15,67 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       // get change's field-newValue pair
       let field = change[1];
       let newValue = change[3];
+      // get change's corresponding cell
+      let colIndex = this.refs.hot.hotInstance.propToCol(change[1]);
+      let cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
-      // if change's corresponding row was empty prior to change
-      if (rowId === null) {
-        // create a variable to check whether row index is found in newRows array & set its initial value to false
-        let found = false;
+      // if change is of valid data type
+      if (cell.classList[2] !== 'htInvalid') {
+        // if change's corresponding row was empty prior to change
+        if (rowId === null) {
+          // create a variable to check whether row index is found in newRows array & set its initial value to false
+          let found = false;
 
-        // for each row object in newRows array
-        for (let newRow of newRows) {
-          // if row object's index value is equal to row index
-          if (newRow.index === rowIndex) {
-            // add change's field-newValue pair to row object
+          // for each row object in newRows array
+          for (let newRow of newRows) {
+            // if row object's index value is equal to row index
+            if (newRow.index === rowIndex) {
+              // add change's field-newValue pair to row object
+              newRow[field] = newValue;
+              // set check variable to true
+              found = true;
+              // exit loop
+              break;
+            }
+          }
+
+          // subsquent to loop, if check variable is false
+          if (!found) {
+            // create an object with key-value pair: {index: change's row index}
+            let newRow = {index: rowIndex};
+            // add change's field-newValue pair to the object
             newRow[field] = newValue;
-            // set check variable to true
-            found = true;
-            // exit loop
-            break;
+            // push the object to newRows array
+            newRows.push(newRow);
           }
-        }
 
-        // subsquent to loop, if check variable is false
-        if (!found) {
-          // create an object with key-value pair: {index: change's row index}
-          let newRow = {index: rowIndex};
-          // add change's field-newValue pair to the object
-          newRow[field] = newValue;
-          // push the object to newRows array
-          newRows.push(newRow);
-        }
+        // otherwise, if change's corresponding row was not empty prior to change
+        } else {
+          // create a variable to check whether row id is found in updatedRows array & set its initial value to false
+          let found = false;
 
-      // otherwise, if change's corresponding row was not empty prior to change
-      } else {
-        // create a variable to check whether row id is found in updatedRows array & set its initial value to false
-        let found = false;
+          // for each row object in updatedRows array
+          for (let updatedRow of updatedRows) {
+            // if row object's id value is equal to row id
+            if (updatedRow.id === rowId) {
+              // add change's field-newValue pair to row object
+              updatedRow[field] = newValue;
+              // set check variable to true
+              found = true;
+              // exit loop
+              break;
+            }
+          }
 
-        // for each row object in updatedRows array
-        for (let updatedRow of updatedRows) {
-          // if row object's id value is equal to row id
-          if (updatedRow.id === rowId) {
-            // add change's field-newValue pair to row object
+          // subsquent to loop, if check variable is false
+          if (!found) {
+            // create an object with key-value pair: {id: change's row id}
+            let updatedRow = {id: rowId};
+            // add change's field-newValue pair to the object
             updatedRow[field] = newValue;
-            // set check variable to true
-            found = true;
-            // exit loop
-            break;
+            // push the object to updatedRows array
+            updatedRows.push(updatedRow);
           }
-        }
-
-        // subsquent to loop, if check variable is false
-        if (!found) {
-          // create an object with key-value pair: {id: change's row id}
-          let updatedRow = {id: rowId};
-          // add change's field-newValue pair to the object
-          updatedRow[field] = newValue;
-          // push the object to updatedRows array
-          updatedRows.push(updatedRow);
         }
       }
     }
@@ -90,40 +96,3 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
     }
   }
 };
-
-// export function validateCellData(changes, callback) {
-//   const hot = this.refs.hot
-//   if (hot) {
-
-//     let resultArray = [];
-
-//     const validateCell = (rowIndex, colIndex) => {
-//       hot.hotInstance.validateCell(
-//         hot.hotInstance.getDataAtCell(rowIndex, colIndex),
-//         hot.hotInstance.getCellMeta(rowIndex, colIndex),
-//         result => {
-//           pushResult(result)
-//         },
-//         'validateCells'
-//       );
-//     }
-
-//     const pushResult = (result) => {
-//       resultArray.push(result)
-//       if(resultArray.length === changes.length){
-//         if(resultArray.includes(false)){
-//           callback(false)
-//         } else {
-//           callback(true)
-//         }
-//       }
-//     }
-
-//     for(let row of changes){
-//       let rowIndex = row[0]
-//       let colIndex = hot.hotInstance.propToCol(row[1])
-//       validateCell(rowIndex, colIndex);
-//     }
-
-//   }
-// }
