@@ -34,9 +34,9 @@ app.put('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.get('/api/accounts', accounts.getAllAccounts);
 
 app.get('/api/leads', leads.getAllLeads);
-app.post('/api/leads', leads.createLeads);
-app.put('/api/leads', leads.updateLeads);
-app.delete('/api/leads', leads.deleteLead);
+app.post('/api/leads', leads.createAndUpdateLeads);
+app.put('/api/leads', leads.createAndUpdateLeads);
+app.delete('/api/leads', leads.deleteLeads);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Server

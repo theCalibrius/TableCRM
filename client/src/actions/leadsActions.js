@@ -1,10 +1,19 @@
 import axios from 'axios';
+import moment from 'moment';
+import { getNewAndUpdatedRows, validateCellData } from '../lib/helper.js';
+import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
-export function getLeads(dispatch) {
+export function getAllLeads(dispatch) {
   axios
     .get('/api/leads')
     .then(response => {
-      console.log(response.data);
+      for (const row of response.data) {
+        if (row.createdAt)
+          row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
+      }
+      return response;
+    })
+    .then(response => {
       dispatch({
         type: 'GET_ALL_LEADS',
         payload: response.data
@@ -15,81 +24,38 @@ export function getLeads(dispatch) {
     });
 }
 
-export function afterChange(change, source) {
-  // changes contains [row, prop, oldVal, newVal]
+export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
-    if (change !== null) {
-      // remove row from change if old√al and newVal are false value
-      for (let i = 0; i < change.length; i++) {
-        if (!change[i][2] && !change[i][3]) {
-          change.splice(i, 1);
-        }
-      }
-      // get changed rows as array
-      const changedRows = {};
-      for (const i of change) {
-        changedRows[i[0]] = true;
-      }
-      const changedRowsArray = Object.keys(changedRows);
-
-      const newRows = [];
-      const existingRows = [];
-
-      for (const i of changedRowsArray) {
-        const rowData = this.refs.hot.hotInstance.getSourceDataAtRow(i);
-        if (rowData.id === null) newRows.push(rowData);
-        else existingRows.push(rowData);
-      }
-
-      if (newRows.length !== 0) {
-        axios
-          .post('/api/leads', {
-            newRows
-          })
-          .then(() => {
-            dispatch(getLeads);
+    const validateCellDataBound = validateCellData.bind(this);
+    validateCellDataBound(changes, validationResult => {
+      if(validationResult){
+        const postCallback = function(newRows) {
+          axios.post('/api/leads', { newRows }).then(() => {
+            dispatch(getAllLeads);
           });
-      }
+        };
 
-      if (existingRows.length !== 0) {
-        axios.put('/api/leads', {
-          existingRows
-        });
+        const putCallback = function(updatedRows) {
+          axios.put('/api/leads', { updatedRows }).then(() => {
+            dispatch(getAllLeads);
+          });
+        };
+
+        const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+        getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
       }
-    }
+    });
   };
 }
 
-export function beforeRemoveRow(index, amount) {
+export function deleteLeads(index, amount) {
   return function(dispatch) {
-    console.log('index ->', index);
-    console.log('amount ->', amount);
-    console.log('selected ->', this.refs.hot.hotInstance.getSelected());
     // [startRow, startCol, endRow, endCol]
-    const removedId = this.refs.hot.hotInstance.getDataAtRow(index)[0];
-    // indexs
-    const startRow = this.refs.hot.hotInstance.getSelected()[0];
-    const endRow = this.refs.hot.hotInstance.getSelected()[2];
-    // smallest and biggest index
-    let smallestRowIndex;
-    let biggestRowIndex;
-    if (startRow < endRow) {
-      smallestRowIndex = startRow;
-      biggestRowIndex = endRow;
-    } else if (startRow > endRow) {
-      smallestRowIndex = endRow;
-      biggestRowIndex = startRow;
-    } else {
-      smallestRowIndex = endRow;
-      biggestRowIndex = startRow;
-    }
-    // get list of deleted index
-    const removedIds = [];
-    for (let i = smallestRowIndex; i <= biggestRowIndex; i++) {
-      removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
-    }
-    console.log(removedIds);
-
+    // selected rows
+    const selectedRows = this.refs.hot.hotInstance.getSelected();
+    // get deleted row ID(s)
+    const getRemovedIdsBound = getRemovedIds.bind(this);
+    const removedIds = getRemovedIdsBound(selectedRows);
     axios({
       method: 'DELETE',
       url: '/api/leads',

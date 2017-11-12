@@ -37,20 +37,19 @@ CREATE TABLE contacts (
   /*FOREIGN KEY (accountId) REFERENCES opportunities (contactPersonId)*/
 );
 
-DROP TABLE IF EXISTS leads;
 CREATE TABLE leads (
   id int NOT NULL AUTO_INCREMENT,
   ownerId int,
   description varchar(255),
-  firstName varchar(255),
-  lastName varchar(255),
-  suffix varchar(255),
-  title varchar(255),
+  firstName varchar(50),
+  lastName varchar(50),
+  suffix varchar(20),
+  title varchar(50),
   value int,
   email varchar(255),
   phoneNumber varchar(255),
-  createdDate datetime NOT NULL DEFAULT NOW(),
-  updatedDate date,
+  createdAt timestamp DEFAULT NOW(),
+  updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
   PRIMARY KEY (id)
 );
 

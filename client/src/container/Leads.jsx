@@ -2,12 +2,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getLeads, afterChange, beforeRemoveRow } from '../actions/leadsActions';
+import {
+  getAllLeads,
+  createAndUpdateLeads,
+  deleteLeads
+} from '../actions/leadsActions';
 // api call
 import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
-import 'handsontable-pro/dist/handsontable.full.js';
+import Handsontable from 'handsontable-pro/dist/handsontable.full.js';
+import 'handsontable-pro/dist/handsontable.full.css';
 
 class Leads extends React.Component {
   constructor(props) {
@@ -15,7 +20,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getLeads);
+    this.props.dispatch(getAllLeads);
   }
   render() {
     return (
@@ -28,7 +33,7 @@ class Leads extends React.Component {
               root="hot"
               ref="hot"
               settings={{
-                licenseKey: '',
+                licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.leads,
                 dataSchema: {
                   id: null,
@@ -41,7 +46,7 @@ class Leads extends React.Component {
                   value: null,
                   email: null,
                   phoneNumber: null,
-                  createdDate: null
+                  createdAt: null
                 },
                 colHeaders: [
                   'id',
@@ -54,13 +59,15 @@ class Leads extends React.Component {
                   'value',
                   'email',
                   'phoneNumber',
-                  'createdDate'
+                  'createdAt'
                 ],
                 columns: [
                   { data: 'id' },
                   { data: 'ownerId' },
                   { data: 'description' },
-                  { data: 'firstName' },
+                  {
+                    data: 'firstName'
+                  },
                   { data: 'lastName' },
                   { data: 'suffix' },
                   { data: 'title' },
@@ -72,24 +79,36 @@ class Leads extends React.Component {
                   { data: 'email' },
                   { data: 'phoneNumber' },
                   {
-                    data: 'createdDate',
+                    data: 'createdAt',
                     type: 'date',
                     dateFormat: 'MM/DD/YYYY',
-                    correctFormat: false
+                    correctFormat: true
+                    // readOnly: true
                   }
                 ],
+                // hiddenColumns: {
+                //   columns: [0],
+                //   indicators: false
+                // },
                 rowHeaders: true,
                 stretchH: 'all',
                 contextMenu: ['remove_row', 'copy', 'cut'],
                 filters: true,
-                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
                 columnSorting: true,
                 minSpareRows: 1,
-                afterChange: (change, source) => {
-                  this.props.dispatch(afterChange(change, source).bind(this));
+                afterChange: (changes, source) => {
+                  if (source !== 'loadData')
+                    this.props.dispatch(
+                      createAndUpdateLeads(changes, source).bind(this)
+                    );
                 },
                 beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(beforeRemoveRow(index, amount).bind(this));
+                  this.props.dispatch(deleteLeads(index, amount).bind(this));
                 }
               }}
             />

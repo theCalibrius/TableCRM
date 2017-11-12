@@ -90,3 +90,40 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
     }
   }
 };
+
+export function validateCellData(changes, callback) {
+  const hot = this.refs.hot
+  if (hot) {
+
+    let resultArray = [];
+
+    const validateCell = (rowIndex, colIndex) => {
+      hot.hotInstance.validateCell(
+        hot.hotInstance.getDataAtCell(rowIndex, colIndex),
+        hot.hotInstance.getCellMeta(rowIndex, colIndex),
+        result => {
+          pushResult(result)
+        },
+        'validateCells'
+      );
+    }
+
+    const pushResult = (result) => {
+      resultArray.push(result)
+      if(resultArray.length === changes.length){
+        if(resultArray.includes(false)){
+          callback(false)
+        } else {
+          callback(true)
+        }
+      }
+    }
+
+    for(let row of changes){
+      let rowIndex = row[0]
+      let colIndex = hot.hotInstance.propToCol(row[1])
+      validateCell(rowIndex, colIndex);
+    }
+
+  }
+}
