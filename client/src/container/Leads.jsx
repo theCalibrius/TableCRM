@@ -42,7 +42,7 @@ class Leads extends React.Component {
                   value: null,
                   email: null,
                   phoneNumber: null,
-                  createdDate: null
+                  createdAt: null
                 },
                 colHeaders: [
                   'id',
@@ -55,7 +55,7 @@ class Leads extends React.Component {
                   'value',
                   'email',
                   'phoneNumber',
-                  'createdDate'
+                  'createdAt'
                 ],
                 columns: [
                   { data: 'id' },
@@ -75,7 +75,7 @@ class Leads extends React.Component {
                   { data: 'email' },
                   { data: 'phoneNumber' },
                   {
-                    data: 'createdDate',
+                    data: 'createdAt',
                     type: 'date',
                     dateFormat: 'MM/DD/YYYY',
                     correctFormat: true
@@ -95,10 +95,18 @@ class Leads extends React.Component {
                 minSpareRows: 1,
                 afterChange: (change, source) => {
                   if (this.refs.hot) {
-                    this.refs.hot.hotInstance.validateCells(result => {
-                      if (!result) return false;
-                      this.props.dispatch(createAndUpdateLeads(change, source).bind(this));
-                    });
+                    this.refs.hot.hotInstance.validateCell(
+                      this.refs.hot.hotInstance.getDataAtCell(0, 7), // <-- has to be dynamic
+                      this.refs.hot.hotInstance.getCellMeta(0, 7), // <-- has to be dynamic
+                      result => {
+                        console.log(result);
+                        if (result === false) {
+                          return false;
+                        }
+                        this.props.dispatch(createAndUpdateLeads(change, source).bind(this));
+                      },
+                      'validateCells'
+                    );
                   }
                 },
                 beforeRemoveRow: (index, amount) => {

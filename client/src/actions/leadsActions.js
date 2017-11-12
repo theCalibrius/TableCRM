@@ -7,8 +7,9 @@ export function getAllLeads(dispatch) {
   axios
     .get('/api/leads')
     .then(response => {
-      for (let row of response.data) {
-        if (row.createdDate) row.createdDate = moment(new Date(row.createdDate)).format('MM/DD/YYYY');
+      for (const row of response.data) {
+        if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
+        console.log(row.createdAt);
       }
       return response;
     })
