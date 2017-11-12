@@ -27,8 +27,8 @@ export function getAllLeads(dispatch) {
 export function createAndUpdateLeads(changes, source) {
   return function(dispatch) {
     const validateCellDataBound = validateCellData.bind(this);
-    validateCellDataBound(changes, (result) => {
-      if(result){
+    validateCellDataBound(changes, validationResult => {
+      if(validationResult){
         const postCallback = function(newRows) {
           axios.post('/api/leads', { newRows }).then(() => {
             dispatch(getAllLeads);
