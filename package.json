@@ -11,7 +11,7 @@
     "lint": "eslint --quiet --fix . --ext .js --ext .jsx --cache --format node_modules/eslint-friendly-formatter || true",
     "flow": "flow",
     "lint-staged": "lint-staged",
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "lint-staged": {
     "*.js": [
@@ -32,7 +32,9 @@
     ]
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/__test__/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/__test__/setupTests.js",
+    "collectCoverage": "true",
+    "collectCoverageFrom": ["**/*"]
   },
   "precommit": "lint-staged",
   "dependencies": {
