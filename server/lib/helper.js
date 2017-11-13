@@ -13,6 +13,10 @@ module.exports.getFields = (fieldsArr) => {
 module.exports.getValues = (row, fieldsArr) => {
   let values = fieldsArr.map((field) => { return row[field]; });
   for (let i = 0; i < values.length; i++) {
+    // handle empty cells
+    if (values[i] === null || values[i] === '') {
+      values[i] = 'null';
+    }
     if (typeof(values[i]) === 'string' && values[i] !== 'null') {
       values[i] = `"${values[i]}"`;
     }

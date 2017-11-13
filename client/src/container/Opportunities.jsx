@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { handleEmptyCells } from '../lib/handleEmptyCells.js';
 import { getAllOpportunities, createAndUpdateOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
 
@@ -57,9 +56,6 @@ class Opportunities extends React.Component {
                   stretchH: 'all',
                   minSpareRows: 1,
                   contextMenu: ['remove_row', 'copy', 'cut'],
-                  beforeChange: (changes, source) => {
-                    handleEmptyCells(changes, source);
-                  },
                   afterChange: (changes, source) => {
                     this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
                   },
