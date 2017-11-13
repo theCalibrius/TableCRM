@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { handleEmptyCells } from '../lib/handleEmptyCells.js';
 import { getAllOpportunities, createAndUpdateOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
 
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
-// import 'handsontable-pro/dist/handsontable.full.css';
 
 // start of class
 class Opportunities extends React.Component {
@@ -57,6 +57,9 @@ class Opportunities extends React.Component {
                   stretchH: 'all',
                   minSpareRows: 1,
                   contextMenu: ['remove_row', 'copy', 'cut'],
+                  beforeChange: (changes, source) => {
+                    handleEmptyCells(changes, source);
+                  },
                   afterChange: (changes, source) => {
                     this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
                   },

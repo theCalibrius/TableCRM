@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { getNewAndUpdatedRows, validateCellData } from '../lib/helper.js';
+import { getNewAndUpdatedRows, validateCellData } from '../lib/getNewAndUpdatedRows.js';
 import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
 
 export function getAllLeads(dispatch) {
