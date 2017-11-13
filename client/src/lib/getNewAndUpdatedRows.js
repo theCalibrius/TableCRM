@@ -20,7 +20,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       let cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
       // if change is of valid data type
-      if (cell.classList[2] !== 'htInvalid') {
+      if (!cell.classList.value.split(' ').includes('htInvalid')) {
         // if change's corresponding row was empty prior to change
         if (rowId === null) {
           // create a variable to check whether row index is found in newRows array & set its initial value to false
