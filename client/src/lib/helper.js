@@ -95,4 +95,19 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       putCallback(updatedRows);
     }
   }
-};
+}
+
+export function getRemovedIds(selectedRows) {
+  const startRow = selectedRows[0];
+  const endRow = selectedRows[2];
+  // get smallest and biggest row id's
+  const smallestRowIndex = Math.min(startRow, endRow);
+  const biggestRowIndex = Math.max(startRow, endRow);
+  // get list of deleted row id's
+  const removedIds = [];
+  for (let i = smallestRowIndex; i <= biggestRowIndex; i++) {
+    removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
+  }
+  return removedIds;
+}
+

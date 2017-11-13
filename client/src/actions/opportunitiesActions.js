@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getNewAndUpdatedRows } from '../lib/getNewAndUpdatedRows.js';
+import { getNewAndUpdatedRows } from '../lib/helper';
 
 export function getAllOpportunities() {
   let request = axios.get('/api/opportunities');

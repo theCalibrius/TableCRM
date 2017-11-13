@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getRemovedIds } from '../lib/getRemovedRowIDsHelper.js';
+import { getRemovedIds } from '../lib/helper';
 
 export function getContacts(dispatch) {
   axios
