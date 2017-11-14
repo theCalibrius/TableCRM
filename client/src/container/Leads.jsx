@@ -1,3 +1,7 @@
+// handsontable
+import 'handsontable-pro/dist/handsontable.full';
+import 'handsontable-pro/dist/handsontable.full.css';
+import HotTable from 'react-handsontable';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
@@ -7,12 +11,6 @@ import {
   createAndUpdateLeads,
   deleteLeads
 } from '../actions/leadsActions';
-// api call
-import axios from 'axios';
-// handsontable
-import HotTable from 'react-handsontable';
-import Handsontable from 'handsontable-pro/dist/handsontable.full.js';
-import 'handsontable-pro/dist/handsontable.full.css';
 
 class Leads extends React.Component {
   constructor(props) {
@@ -102,10 +100,9 @@ class Leads extends React.Component {
                 columnSorting: true,
                 minSpareRows: 1,
                 afterChange: (changes, source) => {
-                  if (source !== 'loadData')
-                    this.props.dispatch(
-                      createAndUpdateLeads(changes, source).bind(this)
-                    );
+                  this.props.dispatch(
+                    createAndUpdateLeads(changes, source).bind(this)
+                  );
                 },
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(deleteLeads(index, amount).bind(this));
