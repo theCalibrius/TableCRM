@@ -26,12 +26,11 @@ module.exports.getValues = (row, fieldsArr) => {
   return values;
 };
 
-module.exports.getUpdateQuery = (row) => {
-  let fields = Object.keys(row);
-  for (let i = 0; i < fields.length; i++) {
-    fields[i] = `${fields[i]}=VALUES(${fields[i]})`;
+module.exports.getUpdateQuery = (fieldsArr) => {
+  for (let i = 0; i < fieldsArr.length; i++) {
+    fieldsArr[i] = `${fieldsArr[i]}=VALUES(${fieldsArr[i]})`;
   }
-  let updateQuery = fields.join(', ');
+  let updateQuery = fieldsArr.join(', ');
 
   return updateQuery;
 };

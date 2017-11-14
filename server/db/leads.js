@@ -26,7 +26,7 @@ const createAndUpdateLeads = (req, res) => {
     if (req.method === 'POST') {
       db.query(`INSERT INTO leads(${fields}) VALUES (${values});`);
     } else if (req.method === 'PUT') {
-      const updateQuery = lib.getUpdateQuery(row);
+      const updateQuery = lib.getUpdateQuery(fieldsArr);
       db.query(`INSERT INTO leads(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
     }
   }

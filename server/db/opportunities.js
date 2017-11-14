@@ -25,7 +25,7 @@ module.exports.createAndUpdateOpportunities = (req, res) => {
     if (req.method === 'POST') {
       db.query(`INSERT INTO opportunities(${fields}) VALUES (${values});`);
     } else if (req.method === 'PUT') {
-      const updateQuery = lib.getUpdateQuery(row);
+      const updateQuery = lib.getUpdateQuery(fieldsArr);
       db.query(`INSERT INTO opportunities(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
     }
   }
