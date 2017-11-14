@@ -32,3 +32,12 @@ module.exports.createAndUpdateOpportunities = (req, res) => {
 
   res.sendStatus(201);
 };
+
+module.exports.deleteOpportunities = (req, res) => {
+  const removedIds = req.body.removedIds;
+  db.query(`DELETE FROM opportunities WHERE id IN (${removedIds});`, (err) => {
+    if (!err) { res.sendStatus(200); }
+  });
+};
+
+

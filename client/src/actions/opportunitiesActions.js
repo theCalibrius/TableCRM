@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getNewAndUpdatedRows } from '../lib/helper';
+import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
 
 export function getAllOpportunities() {
   let request = axios.get('/api/opportunities');
@@ -24,5 +24,18 @@ export function createAndUpdateOpportunities(changes, source) {
 
     let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
     getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+  };
+}
+
+export function deleteOpportunities(index, amount) {
+  return function(dispatch) {
+    const selectedRows = this.refs.hot.hotInstance.getSelected();
+    const getRemovedIdsBound = getRemovedIds.bind(this);
+    const removedIds = getRemovedIdsBound(selectedRows);
+    axios({
+      method: 'DELETE',
+      url: '/api/opportunities',
+      data: {removedIds}
+    });
   };
 }
