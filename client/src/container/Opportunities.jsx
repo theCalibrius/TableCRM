@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getAllOpportunities, createAndUpdateOpportunities } from '../actions/opportunitiesActions';
 import axios from 'axios';
+import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities } from '../actions/opportunitiesActions';
 
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
@@ -60,7 +60,7 @@ class Opportunities extends React.Component {
                     this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
                   },
                   beforeRemoveRow: (index, amount) => {
-                    console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
+                    this.props.dispatch(deleteOpportunities(index, amount).bind(this));
                   }
                 }}
               />}
