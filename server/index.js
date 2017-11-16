@@ -44,6 +44,9 @@ app.put(
 );
 
 app.get('/api/accounts', accounts.getAllAccounts);
+app.delete('/api/accounts', accounts.deleteAccounts);
+app.post('/api/accounts', accounts.createAndUpdateAccounts);
+app.put('/api/accounts', accounts.createAndUpdateAccounts);
 
 app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createAndUpdateLeads);

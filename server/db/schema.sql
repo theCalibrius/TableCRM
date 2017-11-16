@@ -69,6 +69,7 @@ CREATE TABLE leads (
 CREATE TABLE accounts (
   id int NOT NULL AUTO_INCREMENT,
   description text(255),
+  industryID int,
   email varchar(255),
   phoneNumber varchar(255),
   street varchar(255),
@@ -77,8 +78,8 @@ CREATE TABLE accounts (
   postalCode varchar(255),
   country varchar(255),
   website varchar(255),
-  createdDate timestamp,
-  updatedDate date,
+  createdAt timestamp DEFAULT NOW(),
+  updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
   PRIMARY KEY (id)
 );
 
