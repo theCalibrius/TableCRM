@@ -33,7 +33,7 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/__test__/setupTests.js",
-    "collectCoverage": "true",
+    "collectCoverage": true,
     "collectCoverageFrom": ["**/*"]
   },
   "precommit": "lint-staged",

@@ -4,8 +4,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import App from '../client/src/components/App';
 
+// shallow function takes in JSX as an argument and returns an object that represents the JSX component in the react testing environment
+// the app variable stores this object
 const app = shallow(<App />);
 
+// for the globsl 'it' function, the first parameter (called a shrink) describes the test, the second is a function that actually runs the test
 it('renders correctly', () => {
   expect(app).toMatchSnapshot();
 });
