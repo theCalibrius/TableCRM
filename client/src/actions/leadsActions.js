@@ -7,7 +7,8 @@ export function getAllLeads(dispatch) {
     .get('/api/leads')
     .then(response => {
       for (const row of response.data) {
-        if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
+        if (row.createdAt)
+          row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
       }
       return response;
     })
@@ -60,12 +61,12 @@ export function getLeadsColumnOrders(dispatch) {
   axios
     .get('/api/leadsColumnOrders')
     .then(response => {
-      let columnsHeader = [];
+      const columnsHeader = [];
       const columns = response.data;
-      for(let column of columns){
-        columnsHeader.push(column['data'])
+      for (const column of columns) {
+        columnsHeader.push(column.data);
       }
-      return [response.data, columnsHeader]
+      return [response.data, columnsHeader];
     })
     .then(response => {
       dispatch({
