@@ -55,3 +55,25 @@ export function deleteLeads(index, amount) {
     });
   };
 }
+
+export function getLeadsColumnOrders(dispatch) {
+  axios
+    .get('/api/leadsColumnOrders')
+    .then(response => {
+      let columnsArray = [];
+      const columns = response.data;
+      for(let column of columns){
+        columnsArray.push(column['data'])
+      }
+      return columnsArray
+    })
+    .then(response => {
+      dispatch({
+        type: 'GET_ALL_LEADS_COLUMNS',
+        payload: response
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
+    });
+}

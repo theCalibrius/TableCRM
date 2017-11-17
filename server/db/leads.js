@@ -42,8 +42,16 @@ const deleteLeads = (req, res) => {
   res.status(200).send();
 };
 
+const getColumnOrders = (req, res) => {
+  db.query('SELECT * from leads_columns ORDER BY columnOrder ASC', (err, rows) => {
+    if (err) console.log(err);
+    res.json(rows);
+  });
+};
+
 module.exports = {
   getAllLeads,
   createAndUpdateLeads,
-  deleteLeads
+  deleteLeads,
+  getColumnOrders
 };

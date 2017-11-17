@@ -5,11 +5,13 @@ import HotTable from 'react-handsontable';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 // redux actions
 import {
   getAllLeads,
   createAndUpdateLeads,
-  deleteLeads
+  deleteLeads,
+  getLeadsColumnOrders
 } from '../actions/leadsActions';
 
 class Leads extends React.Component {
@@ -18,6 +20,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    this.props.dispatch(getLeadsColumnOrders);
     this.props.dispatch(getAllLeads);
   }
   render() {
@@ -33,61 +36,95 @@ class Leads extends React.Component {
               settings={{
                 licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.leads,
-                dataSchema: {
-                  id: null,
-                  ownerId: null,
-                  description: null,
-                  firstName: null,
-                  lastName: null,
-                  suffix: null,
-                  title: null,
-                  value: null,
-                  email: null,
-                  phoneNumber: null,
-                  createdAt: null
-                },
-                colHeaders: [
-                  'id',
-                  'ownerId',
-                  'description',
-                  'firstName',
-                  'lastName',
-                  'suffix',
-                  'title',
-                  'value',
-                  'email',
-                  'phoneNumber',
-                  'createdAt'
-                ],
+                // dataSchema: {
+                //   id: null,
+                //   ownerId: null,
+                //   description: null,
+                //   firstName: null,
+                //   lastName: null,
+                //   suffix: null,
+                //   title: null,
+                //   value: null,
+                //   email: null,
+                //   phoneNumber: null,
+                //   createdAt: null
+                // },
+                colHeaders: this.props.leadsColumns,
                 columns: [
-                  { data: 'id' },
-                  { data: 'ownerId' },
-                  { data: 'description' },
-                  {
-                    data: 'firstName'
+                  { data: 'id',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
                   },
-                  { data: 'lastName' },
-                  { data: 'suffix' },
-                  { data: 'title' },
+                  { data: 'ownerId',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
+                  { data: 'description',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
+                  { data: 'firstName',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
+                  { data: 'lastName',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
+                  { data: 'suffix',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
+                  { data: 'title',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
                   {
                     data: 'value',
                     type: 'numeric',
-                    format: '$0,0.00'
+                    format: '$0,0.00',
+                    correctFormat: false,
+                    readOnly: false
                   },
-                  { data: 'email' },
-                  { data: 'phoneNumber' },
+                  { data: 'email',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
+                  { data: 'phoneNumber',
+                    type: 'text',
+                    format: null,
+                    correctFormat: false,
+                    readOnly: false
+                  },
                   {
                     data: 'createdAt',
                     type: 'date',
                     dateFormat: 'MM/DD/YYYY',
-                    correctFormat: true
-                    // readOnly: true
+                    correctFormat: true,
+                    readOnly: true
                   }
                 ],
-                // hiddenColumns: {
-                //   columns: [0],
-                //   indicators: false
-                // },
+                hiddenColumns: {
+                  columns: [1],
+                  indicators: false
+                },
+                manualColumnMove: true,
                 rowHeaders: true,
                 stretchH: 'all',
                 contextMenu: ['remove_row', 'copy', 'cut'],
@@ -106,6 +143,12 @@ class Leads extends React.Component {
                 },
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(deleteLeads(index, amount).bind(this));
+                },
+                afterColumnMove: (columns, target) => {
+                  // Array of visual column indexes that were moved.
+                  console.log(columns);
+                  // Visual column index being a target for moved columns.
+                  console.log(target);
                 }
               }}
             />
@@ -117,7 +160,8 @@ class Leads extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leadsReducer.leads
+  leads: state.leadsReducer.leads,
+  leadsColumns: state.leadsReducer.leadsColums
 });
 
 export default connect(mapStateToProps, null)(Leads);

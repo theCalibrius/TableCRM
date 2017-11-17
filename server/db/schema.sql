@@ -69,6 +69,13 @@ CREATE TABLE accounts (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE leads_columns (
+  id int NOT NULL AUTO_INCREMENT,
+  data varchar(50),
+  columnOrder int,
+  PRIMARY KEY (id)
+);
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -115,3 +122,16 @@ INSERT INTO contacts (firstName, lastName, suffix, title, department, descriptio
 ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
 ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
+
+INSERT INTO leads_columns (data, columnOrder) VALUES
+('id', 1),
+('firstName', 2),
+('lastName', 3),
+('suffix', 4),
+('title', 5),
+('value', 6),
+('email', 7),
+('phoneNumber', 8),
+('description', 9),
+('createdAt', 10),
+('ownerId', 11);

@@ -11,5 +11,12 @@ export default function(
         leads: action.payload
       };
   }
+  switch (action.type) {
+    case 'GET_ALL_LEADS_COLUMNS':
+      return {
+        ...state,
+        leadsColums: action.payload
+      };
+  }
   return state;
 }
