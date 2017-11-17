@@ -36,94 +36,12 @@ class Leads extends React.Component {
               settings={{
                 licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.leads,
-                // dataSchema: {
-                //   id: null,
-                //   ownerId: null,
-                //   description: null,
-                //   firstName: null,
-                //   lastName: null,
-                //   suffix: null,
-                //   title: null,
-                //   value: null,
-                //   email: null,
-                //   phoneNumber: null,
-                //   createdAt: null
+                colHeaders: this.props.leadsColumsHeader,
+                columns: this.props.leadsColums,
+                // hiddenColumns: {
+                //   columns: [0],
+                //   indicators: false
                 // },
-                colHeaders: this.props.leadsColumns,
-                columns: [
-                  { data: 'id',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'ownerId',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'description',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'firstName',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'lastName',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'suffix',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'title',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  {
-                    data: 'value',
-                    type: 'numeric',
-                    format: '$0,0.00',
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'email',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  { data: 'phoneNumber',
-                    type: 'text',
-                    format: null,
-                    correctFormat: false,
-                    readOnly: false
-                  },
-                  {
-                    data: 'createdAt',
-                    type: 'date',
-                    dateFormat: 'MM/DD/YYYY',
-                    correctFormat: true,
-                    readOnly: true
-                  }
-                ],
-                hiddenColumns: {
-                  columns: [1],
-                  indicators: false
-                },
                 manualColumnMove: true,
                 rowHeaders: true,
                 stretchH: 'all',
@@ -161,7 +79,8 @@ class Leads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.leadsReducer.leads,
-  leadsColumns: state.leadsReducer.leadsColums
+  leadsColums: state.leadsReducer.leadsColums,
+  leadsColumsHeader: state.leadsReducer.leadsColumsHeader
 });
 
 export default connect(mapStateToProps, null)(Leads);

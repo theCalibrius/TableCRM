@@ -13,9 +13,16 @@ export default function(
   }
   switch (action.type) {
     case 'GET_ALL_LEADS_COLUMNS':
+    return {
+      ...state,
+      leadsColums: action.payload
+    };
+  }
+  switch (action.type) {
+    case 'GET_ALL_LEADS_COLUMNS_HEADER':
       return {
         ...state,
-        leadsColums: action.payload
+        leadsColumsHeader: action.payload
       };
   }
   return state;

@@ -60,17 +60,21 @@ export function getLeadsColumnOrders(dispatch) {
   axios
     .get('/api/leadsColumnOrders')
     .then(response => {
-      let columnsArray = [];
+      let columnsHeader = [];
       const columns = response.data;
       for(let column of columns){
-        columnsArray.push(column['data'])
+        columnsHeader.push(column['data'])
       }
-      return columnsArray
+      return [response.data, columnsHeader]
     })
     .then(response => {
       dispatch({
         type: 'GET_ALL_LEADS_COLUMNS',
-        payload: response
+        payload: response[0]
+      });
+      dispatch({
+        type: 'GET_ALL_LEADS_COLUMNS_HEADER',
+        payload: response[1]
       });
     })
     .catch(err => {
