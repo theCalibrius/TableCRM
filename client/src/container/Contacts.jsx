@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getContacts, createAndUpdateContacts, beforeRemoveContacts } from '../actions/contactsActions';
+import { getContacts, createAndUpdateContacts, deleteContacts } from '../actions/contactsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -102,7 +102,7 @@ class Contacts extends React.Component {
                 },
                 beforeRemoveRow: (index, amount) => {
                   console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
-                  this.props.dispatch(beforeRemoveContacts(index, amount).bind(this));
+                  this.props.dispatch(deleteContacts(index, amount).bind(this));
                 },
                 afterCopy: (index, amount) => {
                   console.log(`afterCopy: index: ${index}, amount: ${amount}`);
