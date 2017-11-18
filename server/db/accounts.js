@@ -1,5 +1,6 @@
 const db = require('./config');
 const lib = require('../lib/helper');
+const moment = require('moment');
 
 
 const getAllAccounts = (req, res) => {
@@ -21,6 +22,7 @@ const createAndUpdateAccounts = (req, res) => {
   }
 
   for (const row of rows) {
+    if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('YYYY-MM-DD HH:mm:ss');
     const fieldsArr = lib.getFieldsArr(row);
     const fields = lib.getFields(fieldsArr);
     const values = lib.getValues(row, fieldsArr);
