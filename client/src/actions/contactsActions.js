@@ -17,17 +17,19 @@ export function getContacts(dispatch) {
 
 export function createAndUpdateContacts(changes, source) {
   return function(dispatch) {
-    let postCallback = function(newRows) {
-      axios.post('/api/contacts', {newRows})
-        .then(() => { dispatch(getContacts()); });
+    const postCallback = function(newRows) {
+      axios.post('/api/contacts', { newRows }).then(() => {
+        dispatch(getContacts());
+      });
     };
 
-    let putCallback = function(updatedRows) {
-      axios.put('/api/contacts', {updatedRows})
-        .then(() => { dispatch(getContacts()); });
+    const putCallback = function(updatedRows) {
+      axios.put('/api/contacts', { updatedRows }).then(() => {
+        dispatch(getContacts());
+      });
     };
 
-    let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+    const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
     getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
   };
 }
