@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getRemovedIds } from '../lib/helper';
+import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
 
 export function getContacts(dispatch) {
   axios
@@ -13,6 +13,23 @@ export function getContacts(dispatch) {
     .catch(err => {
       console.error.bind(err);
     });
+}
+
+export function createAndUpdateContacts(changes, source) {
+  return function(dispatch) {
+    let postCallback = function(newRows) {
+      axios.post('/api/contacts', {newRows})
+        .then(() => { dispatch(getContacts()); });
+    };
+
+    let putCallback = function(updatedRows) {
+      axios.put('/api/contacts', {updatedRows})
+        .then(() => { dispatch(getContacts()); });
+    };
+
+    let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+    getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+  };
 }
 
 export function beforeRemoveContacts(index, amount) {

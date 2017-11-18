@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getContacts, beforeRemoveContacts } from '../actions/contactsActions';
+import { getContacts, createAndUpdateContacts, beforeRemoveContacts } from '../actions/contactsActions';
 // api call
 import axios from 'axios';
 // handsontable
@@ -75,13 +75,15 @@ class Contacts extends React.Component {
                     data: 'createdAt',
                     type: 'date',
                     dateFormat: 'MM/DD/YYYY',
-                    correctFormat: false
+                    correctFormat: false,
+                    readOnly: true
                   },
                   {
                     data: 'updatedAt',
                     type: 'date',
                     dateFormat: 'MM/DD/YYYY',
-                    correctFormat: false
+                    correctFormat: false,
+                    readOnly: true
                   }
                 ],
                 hiddenColumns: {
@@ -95,8 +97,8 @@ class Contacts extends React.Component {
                 filters: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
-                afterChange: (change, source) => {
-                  console.log(`afterChange: change: ${change}, source: ${source}`);
+                afterChange: (changes, source) => {
+                  this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
                 },
                 beforeRemoveRow: (index, amount) => {
                   console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
