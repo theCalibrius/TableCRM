@@ -97,7 +97,9 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
   }
 }
 
-export function getRemovedIds(selectedRows) {
+export function getRemovedIds() {
+  // selected rows
+  const selectedRows = this.refs.hot.hotInstance.getSelected();
   const startRow = selectedRows[0];
   const endRow = selectedRows[2];
   // get smallest and biggest row id's
