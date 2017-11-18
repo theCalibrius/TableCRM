@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 import {
   getAllLeads,
   createAndUpdateLeads,
-  deleteLeads
+  deleteLeads,
+  getLeadsColumnOrders
 } from '../actions/leadsActions';
 
 class Leads extends React.Component {
@@ -18,98 +19,59 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    this.props.dispatch(getLeadsColumnOrders);
     this.props.dispatch(getAllLeads);
   }
   render() {
     return (
       <div>
         <div id="table">
-          {!this.props.leads ? (
-            <p>loading...</p>
-          ) : (
-            <HotTable
-              root="hot"
-              ref="hot"
-              settings={{
-                licenseKey: '7fb69-d3720-89c63-24040-8e45b',
-                data: this.props.leads,
-                dataSchema: {
-                  id: null,
-                  ownerId: null,
-                  description: null,
-                  firstName: null,
-                  lastName: null,
-                  suffix: null,
-                  title: null,
-                  value: null,
-                  email: null,
-                  phoneNumber: null,
-                  createdAt: null
-                },
-                colHeaders: [
-                  'id',
-                  'ownerId',
-                  'description',
-                  'firstName',
-                  'lastName',
-                  'suffix',
-                  'title',
-                  'value',
-                  'email',
-                  'phoneNumber',
-                  'createdAt'
-                ],
-                columns: [
-                  { data: 'id' },
-                  { data: 'ownerId' },
-                  { data: 'description' },
-                  {
-                    data: 'firstName'
+          {!this.props.leads ||
+					!this.props.leadsColumns ||
+					!this.props.leadsColumnsHeader ? (
+              <p>loading...</p>
+            ) : (
+              <HotTable
+                root="hot"
+                ref="hot"
+                settings={{
+                  licenseKey: '7fb69-d3720-89c63-24040-8e45b',
+                  data: this.props.leads,
+                  colHeaders: this.props.leadsColumnsHeader,
+                  columns: this.props.leadsColumns,
+                  // hiddenColumns: {
+                  //   columns: [0],
+                  //   indicators: false
+                  // },
+                  manualColumnMove: true,
+                  rowHeaders: true,
+                  stretchH: 'all',
+                  contextMenu: ['remove_row', 'copy', 'cut'],
+                  filters: true,
+                  dropdownMenu: [
+                    'filter_by_condition',
+                    'filter_by_value',
+                    'filter_action_bar'
+                  ],
+                  columnSorting: true,
+                  minSpareRows: 1,
+                  afterChange: (changes, source) => {
+                    this.props.dispatch(
+                      createAndUpdateLeads(changes, source).bind(this)
+                    );
                   },
-                  { data: 'lastName' },
-                  { data: 'suffix' },
-                  { data: 'title' },
-                  {
-                    data: 'value',
-                    type: 'numeric',
-                    format: '$0,0.00'
+                  beforeRemoveRow: (index, amount) => {
+                    this.props.dispatch(deleteLeads(index, amount).bind(this));
                   },
-                  { data: 'email' },
-                  { data: 'phoneNumber' },
-                  {
-                    data: 'createdAt',
-                    type: 'date',
-                    dateFormat: 'MM/DD/YYYY',
-                    correctFormat: true
-                    // readOnly: true
+                  afterColumnMove: (columns, target) => {
+                    // Array of visual column indexes that were moved.
+                    console.log(columns);
+                    // Visual column index being a target for moved columns.
+                    console.log(target);
                   }
-                ],
-                // hiddenColumns: {
-                //   columns: [0],
-                //   indicators: false
-                // },
-                rowHeaders: true,
-                stretchH: 'all',
-                contextMenu: ['remove_row', 'copy', 'cut'],
-                filters: true,
-                dropdownMenu: [
-                  'filter_by_condition',
-                  'filter_by_value',
-                  'filter_action_bar'
-                ],
-                columnSorting: true,
-                minSpareRows: 1,
-                afterChange: (changes, source) => {
-                  this.props.dispatch(
-                    createAndUpdateLeads(changes, source).bind(this)
-                  );
-                },
-                beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(deleteLeads(index, amount).bind(this));
-                }
-              }}
-            />
-          )}
+                }}
+              />
+            )}
         </div>
       </div>
     );
@@ -117,7 +79,9 @@ class Leads extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leadsReducer.leads
+  leads: state.leadsReducer.leads,
+  leadsColumns: state.leadsReducer.leadsColumns,
+  leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader
 });
 
 export default connect(mapStateToProps, null)(Leads);

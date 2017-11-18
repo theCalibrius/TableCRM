@@ -7,7 +7,8 @@ export function getAllLeads(dispatch) {
     .get('/api/leads')
     .then(response => {
       for (const row of response.data) {
-        if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
+        if (row.createdAt)
+          row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
       }
       return response;
     })
@@ -54,4 +55,30 @@ export function deleteLeads(index, amount) {
       }
     });
   };
+}
+
+export function getLeadsColumnOrders(dispatch) {
+  axios
+    .get('/api/leadsColumnOrders')
+    .then(response => {
+      const columnsHeader = [];
+      const columns = response.data;
+      for (const column of columns) {
+        columnsHeader.push(column.data);
+      }
+      return [response.data, columnsHeader];
+    })
+    .then(response => {
+      dispatch({
+        type: 'GET_ALL_LEADS_COLUMNS',
+        payload: response[0]
+      });
+      dispatch({
+        type: 'GET_ALL_LEADS_COLUMNS_HEADER',
+        payload: response[1]
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
+    });
 }

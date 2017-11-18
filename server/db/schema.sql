@@ -69,6 +69,17 @@ CREATE TABLE accounts (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE leads_columns (
+  id int NOT NULL AUTO_INCREMENT,
+  columnOrder int,
+  data varchar(50),
+  type varchar(50),
+  format varchar(50),
+  correctFormat boolean,
+  readOnly boolean,
+  PRIMARY KEY (id)
+);
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -115,3 +126,16 @@ INSERT INTO contacts (firstName, lastName, suffix, title, department, descriptio
 ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
 ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
+
+INSERT INTO leads_columns (columnOrder, data, type, format, correctFormat, readOnly) VALUES
+(1, 'id', 'text', null, false, false),
+(2, 'firstName', 'text', null, false, false),
+(3, 'lastName', 'text', null, false, false),
+(4, 'suffix', 'text', null, false, false),
+(5, 'title', 'text', null, false, false),
+(6, 'value', 'numeric', '$0,0.00', false, false),
+(7, 'email', 'text', null, false, false),
+(8, 'phoneNumber', 'text', null, false, false),
+(9, 'description', 'text', null, false, false),
+(10, 'createdAt', 'date', null, true, true),
+(11, 'ownerId', 'numeric', null, false, false);
