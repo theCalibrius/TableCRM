@@ -23,7 +23,7 @@ import HotTable from 'react-handsontable';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getAccounts, createAndUpdateAccounts, deleteAccounts } from '../actions/accountsActions';
+import { getAllAccounts, createAndUpdateAccounts, deleteAccounts } from '../actions/accountsActions';
 
 class Accounts extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class Accounts extends React.Component {
   }
   componentDidMount() {
     console.log('Component Did Mount!');
-    this.props.dispatch(getAccounts);
+    this.props.dispatch(getAllAccounts);
   }
   render() {
     return (
@@ -81,7 +81,7 @@ class Accounts extends React.Component {
                 columns: [
                   { data: 'id' },
                   { data: 'description' },
-                  { data: 'industryID' },
+                  { data: 'industryID', type: 'numeric' },
                   { data: 'email' },
                   { data: 'phoneNumber' },
                   { data: 'street' },
@@ -90,8 +90,8 @@ class Accounts extends React.Component {
                   { data: 'postalCode' },
                   { data: 'country' },
                   { data: 'website' },
-                  { data: 'createdAt', readOnly: true },
-                  { data: 'updatedAt', readOnly: true }
+                  { data: 'createdAt', type: 'date', readOnly: true },
+                  { data: 'updatedAt', type: 'date', readOnly: true }
                 ],
                 rowHeaders: true,
                 minSpareRows: 1,

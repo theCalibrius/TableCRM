@@ -14,8 +14,7 @@ import moment from 'moment';
 
 import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
 
-export function getAccounts(dispatch) {
-  console.log('dispatch: ', dispatch);
+export function getAllAccounts(dispatch) {
   axios
     .get('/api/accounts')
     .then(response => {
@@ -41,13 +40,13 @@ export function createAndUpdateAccounts(changes, source) {
   return function(dispatch) {
     let postCallback = function(newRows) {
       axios.post('/api/accounts', { newRows }).then(() => {
-        dispatch(getAccounts);
+        dispatch(getAllAccounts);
       });
     };
 
     let putCallback = function(updatedRows) {
       axios.put('/api/accounts', { updatedRows }).then(() => {
-        dispatch(getAccounts);
+        dispatch(getAllAccounts);
       });
     };
 
