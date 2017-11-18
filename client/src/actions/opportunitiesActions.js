@@ -29,9 +29,8 @@ export function createAndUpdateOpportunities(changes, source) {
 
 export function deleteOpportunities(index, amount) {
   return function(dispatch) {
-    const selectedRows = this.refs.hot.hotInstance.getSelected();
     const getRemovedIdsBound = getRemovedIds.bind(this);
-    const removedIds = getRemovedIdsBound(selectedRows);
+    const removedIds = getRemovedIdsBound();
     axios({
       method: 'DELETE',
       url: '/api/opportunities',
