@@ -45,7 +45,7 @@ class Accounts extends React.Component {
               root="hot"
               ref="hot"
               settings={{
-                licenseKey: '',
+                licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.accounts,
                 dataSchema: {
                   id: null,
