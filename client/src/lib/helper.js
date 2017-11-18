@@ -8,7 +8,6 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
 
     // for each change array in changes array
     for (let change of changes) {
-
       // get change's corresponding row's index (per spreadsheet) and id (per database)
       let rowIndex = change[0];
       let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;

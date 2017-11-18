@@ -12,8 +12,11 @@ CREATE TABLE opportunities (
   description text(255),
   estimatedValue int,
   winProbability int,
+  priority varchar(6),
+  stage varchar(9),
   expectedCloseDate date,
   closeDate date,
+  origin varchar(9),
   createdAt timestamp DEFAULT NOW(),
   updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
   PRIMARY KEY (id)
