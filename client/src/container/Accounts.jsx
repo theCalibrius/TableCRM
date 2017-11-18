@@ -16,14 +16,12 @@ documentation:
 https://redux.js.org/docs/api/Store.html#dispatch
 
 */
+import 'handsontable-pro/dist/handsontable.full.js';
+import 'handsontable-pro/dist/handsontable.full.css';
+import HotTable from 'react-handsontable';
 
 import React from 'react';
 import { connect } from 'react-redux';
-
-import HotTable from 'react-handsontable';
-
-import 'handsontable-pro/dist/handsontable.full.js';
-// import 'handsontable-pro/dist/handsontable.full.css';
 
 import { getAccounts, createAndUpdateAccounts, deleteAccounts } from '../actions/accountsActions';
 
@@ -33,8 +31,8 @@ class Accounts extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    // console.log('Component Did Mount!');
-    this.props.dispatch(getAccounts());
+    console.log('Component Did Mount!');
+    this.props.dispatch(getAccounts);
   }
   render() {
     return (
