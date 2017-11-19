@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
           text: null
         },
         xAxis: {
-          categories: ['Won', 'Lost', 'Abandoned'],
+          categories: ['Won', 'Lost', 'Abandoned', 'Open'],
           title: {
             // text: 'Closed Status'
           }
@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
           {
             showInLegend: false,
             name: 'Total Value',
-            data: [29.9, 71.5, 106.4],
+            data: [29.9, 71.5, 106.4, 1000],
             color: '#39ACFF'
           }
         ],
