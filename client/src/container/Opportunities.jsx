@@ -67,7 +67,8 @@ class Opportunities extends React.Component {
                   rowHeaders: true,
                   stretchH: 'all',
                   minSpareRows: 1,
-                  contextMenu: ['remove_row'],
+                  contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
+                  hiddenColumns: { indicators: true },
                   afterChange: (changes, source) => {
                     this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
                   },
