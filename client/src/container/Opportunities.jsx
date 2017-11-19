@@ -35,6 +35,7 @@ class Opportunities extends React.Component {
                     estimatedValue: null,
                     winProbability: null,
                     priority: null,
+                    status: null,
                     stage: null,
                     expectedCloseDate: null,
                     lostReason: null,
@@ -42,7 +43,7 @@ class Opportunities extends React.Component {
                     createdAt: null,
                     updatedAt: null
                   },
-                  colHeaders: ['id', 'Opportunity Name', 'Description', 'Pipeline', 'Est Value ($)', 'Win Probability (%)', 'Priority', 'Stage', 'Expected Close Date', 'Lost Reason', 'Origin', 'Created At', 'Updated At'],
+                  colHeaders: ['id', 'Opportunity Name', 'Description', 'Pipeline', 'Est Value ($)', 'Win Probability (%)', 'Priority', 'Status', 'Stage', 'Expected Close Date', 'Lost Reason', 'Origin', 'Created At', 'Updated At'],
                   columns: [
                     {data: 'id'},
                     {data: 'name'},
@@ -51,7 +52,8 @@ class Opportunities extends React.Component {
                     {data: 'estimatedValue', type: 'numeric'},
                     {data: 'winProbability', type: 'numeric'},
                     {data: 'priority', type: 'dropdown', source: ['High', 'Medium', 'Low']},
-                    {data: 'stage', type: 'dropdown', source: ['Open', 'Won', 'Lost', 'Abandoned']},
+                    {data: 'status', type: 'dropdown', source: ['Open', 'Won', 'Lost', 'Abandoned']},
+                    {data: 'stage', type: 'dropdown', source: ['Qualified', 'Presentation', 'Negotiation', 'Contract Sent', 'Payment']},
                     {data: 'expectedCloseDate', type: 'date'},
                     {data: 'lostReason', type: 'dropdown', source: ['Not Applicable', 'Feature', 'Price', 'Competitor']},
                     {data: 'origin', type: 'dropdown', source: ['Reference', 'Network', 'Other']},
