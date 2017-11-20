@@ -4,6 +4,7 @@
 // import { shallow } from 'enzyme';
 // import Accounts from '../client/src/container/Accounts';
 
+// // include related tests within a describe block
 
 // describe( 'Accounts', () => {
 // 	  // shallow function takes in JSX as an argument and returns an object that represents the JSX component in the react testing environment
