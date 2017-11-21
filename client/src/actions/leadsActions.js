@@ -1,6 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
-import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
+import {
+  getNewAndUpdatedRows,
+  getRemovedIds,
+  entityColumnsToObj,
+  getChangedColumnsObj
+} from '../lib/helper';
 
 export function getAllLeads(dispatch) {
   axios
@@ -57,28 +62,38 @@ export function deleteLeads(index, amount) {
   };
 }
 
-export function getLeadsColumnOrders(dispatch) {
-  axios
-    .get('/api/leadsColumnOrders')
-    .then(response => {
-      const columnsHeader = [];
-      const columns = response.data;
-      for (const column of columns) {
-        columnsHeader.push(column.data);
-      }
-      return [response.data, columnsHeader];
-    })
-    .then(response => {
-      dispatch({
-        type: 'GET_ALL_LEADS_COLUMNS',
-        payload: response[0]
-      });
-      dispatch({
-        type: 'GET_ALL_LEADS_COLUMNS_HEADER',
-        payload: response[1]
-      });
-    })
-    .catch(err => {
-      console.error.bind(err);
-    });
+export function getEntityColumnOrders(dispatch) {
+  axios.get('/api/leads/columnorders').then(response => {
+    console.log(response);
+    // const columnsHeader = [];
+    // const columns = response.data;
+    // for (const column of columns) {
+    //   columnsHeader.push(column.data);
+    // }
+    // return [response.data, columnsHeader];
+  });
+  // .then(response => {
+  //   dispatch({
+  //     type: 'GET_ALL_LEADS_COLUMNS',
+  //     payload: response[0]
+  //   });
+  // })
+  // .catch(err => {
+  //   console.error.bind(err);
+  // });
 }
+
+// export function updateEntityColumnOrders(leadsColumns) {
+//   return function(dispatch) {
+//     const afterColumns = this.refs.hot.hotInstance.getColHeader();
+//     entityColumnsToObj(leadsColumns)
+//       .then(leadsColumnsObj =>
+//         getChangedColumnsObj(afterColumns, leadsColumns, leadsColumnsObj)
+//       )
+//       .then(movedColumns => {
+//         axios.put('/api/leadsColumnOrders', { movedColumns }).then(() => {
+//           dispatch(getAllLeads);
+//         });
+//       });
+//   };
+// }

@@ -43,7 +43,8 @@ app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createAndUpdateLeads);
 app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);
-app.get('/api/leadsColumnOrders', leads.getColumnOrders);
+app.get('/api/leads/columnorders', leads.getColumnOrders);
+app.put('/api/leads/columnorders', leads.updateColumnOrders);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Server

@@ -10,16 +10,10 @@ CREATE TABLE opportunities (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(50),
   description text(255),
-  pipeline varchar(7),
   estimatedValue int,
   winProbability int,
-  priority varchar(6),
-  status varchar(9),
-  stage varchar(13),
   expectedCloseDate date,
   closeDate date,
-  lostReason varchar(14),
-  origin varchar(9),
   createdAt timestamp DEFAULT NOW(),
   updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
   PRIMARY KEY (id)
@@ -82,14 +76,10 @@ CREATE TABLE accounts (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE leads_columns (
+CREATE TABLE leadsColumns (
   id int NOT NULL AUTO_INCREMENT,
-  columnOrder int,
+  rank int,
   data varchar(50),
-  type varchar(50),
-  format varchar(50),
-  correctFormat boolean,
-  readOnly boolean,
   PRIMARY KEY (id)
 );
 
@@ -147,15 +137,15 @@ INSERT INTO contacts (firstName, lastName, suffix, title, department, descriptio
 ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
 
-INSERT INTO leads_columns (columnOrder, data, type, format, correctFormat, readOnly) VALUES
-(1, 'id', 'text', null, false, false),
-(2, 'firstName', 'text', null, false, false),
-(3, 'lastName', 'text', null, false, false),
-(4, 'suffix', 'text', null, false, false),
-(5, 'title', 'text', null, false, false),
-(6, 'value', 'numeric', '$0,0.00', false, false),
-(7, 'email', 'text', null, false, false),
-(8, 'phoneNumber', 'text', null, false, false),
-(9, 'description', 'text', null, false, false),
-(10, 'createdAt', 'date', null, true, true),
-(11, 'ownerId', 'numeric', null, false, false);
+INSERT INTO leadsColumns (rank, data) VALUES
+(1, 'id'),
+(2, 'firstName'),
+(3, 'lastName'),
+(4, 'suffix'),
+(5, 'title'),
+(6, 'value'),
+(7, 'email'),
+(8, 'phoneNumber'),
+(9, 'description'),
+(10, 'createdAt'),
+(11, 'ownerId');
