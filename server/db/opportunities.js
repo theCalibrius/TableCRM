@@ -43,11 +43,20 @@ module.exports.deleteOpportunities = (req, res) => {
 module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
 
-  for (let hiddenColumn of hiddenColumns) {
-    db.query(`UPDATE opportunitiesColumns SET hidden=true WHERE name='${hiddenColumn}';`);
-  }
-
-  res.sendStatus(201);
+  db.query('SELECT name, hidden FROM opportunitiesColumns;', (err, rows) => {
+    if (!err) {
+      for (let row of rows) {
+        let name = row.name;
+        let hidden = row.hidden;
+        if (hidden && !hiddenColumns.includes(name)) {
+          db.query(`UPDATE opportunitiesColumns SET hidden=false WHERE name='${name}';`);
+        } else if (!hidden && hiddenColumns.includes(name)) {
+          db.query(`UPDATE opportunitiesColumns SET hidden=true WHERE name='${name}';`);
+        }
+      }
+      res.sendStatus(201);
+    }
+  });
 };
 
 
