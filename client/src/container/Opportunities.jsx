@@ -10,7 +10,6 @@ import 'handsontable-pro/dist/handsontable.full.js';
 class Opportunities extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
   componentDidMount() {
     this.props.dispatch(getAllOpportunities());
