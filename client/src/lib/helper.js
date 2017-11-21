@@ -1,5 +1,5 @@
 // given changes array
-export function getNewAndUpdatedRows(changes, source, postCallback, putCallback) {
+export function getNewAndUpdatedRows(changes, source) {
   // if changes array is not null
   if (changes && source !== 'loadData') {
     // create empty arrays to store new rows and updated rows as objects, respectively
@@ -86,13 +86,7 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       }
     }
 
-    if (newRows.length > 0) {
-      postCallback(newRows);
-    }
-
-    if (updatedRows.length > 0) {
-      putCallback(updatedRows);
-    }
+    return {newRows, updatedRows};
   }
 }
 

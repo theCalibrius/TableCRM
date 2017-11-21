@@ -12,18 +12,23 @@ export function getAllOpportunities() {
 
 export function createAndUpdateOpportunities(changes, source) {
   return function(dispatch) {
-    let postCallback = function(newRows) {
-      axios.post('/api/opportunities', {newRows})
-        .then(() => { dispatch(getAllOpportunities()); });
-    };
-
-    let putCallback = function(updatedRows) {
-      axios.put('/api/opportunities', {updatedRows})
-        .then(() => { dispatch(getAllOpportunities()); });
-    };
-
     let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
-    getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+    let newAndUpdatedRows = getNewAndUpdatedRowsBound(changes, source);
+
+    if (newAndUpdatedRows) {
+      let newRows = newAndUpdatedRows.newRows;
+      let updatedRows = newAndUpdatedRows.updatedRows;
+
+      if (newRows.length > 0) {
+        axios.post('/api/opportunities', {newRows})
+          .then(() => { dispatch(getAllOpportunities()); });
+      }
+
+      if (updatedRows.length > 0) {
+        axios.put('/api/opportunities', {updatedRows})
+          .then(() => { dispatch(getAllOpportunities()); });
+      }
+    }
   };
 }
 
