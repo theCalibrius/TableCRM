@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getNewAndUpdatedRows, getRemovedIds, getHiddenColumns } from '../lib/helper';
+import { getNewAndUpdatedRows, getRemovedIds, getHiddenCols, colPropsToIndices } from '../lib/helper';
 
 export function getAllOpportunities() {
   let request = axios.get('/api/opportunities');
@@ -39,10 +39,23 @@ export function deleteOpportunities(index, amount) {
   };
 }
 
+export function getHiddenColumnsOfOpportunities(dispatch) {
+  let colPropsToIndicesBound = colPropsToIndices.bind(this);
+
+  axios.get('/api/opportunities/columns')
+  .then(response => {
+    let hiddenColIndices = colPropsToIndicesBound(response.data);
+    dispatch({
+      type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
+      payload: hiddenColIndices
+    });
+  });
+}
+
 export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
-    let getHiddenColumnsBound = getHiddenColumns.bind(this);
-    let hiddenColumns = getHiddenColumnsBound(context);
+    let getHiddenColsBound = getHiddenCols.bind(this);
+    let hiddenColumns = getHiddenColsBound(context);
     axios.put('/api/opportunities/columns', {hiddenColumns});
   };
 }

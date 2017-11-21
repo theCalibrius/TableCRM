@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities, updateHiddenColumnsOfOpportunities } from '../actions/opportunitiesActions';
+import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities, getHiddenColumnsOfOpportunities, updateHiddenColumnsOfOpportunities } from '../actions/opportunitiesActions';
 
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
@@ -14,6 +14,7 @@ class Opportunities extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getAllOpportunities());
+    this.props.dispatch(getHiddenColumnsOfOpportunities.bind(this));
   }
   render() {
     return (
@@ -52,7 +53,7 @@ class Opportunities extends React.Component {
                   stretchH: 'all',
                   minSpareRows: 1,
                   contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
-                  hiddenColumns: { indicators: true },
+                  hiddenColumns: { columns: this.props.hiddenColIndices, indicators: true },
                   afterChange: (changes, source) => {
                     this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
                   },
@@ -71,7 +72,8 @@ class Opportunities extends React.Component {
 } // end of class
 
 const mapStateToProps = state => ({
-  opportunities: state.opportunitiesReducer.opportunities
+  opportunities: state.opportunitiesReducer.opportunities,
+  hiddenColIndices: state.opportunitiesReducer.hiddenColIndices
 });
 
 export default connect(mapStateToProps)(Opportunities);

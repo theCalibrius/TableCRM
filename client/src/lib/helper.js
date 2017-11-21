@@ -111,7 +111,7 @@ export function getRemovedIds() {
   return removedIds;
 }
 
-export function getHiddenColumns(context) {
+export function getHiddenCols(context) {
   let hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
   let hiddenColProps = [];
 
@@ -121,5 +121,17 @@ export function getHiddenColumns(context) {
   }
 
   return hiddenColProps;
+}
+
+export function colPropsToIndices(colProps) {
+  let colIndices = [];
+
+  for (let colProp of colProps) {
+    let prop = colProp.name;
+    let index = this.refs.hot.hotInstance.propToCol(prop);
+    colIndices.push(index);
+  }
+
+  return colIndices;
 }
 
