@@ -61,7 +61,7 @@ class Accounts extends React.Component {
                 rowHeaders: true,
                 minSpareRows: 1,
                 stretchH: 'all',
-                contextMenu: ['remove_row', 'copy', 'cut'],
+                contextMenu: ['remove_row'],
                 filters: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,

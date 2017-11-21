@@ -46,7 +46,7 @@ class Leads extends React.Component {
                   manualColumnMove: true,
                   rowHeaders: true,
                   stretchH: 'all',
-                  contextMenu: ['remove_row', 'copy', 'cut'],
+                  contextMenu: ['remove_row'],
                   filters: true,
                   dropdownMenu: [
                     'filter_by_condition',
@@ -65,9 +65,9 @@ class Leads extends React.Component {
                   },
                   afterColumnMove: (columns, target) => {
                     // Array of visual column indexes that were moved.
-                    console.log(columns);
+                    console.log('c->', columns);
                     // Visual column index being a target for moved columns.
-                    console.log(target);
+                    console.log('t->', target);
                   }
                 }}
               />
