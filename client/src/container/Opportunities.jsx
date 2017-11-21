@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities } from '../actions/opportunitiesActions';
+import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities, updateHiddenColumns } from '../actions/opportunitiesActions';
 
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
@@ -27,22 +27,6 @@ class Opportunities extends React.Component {
                 settings={{
                   licenseKey: '',
                   data: this.props.opportunities,
-                  dataSchema: {
-                    id: null,
-                    name: null,
-                    description: null,
-                    pipeline: null,
-                    estimatedValue: null,
-                    winProbability: null,
-                    priority: null,
-                    status: null,
-                    stage: null,
-                    expectedCloseDate: null,
-                    lostReason: null,
-                    origin: null,
-                    createdAt: null,
-                    updatedAt: null
-                  },
                   colHeaders: ['id', 'Opportunity Name', 'Description', 'Pipeline', 'Est Value ($)', 'Win Probability (%)', 'Priority', 'Status', 'Stage', 'Expected Close Date', 'Lost Reason', 'Origin', 'Created At', 'Updated At'],
                   columns: [
                     {data: 'id'},
@@ -74,6 +58,9 @@ class Opportunities extends React.Component {
                   },
                   beforeRemoveRow: (index, amount) => {
                     this.props.dispatch(deleteOpportunities(index, amount).bind(this));
+                  },
+                  afterContextMenuHide: (context) => {
+                    this.props.dispatch(updateHiddenColumns(context).bind(this));
                   }
                 }}
               />}

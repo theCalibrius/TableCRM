@@ -97,7 +97,6 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
 }
 
 export function getRemovedIds() {
-  // selected rows
   const selectedRows = this.refs.hot.hotInstance.getSelected();
   const startRow = selectedRows[0];
   const endRow = selectedRows[2];
@@ -110,5 +109,17 @@ export function getRemovedIds() {
     removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
   }
   return removedIds;
+}
+
+export function getHiddenColumns(context) {
+  let hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
+  let hiddenColProps = [];
+
+  for (let hiddenColIndex of hiddenColIndices) {
+    let hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
+    hiddenColProps.push(hiddenColProp);
+  }
+
+  return hiddenColProps;
 }
 

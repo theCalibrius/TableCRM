@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
+import { getNewAndUpdatedRows, getRemovedIds, getHiddenColumns } from '../lib/helper';
 
 export function getAllOpportunities() {
   let request = axios.get('/api/opportunities');
@@ -36,5 +36,13 @@ export function deleteOpportunities(index, amount) {
       url: '/api/opportunities',
       data: {removedIds}
     });
+  };
+}
+
+export function updateHiddenColumns(context) {
+  return function(dispatch) {
+    let getHiddenColumnsBound = getHiddenColumns.bind(this);
+    let hiddenColumns = getHiddenColumnsBound(context);
+    console.log('->', hiddenColumns);
   };
 }
