@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities, updateHiddenColumns } from '../actions/opportunitiesActions';
+import { getAllOpportunities, createAndUpdateOpportunities, deleteOpportunities, updateHiddenColumnsOfOpportunities } from '../actions/opportunitiesActions';
 
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
@@ -60,7 +60,7 @@ class Opportunities extends React.Component {
                     this.props.dispatch(deleteOpportunities(index, amount).bind(this));
                   },
                   afterContextMenuHide: (context) => {
-                    this.props.dispatch(updateHiddenColumns(context).bind(this));
+                    this.props.dispatch(updateHiddenColumnsOfOpportunities(context).bind(this));
                   }
                 }}
               />}

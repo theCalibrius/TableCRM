@@ -40,7 +40,7 @@ module.exports.deleteOpportunities = (req, res) => {
   });
 };
 
-module.exports.updateHiddenColumns = (req, res) => {
+module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
 
   for (let hiddenColumn of hiddenColumns) {

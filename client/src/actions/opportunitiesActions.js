@@ -39,7 +39,7 @@ export function deleteOpportunities(index, amount) {
   };
 }
 
-export function updateHiddenColumns(context) {
+export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
     let getHiddenColumnsBound = getHiddenColumns.bind(this);
     let hiddenColumns = getHiddenColumnsBound(context);
