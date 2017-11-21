@@ -79,7 +79,11 @@ CREATE TABLE accounts (
 CREATE TABLE leadsColumns (
   id int NOT NULL AUTO_INCREMENT,
   rank int,
+<<<<<<< HEAD
   name varchar(50),
+=======
+  data varchar(50),
+>>>>>>> lead column refactor
   PRIMARY KEY (id)
 );
 
@@ -137,6 +141,7 @@ INSERT INTO contacts (firstName, lastName, suffix, title, department, descriptio
 ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
 
+<<<<<<< HEAD
 INSERT INTO leadsColumns (rank, name) VALUES
 (0, 'id'),
 (1, 'firstName'),
@@ -149,3 +154,17 @@ INSERT INTO leadsColumns (rank, name) VALUES
 (8, 'description'),
 (9, 'createdAt'),
 (10, 'ownerId');
+=======
+INSERT INTO leadsColumns (rank, data) VALUES
+(1, 'id'),
+(2, 'firstName'),
+(3, 'lastName'),
+(4, 'suffix'),
+(5, 'title'),
+(6, 'value'),
+(7, 'email'),
+(8, 'phoneNumber'),
+(9, 'description'),
+(10, 'createdAt'),
+(11, 'ownerId');
+>>>>>>> lead column refactor

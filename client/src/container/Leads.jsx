@@ -20,7 +20,7 @@ class Leads extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    this.props.dispatch(getEntityColumnOrders);
+    // this.props.dispatch(getEntityColumnOrders);
     this.props.dispatch(getAllLeads);
   }
   render() {
@@ -95,9 +95,39 @@ class Leads extends React.Component {
                       updateEntityColumnOrders(columns, target).bind(this)
                     );
                   }
-                }}
-              />
-            )}
+                ],
+                hiddenColumns: {
+                  columns: [0],
+                  indicators: false
+                },
+                manualColumnMove: true,
+                rowHeaders: true,
+                stretchH: 'all',
+                contextMenu: ['remove_row', 'copy', 'cut'],
+                filters: true,
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
+                columnSorting: true,
+                minSpareRows: 1,
+                afterChange: (changes, source) => {
+                  this.props.dispatch(
+                    createAndUpdateLeads(changes, source).bind(this)
+                  );
+                },
+                beforeRemoveRow: (index, amount) => {
+                  this.props.dispatch(deleteLeads(index, amount).bind(this));
+                }
+                // afterColumnMove: (columns, target) => {
+                //   this.props.dispatch(
+                //     updateEntityColumnOrders(this.props.leadsColumns).bind(this)
+                //   );
+                // }
+              }}
+            />
+          )}
         </div>
       </div>
     );
