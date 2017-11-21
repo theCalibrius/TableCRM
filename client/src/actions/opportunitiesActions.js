@@ -43,6 +43,7 @@ export function updateHiddenColumns(context) {
   return function(dispatch) {
     let getHiddenColumnsBound = getHiddenColumns.bind(this);
     let hiddenColumns = getHiddenColumnsBound(context);
-    console.log('->', hiddenColumns);
+    axios.put('/api/opportunities/columns', {hiddenColumns})
+      .then(() => { console.log('->', hiddenColumns) });
   };
 }

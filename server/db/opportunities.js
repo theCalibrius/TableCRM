@@ -40,4 +40,14 @@ module.exports.deleteOpportunities = (req, res) => {
   });
 };
 
+module.exports.updateHiddenColumns = (req, res) => {
+  const hiddenColumns = req.body.hiddenColumns;
+
+  for (let hiddenColumn of hiddenColumns) {
+    db.query(`UPDATE opportunitiesColumns SET hidden=true WHERE name='${hiddenColumn}';`);
+  }
+
+  res.sendStatus(201);
+};
+
 
