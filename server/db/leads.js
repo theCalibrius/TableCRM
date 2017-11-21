@@ -54,7 +54,7 @@ const deleteLeads = (req, res) => {
 };
 
 const getColumnOrders = (req, res) => {
-  db.query('SELECT * from leads_columns ORDER BY id ASC', (err, rows) => {
+  db.query('SELECT * from leadsColumns ORDER BY id ASC', (err, rows) => {
     if (err) console.log(err);
     res.json(rows);
   });
@@ -66,7 +66,7 @@ const updateColumnOrders = (req, res) => {
   console.log(req.body.target);
   res.status(200).send();
   // db.query(
-  //   'SELECT * from leads_columns ORDER BY columnOrder ASC',
+  //   'SELECT * from leadsColumns ORDER BY columnOrder ASC',
   //   (err, rows) => {
   //     if (err) console.log(err);
   //     res.json(rows);

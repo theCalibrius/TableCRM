@@ -91,7 +91,7 @@ class Leads extends React.Component {
                   columns: [0],
                   indicators: false
                 },
-                manualColumnMove: true,
+                manualColumnMove: this.props.leadsColumns,
                 rowHeaders: true,
                 stretchH: 'all',
                 contextMenu: ['remove_row', 'copy', 'cut'],

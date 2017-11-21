@@ -63,24 +63,39 @@ export function deleteLeads(index, amount) {
 }
 
 export function getEntityColumnOrders(dispatch) {
-  axios.get('/api/leads/columnorders').then(response => {
-    console.log(response);
-    // const columnsHeader = [];
-    // const columns = response.data;
-    // for (const column of columns) {
-    //   columnsHeader.push(column.data);
-    // }
-    // return [response.data, columnsHeader];
-  });
-  // .then(response => {
-  //   dispatch({
-  //     type: 'GET_ALL_LEADS_COLUMNS',
-  //     payload: response[0]
-  //   });
-  // })
-  // .catch(err => {
-  //   console.error.bind(err);
-  // });
+  axios
+    .get('/api/leads/columnorders')
+    .then(response => {
+      const columnsOrder = [];
+      const columnsHeader = [];
+      const columns = response.data;
+      for (const column of columns) {
+        columnsOrder.push(column.rank);
+        columnsHeader.push(column.name);
+      }
+      // // rank reorder
+      // function compare(a, b) {
+      //   if (a.rank < b.rank) return -1;
+      //   if (a.rank > b.rank) return 1;
+      //   return 0;
+      // }
+      // for()
+      // objs.sort(compare);
+      return [columnsHeader, columnsOrder];
+    })
+    .then(response => {
+      dispatch({
+        type: 'GET_ALL_LEADS_COLUMNS_HEADER',
+        payload: response[0]
+      });
+      dispatch({
+        type: 'GET_ALL_LEADS_COLUMNS',
+        payload: response[1]
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
+    });
 }
 
 // export function updateEntityColumnOrders(leadsColumns) {
