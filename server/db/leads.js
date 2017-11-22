@@ -50,28 +50,30 @@ const deleteLeads = (req, res) => {
       if (err) return console.log(err);
     }
   );
-  res.status(200).send();
+  res.sendStatus(200);
 };
 
 const getColumnOrders = (req, res) => {
   db.query('SELECT * from leadsColumns ORDER BY id ASC', (err, rows) => {
-    if (err) console.log(err);
+    if (err) return console.log(err);
     res.json(rows);
   });
 };
 
 const updateColumnOrders = (req, res) => {
-  console.log(req.body);
-  console.log(req.body.columns);
-  console.log(req.body.target);
-  res.status(200).send();
-  // db.query(
-  //   'SELECT * from leadsColumns ORDER BY columnOrder ASC',
-  //   (err, rows) => {
-  //     if (err) console.log(err);
-  //     res.json(rows);
-  //   }
-  // );
+  const updatedColumnOrders = req.body.updatedColumnOrders;
+  console.log(updatedColumnOrders);
+  for (const column of updatedColumnOrders) {
+    db.query(
+      `UPDATE leadsColumns SET rank = ${column.columnOrder} WHERE id = ${
+        column.columnId
+      }`,
+      (err, columns) => {
+        if (err) return console.log(err);
+      }
+    );
+  }
+  res.sendStatus(201);
 };
 
 module.exports = {

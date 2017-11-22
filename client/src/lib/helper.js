@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // given changes array
 export function getNewAndUpdatedRows(changes, source) {
   // if changes array is not null
@@ -8,6 +10,7 @@ export function getNewAndUpdatedRows(changes, source) {
 
     // for each change array in changes array
     for (let change of changes) {
+
       // get change's corresponding row's index (per spreadsheet) and id (per database)
       let rowIndex = change[0];
       let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
@@ -90,8 +93,8 @@ export function getNewAndUpdatedRows(changes, source) {
   }
 }
 
-export function getRemovedIds() {
-  const selectedRows = this.refs.hot.hotInstance.getSelected();
+export function getRemovedIds(selectedRows) {
+
   const startRow = selectedRows[0];
   const endRow = selectedRows[2];
   // get smallest and biggest row id's
@@ -104,6 +107,7 @@ export function getRemovedIds() {
   }
   return removedIds;
 }
+
 
 export function getHiddenCols(context) {
   let hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
@@ -129,3 +133,55 @@ export function colPropsToIndices(colProps) {
   return colIndices;
 }
 
+
+export function getMovedColumnRange(columns, target) {
+  return new Promise(resolve => {
+    let movedRange;
+    let movedRight;
+    columns[0] < target ? (movedRight = true) : (movedRight = false);
+    if (movedRight) {
+      const movedIndex = target - columns.length - 1;
+      movedRange = [columns[0], movedIndex + columns.length];
+    } else {
+      const movedIndex = target;
+      movedRange = [movedIndex, columns[columns.length - 1]];
+    }
+    resolve(movedRange);
+  })
+}
+
+export function entityColumnsToObj() {
+  return new Promise(resolve => {
+    axios
+      .get('/api/leads/columnorders')
+      .then(res => {
+        let columns = res.data;
+        const entityColumnsObj = {};
+        for(let column of columns){
+          let columnName = column.name
+          let columnId = column.id
+          entityColumnsObj[columnName] = columnId
+        }
+        resolve(entityColumnsObj);
+      })
+  });
+}
+
+export function getChangedColumnsObj(entityColumnsObj, movedRange, afterColumnsArray) {
+  return new Promise(resolve => {
+    const updatedColumnOrders = [];
+    const movedRangeStart = movedRange[0];
+    const movedRangeEnd = movedRange[movedRange.length - 1];
+    for (let i = movedRangeStart; i <= movedRangeEnd; i++) {
+      const updatedColumn = {};
+      const columnName = afterColumnsArray[i];
+      const columnId = entityColumnsObj[columnName];
+      const columnOrder = i;
+      updatedColumn.columnName = columnName;
+      updatedColumn.columnId = columnId;
+      updatedColumn.columnOrder = columnOrder;
+      updatedColumnOrders.push(updatedColumn);
+    }
+    resolve(updatedColumnOrders);
+  });
+}

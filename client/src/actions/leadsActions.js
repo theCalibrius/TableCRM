@@ -3,6 +3,7 @@ import moment from 'moment';
 import {
   getNewAndUpdatedRows,
   getRemovedIds,
+  getMovedColumnRange,
   entityColumnsToObj,
   getChangedColumnsObj
 } from '../lib/helper';
@@ -67,20 +68,18 @@ export function getEntityColumnOrders(dispatch) {
     .get('/api/leads/columnorders')
     .then(response => {
       const columnsOrder = [];
-      const columnsHeader = [];
       const columns = response.data;
       for (const column of columns) {
         columnsOrder.push(column.rank);
+      }
+      console.log(columnsOrder);
+      const columnsHeader = [];
+      const columnsCopy = columns.slice(0);
+      columnsCopy.sort((a, b) => a.rank - b.rank);
+      for (const column of columnsCopy) {
         columnsHeader.push(column.name);
       }
-      // // rank reorder
-      // function compare(a, b) {
-      //   if (a.rank < b.rank) return -1;
-      //   if (a.rank > b.rank) return 1;
-      //   return 0;
-      // }
-      // for()
-      // objs.sort(compare);
+      console.log(columnsHeader);
       return [columnsHeader, columnsOrder];
     })
     .then(response => {
@@ -98,17 +97,28 @@ export function getEntityColumnOrders(dispatch) {
     });
 }
 
-// export function updateEntityColumnOrders(leadsColumns) {
-//   return function(dispatch) {
-//     const afterColumns = this.refs.hot.hotInstance.getColHeader();
-//     entityColumnsToObj(leadsColumns)
-//       .then(leadsColumnsObj =>
-//         getChangedColumnsObj(afterColumns, leadsColumns, leadsColumnsObj)
-//       )
-//       .then(movedColumns => {
-//         axios.put('/api/leadsColumnOrders', { movedColumns }).then(() => {
-//           dispatch(getAllLeads);
-//         });
-//       });
-//   };
-// }
+export function updateEntityColumnOrders(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+      getMovedColumnRange(columns, target).then(movedRange => {
+        entityColumnsToObj()
+          .then(entityColumnsObj => [entityColumnsObj, movedRange])
+          .then(res => {
+            const entityColumnsObj = res[0];
+            const movedRange = res[1];
+            getChangedColumnsObj(
+              entityColumnsObj,
+              movedRange,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              console.log(updatedColumnOrders);
+              axios
+                .put('/api/leads/columnorders', { updatedColumnOrders })
+                .then(dispatch(getEntityColumnOrders));
+            });
+          });
+      });
+    }
+  };
+}
