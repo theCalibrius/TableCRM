@@ -38,19 +38,6 @@ class Leads extends React.Component {
                 settings={{
                   licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                   data: this.props.leads,
-                  dataSchema: {
-                    id: null,
-                    ownerId: null,
-                    description: null,
-                    firstName: null,
-                    lastName: null,
-                    suffix: null,
-                    title: null,
-                    value: null,
-                    email: null,
-                    phoneNumber: null,
-                    createdAt: null
-                  },
                   colHeaders: this.props.leadsColumnsHeader,
                   columns: [
                     { data: 'id' },
@@ -102,6 +89,8 @@ class Leads extends React.Component {
                     this.props.dispatch(deleteLeads(index, amount).bind(this));
                   },
                   afterColumnMove: (columns, target) => {
+                    console.log(columns);
+                    console.log(target);
                     this.props.dispatch(
                       updateEntityColumnOrders(columns, target).bind(this)
                     );

@@ -68,18 +68,12 @@ export function getEntityColumnOrders(dispatch) {
     .get('/api/leads/columnorders')
     .then(response => {
       const columnsOrder = [];
+      const columnsHeader = [];
       const columns = response.data;
       for (const column of columns) {
         columnsOrder.push(column.rank);
-      }
-      console.log(columnsOrder);
-      const columnsHeader = [];
-      const columnsCopy = columns.slice(0);
-      columnsCopy.sort((a, b) => a.rank - b.rank);
-      for (const column of columnsCopy) {
         columnsHeader.push(column.name);
       }
-      console.log(columnsHeader);
       return [columnsHeader, columnsOrder];
     })
     .then(response => {
@@ -101,6 +95,7 @@ export function updateEntityColumnOrders(columns, target) {
   return function(dispatch) {
     if (target) {
       const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+      console.log(afterColumnsArray);
       getMovedColumnRange(columns, target).then(movedRange => {
         entityColumnsToObj()
           .then(entityColumnsObj => [entityColumnsObj, movedRange])
@@ -113,9 +108,9 @@ export function updateEntityColumnOrders(columns, target) {
               afterColumnsArray
             ).then(updatedColumnOrders => {
               console.log(updatedColumnOrders);
-              axios
-                .put('/api/leads/columnorders', { updatedColumnOrders })
-                .then(dispatch(getEntityColumnOrders));
+              // axios
+              //   .put('/api/leads/columnorders', { updatedColumnOrders })
+              //   .then(dispatch(getEntityColumnOrders));
             });
           });
       });
