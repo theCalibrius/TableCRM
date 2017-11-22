@@ -61,6 +61,7 @@ const getColumnOrders = (req, res) => {
 };
 
 const updateColumnOrders = (req, res) => {
+
   const updatedColumnOrders = req.body.updatedColumnOrders;
   console.log(updatedColumnOrders);
   for (const column of updatedColumnOrders) {
@@ -74,6 +75,7 @@ const updateColumnOrders = (req, res) => {
     );
   }
   res.sendStatus(201);
+
 };
 
 module.exports = {

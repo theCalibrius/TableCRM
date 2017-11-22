@@ -93,6 +93,7 @@ export function getEntityColumnOrders(dispatch) {
 
 export function updateEntityColumnOrders(columns, target) {
   return function(dispatch) {
+
     if (target) {
       const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
       console.log(afterColumnsArray);
@@ -113,6 +114,7 @@ export function updateEntityColumnOrders(columns, target) {
               //   .then(dispatch(getEntityColumnOrders));
             });
           });
+
       });
     }
   };
