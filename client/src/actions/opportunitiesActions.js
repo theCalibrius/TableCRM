@@ -12,12 +12,12 @@ export function getAllOpportunities() {
 
 export function createAndUpdateOpportunities(changes, source) {
   return function(dispatch) {
-    let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
-    let newAndUpdatedRows = getNewAndUpdatedRowsBound(changes, source);
+    const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+    const newAndUpdatedRows = getNewAndUpdatedRowsBound(changes, source);
 
     if (newAndUpdatedRows) {
-      let newRows = newAndUpdatedRows.newRows;
-      let updatedRows = newAndUpdatedRows.updatedRows;
+      const newRows = newAndUpdatedRows.newRows;
+      const updatedRows = newAndUpdatedRows.updatedRows;
 
       if (newRows.length > 0) {
         axios.post('/api/opportunities', {newRows})
@@ -45,11 +45,11 @@ export function deleteOpportunities(index, amount) {
 }
 
 export function getHiddenColumnsOfOpportunities(dispatch) {
-  let colPropsToIndicesBound = colPropsToIndices.bind(this);
+  const colPropsToIndicesBound = colPropsToIndices.bind(this);
 
   axios.get('/api/opportunities/columns')
   .then((response) => {
-    let hiddenColIndices = colPropsToIndicesBound(response.data);
+    const hiddenColIndices = colPropsToIndicesBound(response.data);
     dispatch({
       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
       payload: hiddenColIndices
@@ -59,8 +59,8 @@ export function getHiddenColumnsOfOpportunities(dispatch) {
 
 export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
-    let getHiddenColsBound = getHiddenCols.bind(this);
-    let hiddenColumns = getHiddenColsBound(context);
+    const getHiddenColsBound = getHiddenCols.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
     axios.put('/api/opportunities/columns', {hiddenColumns})
     .then(() => { dispatch(getHiddenColumnsOfOpportunities.bind(this)) });
   };

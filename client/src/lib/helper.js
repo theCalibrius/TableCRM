@@ -118,7 +118,7 @@ export function getHiddenCols(context) {
 }
 
 export function colPropsToIndices(colProps) {
-  let colIndices = [];
+  const colIndices = [];
 
   for (let colProp of colProps) {
     let prop = colProp.name;
