@@ -157,10 +157,10 @@ export function entityColumnsToObj() {
       .then(res => {
         let columns = res.data;
         const entityColumnsObj = {};
-        for(let column of columns){
-          let columnName = column.name
-          let columnId = column.id
-          entityColumnsObj[columnName] = columnId
+        for(const column of columns){
+          const columnName = column.name;
+          const columnId = column.id;
+          entityColumnsObj[columnName] = columnId;
         }
         resolve(entityColumnsObj);
       })

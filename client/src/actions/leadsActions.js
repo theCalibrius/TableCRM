@@ -67,23 +67,35 @@ export function getEntityColumnOrders(dispatch) {
   axios
     .get('/api/leads/columnorders')
     .then(response => {
-      const columnsOrder = [];
-      const columnsHeader = [];
       const columns = response.data;
+      // ----
+      const rankedColumns = [];
+      const currentColumns = this.state.columns;
+      for (let i = 0; i < currentColumns.length; i++) {
+        rankedColumns.push(Object.assign({}, currentColumns[i], columns[i]));
+      }
+      rankedColumns.sort((a, b) => {
+        if (a.rank < b.rank) return -1;
+        if (a.rank > b.rank) return 1;
+        return 0;
+      });
+      this.setState({ columns: rankedColumns });
+      // ----
+      const columnsHeader = [];
+      columns.sort((a, b) => {
+        if (a.rank < b.rank) return -1;
+        if (a.rank > b.rank) return 1;
+        return 0;
+      });
       for (const column of columns) {
-        columnsOrder.push(column.rank);
         columnsHeader.push(column.name);
       }
-      return [columnsHeader, columnsOrder];
+      return columnsHeader;
     })
-    .then(response => {
+    .then(columnsHeader => {
       dispatch({
         type: 'GET_ALL_LEADS_COLUMNS_HEADER',
-        payload: response[0]
-      });
-      dispatch({
-        type: 'GET_ALL_LEADS_COLUMNS',
-        payload: response[1]
+        payload: columnsHeader
       });
     })
     .catch(err => {
@@ -93,7 +105,6 @@ export function getEntityColumnOrders(dispatch) {
 
 export function updateEntityColumnOrders(columns, target) {
   return function(dispatch) {
-
     if (target) {
       const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
       console.log(afterColumnsArray);
@@ -109,12 +120,11 @@ export function updateEntityColumnOrders(columns, target) {
               afterColumnsArray
             ).then(updatedColumnOrders => {
               console.log(updatedColumnOrders);
-              // axios
-              //   .put('/api/leads/columnorders', { updatedColumnOrders })
-              //   .then(dispatch(getEntityColumnOrders));
+              axios
+                .put('/api/leads/columnorders', { updatedColumnOrders })
+                .then(dispatch(getEntityColumnOrders));
             });
           });
-
       });
     }
   };

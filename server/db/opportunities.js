@@ -66,5 +66,3 @@ module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
     }
   });
 };
-
-
