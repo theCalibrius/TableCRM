@@ -68,7 +68,6 @@ class Leads extends React.Component {
                   columns: [0],
                   indicators: false
                 },
-                // manualColumnMove: this.props.leadsColumns,
                 manualColumnMove: true,
                 rowHeaders: true,
                 stretchH: 'all',

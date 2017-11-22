@@ -131,6 +131,20 @@ export function colPropsToIndices(colProps) {
   return colIndices;
 }
 
+export function mergeRankColumns(columns) {
+  const rankedColumns = [];
+  const currentColumns = this.state.columns;
+  for (let i = 0; i < currentColumns.length; i++) {
+    rankedColumns.push(Object.assign({}, currentColumns[i], columns[i]));
+  }
+  rankedColumns.sort((a, b) => {
+    if (a.rank < b.rank) return -1;
+    if (a.rank > b.rank) return 1;
+    return 0;
+  });
+  this.setState({ columns: rankedColumns });
+}
+
 export function getMovedColumnRange(columns, target) {
   return new Promise(resolve => {
     let movedRange;

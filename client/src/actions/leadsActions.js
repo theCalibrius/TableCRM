@@ -3,6 +3,7 @@ import moment from 'moment';
 import {
   getNewAndUpdatedRows,
   getRemovedIds,
+  mergeRankColumns,
   getMovedColumnRange,
   entityColumnsToObj,
   getChangedColumnsObj
@@ -68,19 +69,10 @@ export function getEntityColumnOrders(dispatch) {
     .get('/api/leads/columnorders')
     .then(response => {
       const columns = response.data;
-      // ----
-      const rankedColumns = [];
-      const currentColumns = this.state.columns;
-      for (let i = 0; i < currentColumns.length; i++) {
-        rankedColumns.push(Object.assign({}, currentColumns[i], columns[i]));
-      }
-      rankedColumns.sort((a, b) => {
-        if (a.rank < b.rank) return -1;
-        if (a.rank > b.rank) return 1;
-        return 0;
-      });
-      this.setState({ columns: rankedColumns });
-      // ----
+      // merge ranked columns
+      const mergeRankColumnsBind = mergeRankColumns.bind(this);
+      mergeRankColumnsBind(columns);
+      // sort columnHeader by rank and collect column names
       const columnsHeader = [];
       columns.sort((a, b) => {
         if (a.rank < b.rank) return -1;
@@ -107,7 +99,6 @@ export function updateEntityColumnOrders(columns, target) {
   return function(dispatch) {
     if (target) {
       const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
-      console.log(afterColumnsArray);
       getMovedColumnRange(columns, target).then(movedRange => {
         entityColumnsToObj()
           .then(entityColumnsObj => [entityColumnsObj, movedRange])
@@ -119,7 +110,6 @@ export function updateEntityColumnOrders(columns, target) {
               movedRange,
               afterColumnsArray
             ).then(updatedColumnOrders => {
-              console.log(updatedColumnOrders);
               axios
                 .put('/api/leads/columnorders', { updatedColumnOrders })
                 .then(dispatch(getEntityColumnOrders));
