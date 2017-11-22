@@ -6,6 +6,9 @@ that action is then automatically sent to all reducers within the application
 
 below, the function getAccounts is an action creator.
 
+it's customary for redux action types to be all upper-case with words separated by 
+underscores (snake-casing), like GET_ALL_ACCOUNTS below
+
 
 */
 

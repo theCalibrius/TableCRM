@@ -1,4 +1,8 @@
 /* 
+Normally you would want to import the relevant action creator into the reducer,
+but in this project we are instead using the index.js file, along with the redux
+function combineReducers to connect all the reducers and action creator files.
+
 A reducer is a function that returns a piece of the application state
 accountsReducer returns the accounts related data from the application state
 this reducer, along with all other reducers (via combineReducers in index.js) will

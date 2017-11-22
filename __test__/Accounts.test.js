@@ -1,10 +1,54 @@
-// // This is a Jest file for testing the App Component
+// This is a Jest file for testing the App Component
 
-// import React from 'react';
-// import { shallow } from 'enzyme';
-// import Accounts from '../client/src/container/Accounts';
+import React from 'react';
+import { shallow } from 'enzyme';
+import Accounts from '../client/src/container/Accounts';
 
-// // include related tests within a describe block
+
+describe( 'Accounts', () => {
+	const mockDeposit = jest.fn();
+	const props = { accounts: [ { balance: 20, deposit: mockDeposit } ] }
+
+	const accounts = shallow(<Accounts />);
+
+	it('renders properly', () => {
+		expect(accounts).toMatchSnapshot();
+	}); 
+
+	it('displays the accounts from props', () => {
+		expect(accounts.find(/*string representing element or class or whateverto find on shallow render of DOM*/).text()).toEqual(/* .text is just an exampl, find whatever is appropriate*/);
+	});
+
+	// checks for a particular element in the  shallow render
+	it('creates an input to deposit into or withdraw from the balance', () => {
+		expect(accounts.find('.input-wallet').exists()).toBe(true);
+	});
+
+	describe('when the user types into the wallet input', () => {
+		const userBalance = '25';
+
+		beforeEach(() => {
+			/*
+			 a change to an input fires an object with a 'target' key.  That target key is assigned to an
+			 object that has its own value.  And that value is what we're testing here.
+			 simulate is an enzyme function
+			 the first argument of the simulate function is the event to simulate
+			 the second argument is the optional mock event object that gets passed thru to event handlers
+			 
+			*/
+		  accounts.find('input-wallet')
+		    .simulate('change', { target: { value: userBalance}});
+
+		  it('updates the local wallet balance in `state and converst it to a string', () => {
+		  	expect(wallet.state().balance).toEqual(parseInt(userBalance, 10));
+		  })
+
+		});
+	});
+});
+
+
+// include related tests within a describe block
 
 // describe( 'Accounts', () => {
 // 	  // shallow function takes in JSX as an argument and returns an object that represents the JSX component in the react testing environment

@@ -21,6 +21,7 @@ import 'handsontable-pro/dist/handsontable.full.css';
 import HotTable from 'react-handsontable';
 
 import React from 'react';
+// connects the Accounts component to the redux store
 import { connect } from 'react-redux';
 
 import { getAllAccounts, createAndUpdateAccounts, deleteAccounts } from '../actions/accountsActions';
@@ -154,4 +155,12 @@ as a prop, making dispatch available on the props, which is how we can call it a
 ComponentDidMount
 
 */
+
+// invoking connect will return a function, we then pass Accounts to that function and invoke it
+// the first parameter passed to connect is a function which describes which part of the redux
+// store we want to use on this component, the second parameter describes which action creators
+// we want to use on this componenet to send data to the redux store.  In this case, the second
+// parameter is null, because we instead link the getAllAccounts action creator to this component
+// in the ComponentDidMount method above.
+
 export default connect(mapStateToProps, null)(Accounts);

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for TableCRM/flow-typed/npm/axios_v0.17.x.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">TableCRM/flow-typed/npm</a> axios_v0.17.x.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// flow-typed signature: a8f530bf7bd4adfd4d341940ae3f907a
+// flow-typed version: 917c84794d/axios_v0.17.x/flow_&gt;=v0.25.x
+&nbsp;
+declare module 'axios' {
+  declare interface ProxyConfig {
+    host: string;
+    port: number;
+  }
+  declare interface Cancel {
+    constructor(message?: string): Cancel;
+    message: string;
+  }
+  declare interface Canceler {
+    (message?: string): void;
+  }
+  declare interface CancelTokenSource {
+    token: CancelToken;
+    cancel: Canceler;
+  }
+  declare interface CancelToken {
+    constructor(executor: (cancel: Canceler) =&gt; void): CancelToken;
+    static source(): CancelTokenSource;
+    promise: Promise&lt;Cancel&gt;;
+    reason?: Cancel;
+    throwIfRequested(): void;
+  }
+  declare interface AxiosXHRConfigBase&lt;T&gt; {
+    adapter?: &lt;T&gt;(config: AxiosXHRConfig&lt;T&gt;) =&gt; Promise&lt;AxiosXHR&lt;T&gt;&gt;;
+    auth?: {
+      username: string,
+      password: string
+    };
+    baseURL?: string,
+    cancelToken?: CancelToken;
+    headers?: Object;
+    httpAgent?: mixed; // Missing the type in the core flow node libdef
+    httpsAgent?: mixed; // Missing the type in the core flow node libdef
+    maxContentLength?: number;
+    maxRedirects?: 5,
+    params?: Object;
+    paramsSerializer?: (params: Object) =&gt; string;
+    progress?: (progressEvent: Event) =&gt; void | mixed;
+    proxy?: ProxyConfig | false;
+    responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
+    timeout?: number;
+    transformRequest?: Array&lt;&lt;U&gt;(data: T) =&gt; U|Array&lt;&lt;U&gt;(data: T) =&gt; U&gt;&gt;;
+    transformResponse?: Array&lt;&lt;U&gt;(data: T) =&gt; U&gt;;
+    validateStatus?: (status: number) =&gt; boolean,
+    withCredentials?: boolean;
+    xsrfCookieName?: string;
+    xsrfHeaderName?: string;
+  }
+  declare type $AxiosXHRConfigBase&lt;T&gt; = AxiosXHRConfigBase&lt;T&gt;;
+  declare interface AxiosXHRConfig&lt;T&gt; extends AxiosXHRConfigBase&lt;T&gt; {
+    data?: T;
+    method?: string;
+    url: string;
+  }
+  declare type $AxiosXHRConfig&lt;T&gt; = AxiosXHRConfig&lt;T&gt;;
+  declare class AxiosXHR&lt;T&gt; {
+    config: AxiosXHRConfig&lt;T&gt;;
+    data: T;
+    headers?: Object;
+    status: number;
+    statusText: string,
+    request: http$ClientRequest | XMLHttpRequest
+  }
+  declare type $AxiosXHR&lt;T&gt; = AxiosXHR&lt;T&gt;;
+  declare class AxiosInterceptorIdent extends String {}
+  declare class AxiosRequestInterceptor&lt;T&gt; {
+    use(
+      successHandler: ?(response: AxiosXHRConfig&lt;T&gt;) =&gt; Promise&lt;AxiosXHRConfig&lt;*&gt;&gt; | AxiosXHRConfig&lt;*&gt;,
+      errorHandler: ?(error: mixed) =&gt; mixed,
+    ): AxiosInterceptorIdent;
+    eject(ident: AxiosInterceptorIdent): void;
+  }
+  declare class AxiosResponseInterceptor&lt;T&gt; {
+    use(
+      successHandler: ?(response: AxiosXHR&lt;T&gt;) =&gt; mixed,
+      errorHandler: ?(error: $AxiosError&lt;any&gt;) =&gt; mixed,
+    ): AxiosInterceptorIdent;
+    eject(ident: AxiosInterceptorIdent): void;
+  }
+  declare type AxiosPromise&lt;T&gt; = Promise&lt;AxiosXHR&lt;T&gt;&gt;;
+  declare class Axios {
+    constructor&lt;T&gt;(config?: AxiosXHRConfigBase&lt;T&gt;): void;
+    $call: &lt;T&gt;(config: AxiosXHRConfig&lt;T&gt; | string, config?: AxiosXHRConfig&lt;T&gt;) =&gt; AxiosPromise&lt;T&gt;;
+    request&lt;T&gt;(config: AxiosXHRConfig&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    delete&lt;T&gt;(url: string, config?: AxiosXHRConfigBase&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    get&lt;T&gt;(url: string, config?: AxiosXHRConfigBase&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    head&lt;T&gt;(url: string, config?: AxiosXHRConfigBase&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    post&lt;T&gt;(url: string, data?: mixed, config?: AxiosXHRConfigBase&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    put&lt;T&gt;(url: string, data?: mixed, config?: AxiosXHRConfigBase&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    patch&lt;T&gt;(url: string, data?: mixed, config?: AxiosXHRConfigBase&lt;T&gt;): AxiosPromise&lt;T&gt;;
+    interceptors: {
+      request: AxiosRequestInterceptor&lt;mixed&gt;,
+      response: AxiosResponseInterceptor&lt;mixed&gt;,
+    };
+    defaults: AxiosXHRConfig&lt;*&gt; &amp; { headers: Object };
+  }
+&nbsp;
+  declare class AxiosError&lt;T&gt; extends Error {
+    config: AxiosXHRConfig&lt;T&gt;;
+    response: AxiosXHR&lt;T&gt;;
+    code?: string;
+  }
+&nbsp;
+  declare type $AxiosError&lt;T&gt; = AxiosError&lt;T&gt;;
+&nbsp;
+  declare interface AxiosExport extends Axios {
+    Axios: typeof Axios;
+    Cancel: Class&lt;Cancel&gt;;
+    CancelToken: Class&lt;CancelToken&gt;;
+    isCancel(value: any): boolean;
+    create(config?: AxiosXHRConfigBase&lt;any&gt;): Axios;
+    all: typeof Promise.all;
+    spread(callback: Function): (arr: Array&lt;any&gt;) =&gt; Function
+  }
+  declare module.exports: AxiosExport;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 20 2017 12:51:08 GMT-0500 (-05)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

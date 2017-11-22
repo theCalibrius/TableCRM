@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for TableCRM/flow-typed/npm/react-redux_v5.x.x.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">TableCRM/flow-typed/npm</a> react-redux_v5.x.x.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// flow-typed signature: 59b0c4be0e1408f21e2446be96c79804
+// flow-typed version: 9092387fd2/react-redux_v5.x.x/flow_&gt;=v0.54.x
+&nbsp;
+import type { Dispatch, Store } from "redux";
+&nbsp;
+declare module "react-redux" {
+  /*
+&nbsp;
+    S = State
+    A = Action
+    OP = OwnProps
+    SP = StateProps
+    DP = DispatchProps
+&nbsp;
+  */
+&nbsp;
+  declare type MapStateToProps&lt;S, OP: Object, SP: Object&gt; = (
+    state: S,
+    ownProps: OP
+  ) =&gt; ((state: S, ownProps: OP) =&gt; SP) | SP;
+&nbsp;
+  declare type MapDispatchToProps&lt;A, OP: Object, DP: Object&gt; =
+    | ((dispatch: Dispatch&lt;A&gt;, ownProps: OP) =&gt; DP)
+    | DP;
+&nbsp;
+  declare type MergeProps&lt;SP, DP: Object, OP: Object, P: Object&gt; = (
+    stateProps: SP,
+    dispatchProps: DP,
+    ownProps: OP
+  ) =&gt; P;
+&nbsp;
+  declare type Context = { store: Store&lt;*, *&gt; };
+&nbsp;
+  declare type ComponentWithDefaultProps&lt;DP: {}, P: {}, CP: P&gt; = Class&lt;
+    React$Component&lt;CP&gt;
+  &gt; &amp; { defaultProps: DP };
+&nbsp;
+  declare class ConnectedComponentWithDefaultProps&lt;
+    OP,
+    DP,
+    CP
+  &gt; extends React$Component&lt;OP&gt; {
+    static defaultProps: DP, // &lt;= workaround for https://github.com/facebook/flow/issues/4644
+    static WrappedComponent: Class&lt;React$Component&lt;CP&gt;&gt;,
+    getWrappedInstance(): React$Component&lt;CP&gt;,
+    props: OP,
+    state: void
+  }
+&nbsp;
+  declare class ConnectedComponent&lt;OP, P&gt; extends React$Component&lt;OP&gt; {
+    static WrappedComponent: Class&lt;React$Component&lt;P&gt;&gt;,
+    getWrappedInstance(): React$Component&lt;P&gt;,
+    props: OP,
+    state: void
+  }
+&nbsp;
+  declare type ConnectedComponentWithDefaultPropsClass&lt;OP, DP, CP&gt; = Class&lt;
+    ConnectedComponentWithDefaultProps&lt;OP, DP, CP&gt;
+  &gt;;
+&nbsp;
+  declare type ConnectedComponentClass&lt;OP, P&gt; = Class&lt;
+    ConnectedComponent&lt;OP, P&gt;
+  &gt;;
+&nbsp;
+  declare type Connector&lt;OP, P&gt; = (&lt;DP: {}, CP: {}&gt;(
+    component: ComponentWithDefaultProps&lt;DP, P, CP&gt;
+  ) =&gt; ConnectedComponentWithDefaultPropsClass&lt;OP, DP, CP&gt;) &amp;
+    ((component: React$ComponentType&lt;P&gt;) =&gt; ConnectedComponentClass&lt;OP, P&gt;);
+&nbsp;
+  declare class Provider&lt;S, A&gt; extends React$Component&lt;{
+    store: Store&lt;S, A&gt;,
+    children?: any
+  }&gt; {}
+&nbsp;
+  declare function createProvider(
+    storeKey?: string,
+    subKey?: string
+  ): Provider&lt;*, *&gt;;
+&nbsp;
+  declare type ConnectOptions = {
+    pure?: boolean,
+    withRef?: boolean
+  };
+&nbsp;
+  declare type Null = null | void;
+&nbsp;
+  declare function connect&lt;A, OP&gt;(
+    ...rest: Array&lt;void&gt; // &lt;= workaround for https://github.com/facebook/flow/issues/2360
+  ): Connector&lt;OP, $Supertype&lt;{ dispatch: Dispatch&lt;A&gt; } &amp; OP&gt;&gt;;
+&nbsp;
+  declare function connect&lt;A, OP&gt;(
+    mapStateToProps: Null,
+    mapDispatchToProps: Null,
+    mergeProps: Null,
+    options: ConnectOptions
+  ): Connector&lt;OP, $Supertype&lt;{ dispatch: Dispatch&lt;A&gt; } &amp; OP&gt;&gt;;
+&nbsp;
+  declare function connect&lt;S, A, OP, SP&gt;(
+    mapStateToProps: MapStateToProps&lt;S, OP, SP&gt;,
+    mapDispatchToProps: Null,
+    mergeProps: Null,
+    options?: ConnectOptions
+  ): Connector&lt;OP, $Supertype&lt;SP &amp; { dispatch: Dispatch&lt;A&gt; } &amp; OP&gt;&gt;;
+&nbsp;
+  declare function connect&lt;A, OP, DP&gt;(
+    mapStateToProps: Null,
+    mapDispatchToProps: MapDispatchToProps&lt;A, OP, DP&gt;,
+    mergeProps: Null,
+    options?: ConnectOptions
+  ): Connector&lt;OP, $Supertype&lt;DP &amp; OP&gt;&gt;;
+&nbsp;
+  declare function connect&lt;S, A, OP, SP, DP&gt;(
+    mapStateToProps: MapStateToProps&lt;S, OP, SP&gt;,
+    mapDispatchToProps: MapDispatchToProps&lt;A, OP, DP&gt;,
+    mergeProps: Null,
+    options?: ConnectOptions
+  ): Connector&lt;OP, $Supertype&lt;SP &amp; DP &amp; OP&gt;&gt;;
+&nbsp;
+  declare function connect&lt;S, A, OP, SP, DP, P&gt;(
+    mapStateToProps: MapStateToProps&lt;S, OP, SP&gt;,
+    mapDispatchToProps: Null,
+    mergeProps: MergeProps&lt;SP, DP, OP, P&gt;,
+    options?: ConnectOptions
+  ): Connector&lt;OP, P&gt;;
+&nbsp;
+  declare function connect&lt;S, A, OP, SP, DP, P&gt;(
+    mapStateToProps: MapStateToProps&lt;S, OP, SP&gt;,
+    mapDispatchToProps: MapDispatchToProps&lt;A, OP, DP&gt;,
+    mergeProps: MergeProps&lt;SP, DP, OP, P&gt;,
+    options?: ConnectOptions
+  ): Connector&lt;OP, P&gt;;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 20 2017 12:51:08 GMT-0500 (-05)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

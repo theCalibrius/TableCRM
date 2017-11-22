@@ -12,3 +12,9 @@ const app = shallow(<App />);
 it('renders correctly', () => {
   expect(app).toMatchSnapshot();
 });
+// not sure if following test will work with redux router, might need to be refactored
+it('contains a connected Accounts component', () => {
+	// an enzyme trick when trying to check rendering of containers, rather than basic componenets
+	// console.log(app.debug());
+	expect(app.find('Connect(Accounts)').exist()).toBe(true);
+}) ;
