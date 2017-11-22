@@ -8,8 +8,7 @@
     "build": "webpack --config webpack.prod.js",
     "compile": "webpack -p --config webpack.dev.js",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"src/**/*.{js,jsx}\"",
-    "lint":
-      "eslint --quiet --fix . --ext .js --ext .jsx --cache --format node_modules/eslint-friendly-formatter || true",
+    "lint": "eslint --quiet --fix . --ext .js --ext .jsx --cache --format node_modules/eslint-friendly-formatter || true",
     "flow": "flow",
     "lint-staged": "lint-staged",
     "test": "jest"
@@ -35,7 +34,6 @@
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/__test__/setupTests.js"
   },
-
   "precommit": "lint-staged",
   "dependencies": {
     "axios": "^0.17.0",
@@ -48,10 +46,11 @@
     "mysql": "^2.15.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-handsontable": "^0.3.1",
+    "react-highcharts": "^15.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-handsontable": "^0.3.1",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",

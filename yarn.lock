@@ -3170,6 +3170,10 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
+highcharts@^6.0.0:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.0.3.tgz#51348a0c97d8bdc87cb3b273460e3751db4a51cd"
+
 history@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/history/-/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
@@ -5902,6 +5906,12 @@ react-handsontable@^0.3.1:
     numbro "^1.9.3"
     pikaday "^1.5.1"
     zeroclipboard "^2.3.0"
+
+react-highcharts@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-15.0.0.tgz#b3eea96ad6a7f04c3e70827a34e9b1b47d88a2bb"
+  dependencies:
+    highcharts "^6.0.0"
 
 react-redux@^5.0.6:
   version "5.0.6"
