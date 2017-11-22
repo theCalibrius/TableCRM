@@ -48,7 +48,7 @@ export function getHiddenColumnsOfOpportunities(dispatch) {
   let colPropsToIndicesBound = colPropsToIndices.bind(this);
 
   axios.get('/api/opportunities/columns')
-  .then(response => {
+  .then((response) => {
     let hiddenColIndices = colPropsToIndicesBound(response.data);
     dispatch({
       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
@@ -61,6 +61,7 @@ export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
     let getHiddenColsBound = getHiddenCols.bind(this);
     let hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/opportunities/columns', {hiddenColumns});
+    axios.put('/api/opportunities/columns', {hiddenColumns})
+    .then(() => { dispatch(getHiddenColumnsOfOpportunities.bind(this)) });
   };
 }
