@@ -5,6 +5,11 @@ export default function(state={opportunities: null}, action) {
         ...state,
         opportunities: action.payload.data
       };
+    case 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES':
+      return {
+        ...state,
+        hiddenColIndices: action.payload
+      };
   }
   return state;
 }

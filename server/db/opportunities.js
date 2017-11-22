@@ -40,4 +40,31 @@ module.exports.deleteOpportunities = (req, res) => {
   });
 };
 
+module.exports.getHiddenColumnsOfOpportunities = (req, res) => {
+  db.query('SELECT name FROM opportunitiesColumns WHERE hidden=true;', (err, rows) => {
+    if (!err) {
+      res.json(rows);
+    }
+  });
+}
+
+module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
+  const hiddenColumns = req.body.hiddenColumns;
+
+  db.query('SELECT name, hidden FROM opportunitiesColumns;', (err, rows) => {
+    if (!err) {
+      for (let row of rows) {
+        let name = row.name;
+        let hidden = row.hidden;
+        if (hidden && !hiddenColumns.includes(name)) {
+          db.query(`UPDATE opportunitiesColumns SET hidden=false WHERE name='${name}';`);
+        } else if (!hidden && hiddenColumns.includes(name)) {
+          db.query(`UPDATE opportunitiesColumns SET hidden=true WHERE name='${name}';`);
+        }
+      }
+      res.sendStatus(201);
+    }
+  });
+};
+
 

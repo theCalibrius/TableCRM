@@ -25,6 +25,13 @@ CREATE TABLE opportunities (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE opportunitiesColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  name varchar(50),
+  hidden boolean DEFAULT false,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE contacts (
   id int NOT NULL AUTO_INCREMENT,
   firstName varchar(50),
@@ -85,6 +92,13 @@ CREATE TABLE leads_columns (
   readOnly boolean,
   PRIMARY KEY (id)
 );
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+  Actual Data
+* * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+INSERT INTO opportunitiesColumns (name) VALUES
+('name'), ('description'), ('pipeline'), ('estimatedValue'), ('winProbability'), ('priority'), ('status'), ('stage'), ('expectedCloseDate'), ('lostReason'), ('origin'), ('createdAt'), ('updatedAt');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data

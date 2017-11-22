@@ -1,5 +1,5 @@
 // given changes array
-export function getNewAndUpdatedRows(changes, source, postCallback, putCallback) {
+export function getNewAndUpdatedRows(changes, source) {
   // if changes array is not null
   if (changes && source !== 'loadData') {
     // create empty arrays to store new rows and updated rows as objects, respectively
@@ -86,18 +86,11 @@ export function getNewAndUpdatedRows(changes, source, postCallback, putCallback)
       }
     }
 
-    if (newRows.length > 0) {
-      postCallback(newRows);
-    }
-
-    if (updatedRows.length > 0) {
-      putCallback(updatedRows);
-    }
+    return {newRows, updatedRows};
   }
 }
 
 export function getRemovedIds() {
-  // selected rows
   const selectedRows = this.refs.hot.hotInstance.getSelected();
   const startRow = selectedRows[0];
   const endRow = selectedRows[2];
@@ -110,5 +103,29 @@ export function getRemovedIds() {
     removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);
   }
   return removedIds;
+}
+
+export function getHiddenCols(context) {
+  let hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
+  let hiddenColProps = [];
+
+  for (let hiddenColIndex of hiddenColIndices) {
+    let hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
+    hiddenColProps.push(hiddenColProp);
+  }
+
+  return hiddenColProps;
+}
+
+export function colPropsToIndices(colProps) {
+  const colIndices = [];
+
+  for (let colProp of colProps) {
+    let prop = colProp.name;
+    let index = this.refs.hot.hotInstance.propToCol(prop);
+    colIndices.push(index);
+  }
+
+  return colIndices;
 }
 
