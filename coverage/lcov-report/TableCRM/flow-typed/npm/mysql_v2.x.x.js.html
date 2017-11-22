@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for TableCRM/flow-typed/npm/mysql_v2.x.x.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">TableCRM/flow-typed/npm</a> mysql_v2.x.x.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// flow-typed signature: 1129582693f4439cca21de7cc1fa6dd7
+// flow-typed version: b43dff3e0e/mysql_v2.x.x/flow_&gt;=v0.28.x
+&nbsp;
+// TODO: Events on event emitters
+// TODO: Ssl structure type in ConnectionOptions
+// TODO: PoolNamespace internal structure
+// TODO: Packets internal structure
+&nbsp;
+declare module 'mysql' {
+  declare type ConnectionOptions = {
+    host?: string,
+    port?: number,
+    localAddress?: string,
+    socketPath?: string,
+    user: string,
+    password: string,
+    database?: string,
+    charset?: string,
+    timezone?: string,
+    connectTimeout?: number,
+    stringifyObjects?: boolean,
+    insecureAuth?: boolean,
+    typeCast?: boolean,
+    queryFormat?: (query: string, values: ?mixed, timezone: string) =&gt; string,
+    supportBigNumbers?: boolean,
+    bigNumberStrings?: boolean,
+    dateStrings?: boolean | Array&lt;string&gt;,
+    debug?: boolean | Array&lt;string&gt;, // Array form contains ids of packets for logging
+    trace?: boolean,
+    multipleStatements?: boolean,
+    flags?: string,
+    ssl?: string | Object
+  };
+&nbsp;
+  declare type QueryOptions = {
+    sql: string,
+    typeCast?: boolean | (field: Object, next: Function) =&gt; any,
+    nestTables?: boolean | string, // string form is a separator used to produce column names
+    values?: Array&lt;mixed&gt;,
+    timeout?: number
+  } | string;
+&nbsp;
+  declare type QueryResults = Array&lt;Object&gt; &amp; {
+    insertId?: string | number,
+    affectedRows?: number,
+    changedRows?: number
+  };
+&nbsp;
+  declare type QueryField = {
+    name: string,
+    type: string,
+    length: number,
+    table: string,
+    db: string
+  }
+&nbsp;
+  declare class Query extends events$EventEmitter {
+    // readableStreamOptions declared in Flow /lib/node.js
+    stream(options?: readableStreamOptions): stream$Readable;
+  }
+&nbsp;
+  declare class Connection extends events$EventEmitter {
+    threadId: number;
+    connect(callback?: (error: ?Error) =&gt; *): void;
+&nbsp;
+    release(): void;
+    destroy(): void;
+&nbsp;
+    end(callback?: (error: ?Error) =&gt; *): void;
+&nbsp;
+    query(sql: QueryOptions, values?: Array&lt;mixed&gt;, callback?: QueryCallback): Query;
+    query(sql: QueryOptions, callback?: QueryCallback): Query;
+&nbsp;
+    changeUser(options: {
+      user?: string,
+      password?: string,
+      charset?: string,
+      database?: string
+    }, callback: (error: ?Error) =&gt; *): void;
+&nbsp;
+    beginTransaction(options: QueryOptions, callback: QueryCallback): void;
+    beginTransaction(callback: QueryCallback): void;
+    commit(options: QueryOptions, callback: QueryCallback): void;
+    commit(callback: QueryCallback): void;
+    rollback(options: QueryOptions, callback: QueryCallback): void;
+    rollback(callback: QueryCallback): void;
+&nbsp;
+    ping(options: QueryOptions, callback: QueryCallback): void;
+    ping(callback: QueryCallback): void;
+&nbsp;
+    escapeId(val: mixed, forbidQualified?: boolean): string;
+    escape(val: mixed, stringifyObjects?: boolean, timeZone: string): string;
+    format(sql: string, valus: Array&lt;mixed&gt;): string;
+  }
+&nbsp;
+  declare class Pool extends events$EventEmitter {
+    getConnection(callback: (error: ?Error) =&gt; *): void;
+    end(callback?: (error: ?Error) =&gt; *): void;
+    query(sql: QueryOptions, values?: Array&lt;mixed&gt;, callback?: QueryCallback): Query;
+    query(sql: QueryOptions, callback?: QueryCallback): Query;
+&nbsp;
+    escapeId(val: mixed, forbidQualified?: boolean): string;
+    escape(val: mixed, stringifyObjects?: boolean, timeZone: string): string;
+  }
+&nbsp;
+  declare type PoolOptions = ConnectionOptions &amp; {
+    acquireTimeout?: number,
+    connectionLimit?: number,
+    waitForConnections?: boolean,
+    queueLimit?: number
+  };
+&nbsp;
+  declare type PoolClusterSelector = 'RR' | 'ORDER' | 'RANDOM';
+&nbsp;
+  declare type PoolClusterOptions = {
+    defaultSelector?: PoolClusterSelector,
+    canRetry?: boolean,
+    removeNodeErrorCount?: number,
+    restoreNodeTimeout?: number
+  }
+&nbsp;
+  declare type QueryCallback = (error: ?Error, results: QueryResults, fields?: Array&lt;QueryField&gt;) =&gt; *;
+&nbsp;
+  declare class PoolCluster extends events$EventEmitter {
+    add(config: PoolOptions | string): void;
+    add(name: string, config: PoolOptions | string): void;
+    remove(name: string): void;
+&nbsp;
+    getConnection(pattern: string | RegExp, selector: PoolClusterSelector, callback: (error: ?Error, connection?: Connection) =&gt; *): void;
+    getConnection(pattern: string | RegExp, callback: (error: ?Error, connection?: Connection) =&gt; *): void;
+    getConnection(callback: (error: ?Error, connection?: Connection) =&gt; *): void;
+&nbsp;
+    // Truth to be told, of returns not a Pool, but PoolNamespace instance but it is the same for the most part
+    of(pattern: string | RegExp, selector?: PoolClusterSelector): Pool;
+&nbsp;
+    end(callback?: (error: ?Error) =&gt; *): void;
+  }
+&nbsp;
+  declare function escapeId(val: mixed, forbidQualified?: boolean): string;
+  declare function escape(val: mixed, stringifyObjects?: boolean, timeZone: string): string;
+  declare function format(sql: string, valus: Array&lt;mixed&gt;): string;
+  declare function createConnection(options: ConnectionOptions | string): Connection;
+  declare function createPool(options: PoolOptions | string): Pool;
+  declare function createPoolCluster(options?: PoolClusterOptions): PoolCluster;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 20 2017 12:51:08 GMT-0500 (-05)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

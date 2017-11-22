@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for TableCRM/client/src/lib/helper.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">TableCRM/client/src/lib</a> helper.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/48</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/48</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// given changes array
+export function <span class="fstat-no" title="function not covered" >getNewAndUpdatedRows(</span>changes, source, postCallback, putCallback) {
+  // if changes array is not null
+<span class="cstat-no" title="statement not covered" >  if (changes &amp;&amp; source !== 'loadData') {</span>
+    // create empty arrays to store new rows and updated rows as objects, respectively
+    let newRows = <span class="cstat-no" title="statement not covered" >[];</span>
+    let updatedRows = <span class="cstat-no" title="statement not covered" >[];</span>
+&nbsp;
+    // for each change array in changes array
+<span class="cstat-no" title="statement not covered" >    for (let change of changes) {</span>
+&nbsp;
+      // get change's corresponding row's index (per spreadsheet) and id (per database)
+      let rowIndex = <span class="cstat-no" title="statement not covered" >change[0];</span>
+      let rowId = <span class="cstat-no" title="statement not covered" >this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;</span>
+      // get change's field-newValue pair
+      let field = <span class="cstat-no" title="statement not covered" >change[1];</span>
+      let newValue = <span class="cstat-no" title="statement not covered" >change[3];</span>
+      // get change's corresponding cell
+      let colIndex = <span class="cstat-no" title="statement not covered" >this.refs.hot.hotInstance.propToCol(change[1]);</span>
+      let cell = <span class="cstat-no" title="statement not covered" >this.refs.hot.hotInstance.getCell(rowIndex, colIndex);</span>
+&nbsp;
+      // if change is of valid data type
+<span class="cstat-no" title="statement not covered" >      if (!cell.classList.value.split(' ').includes('htInvalid')) {</span>
+        // if change's corresponding row was empty prior to change
+<span class="cstat-no" title="statement not covered" >        if (rowId === null) {</span>
+          // create a variable to check whether row index is found in newRows array &amp; set its initial value to false
+          let found = <span class="cstat-no" title="statement not covered" >false;</span>
+&nbsp;
+          // for each row object in newRows array
+<span class="cstat-no" title="statement not covered" >          for (let newRow of newRows) {</span>
+            // if row object's index value is equal to row index
+<span class="cstat-no" title="statement not covered" >            if (newRow.index === rowIndex) {</span>
+              // add change's field-newValue pair to row object
+<span class="cstat-no" title="statement not covered" >              newRow[field] = newValue;</span>
+              // set check variable to true
+<span class="cstat-no" title="statement not covered" >              found = true;</span>
+              // exit loop
+<span class="cstat-no" title="statement not covered" >              break;</span>
+            }
+          }
+&nbsp;
+          // subsquent to loop, if check variable is false
+<span class="cstat-no" title="statement not covered" >          if (!found) {</span>
+            // create an object with key-value pair: {index: change's row index}
+            let newRow = <span class="cstat-no" title="statement not covered" >{index: rowIndex};</span>
+            // add change's field-newValue pair to the object
+<span class="cstat-no" title="statement not covered" >            newRow[field] = newValue;</span>
+            // push the object to newRows array
+<span class="cstat-no" title="statement not covered" >            newRows.push(newRow);</span>
+          }
+&nbsp;
+        // otherwise, if change's corresponding row was not empty prior to change
+        } else {
+          // create a variable to check whether row id is found in updatedRows array &amp; set its initial value to false
+          let found = <span class="cstat-no" title="statement not covered" >false;</span>
+&nbsp;
+          // for each row object in updatedRows array
+<span class="cstat-no" title="statement not covered" >          for (let updatedRow of updatedRows) {</span>
+            // if row object's id value is equal to row id
+<span class="cstat-no" title="statement not covered" >            if (updatedRow.id === rowId) {</span>
+              // add change's field-newValue pair to row object
+<span class="cstat-no" title="statement not covered" >              updatedRow[field] = newValue;</span>
+              // set check variable to true
+<span class="cstat-no" title="statement not covered" >              found = true;</span>
+              // exit loop
+<span class="cstat-no" title="statement not covered" >              break;</span>
+            }
+          }
+&nbsp;
+          // subsquent to loop, if check variable is false
+<span class="cstat-no" title="statement not covered" >          if (!found) {</span>
+            // create an object with key-value pair: {id: change's row id}
+            let updatedRow = <span class="cstat-no" title="statement not covered" >{id: rowId};</span>
+            // add change's field-newValue pair to the object
+<span class="cstat-no" title="statement not covered" >            updatedRow[field] = newValue;</span>
+            // push the object to updatedRows array
+<span class="cstat-no" title="statement not covered" >            updatedRows.push(updatedRow);</span>
+          }
+        }
+      }
+    }
+&nbsp;
+    // for each new row in newRows array, remove row index before ajax call
+<span class="cstat-no" title="statement not covered" >    for (let newRow of newRows) {</span>
+<span class="cstat-no" title="statement not covered" >      if ('index' in newRow) {</span>
+<span class="cstat-no" title="statement not covered" >        delete newRow.index;</span>
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (newRows.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      postCallback(newRows);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (updatedRows.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      putCallback(updatedRows);</span>
+    }
+  }
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >getRemovedIds(</span>) {
+  // selected rows
+  const selectedRows = <span class="cstat-no" title="statement not covered" >this.refs.hot.hotInstance.getSelected();</span>
+  const startRow = <span class="cstat-no" title="statement not covered" >selectedRows[0];</span>
+  const endRow = <span class="cstat-no" title="statement not covered" >selectedRows[2];</span>
+  // get smallest and biggest row id's
+  const smallestRowIndex = <span class="cstat-no" title="statement not covered" >Math.min(startRow, endRow);</span>
+  const biggestRowIndex = <span class="cstat-no" title="statement not covered" >Math.max(startRow, endRow);</span>
+  // get list of deleted row id's
+  const removedIds = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >  for (let i = smallestRowIndex; i &lt;= biggestRowIndex; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    removedIds.push(this.refs.hot.hotInstance.getDataAtRow(i)[0]);</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return removedIds;</span>
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 20 2017 12:51:08 GMT-0500 (-05)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>
