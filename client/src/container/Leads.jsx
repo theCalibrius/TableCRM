@@ -10,8 +10,8 @@ import {
   getAllLeads,
   createAndUpdateLeads,
   deleteLeads,
-  getEntityColumnOrders,
-  updateEntityColumnOrders
+  getColumnsOfLeads,
+  updateColumnsOfLeads
 } from '../actions/leadsActions';
 
 class Leads extends React.Component {
@@ -46,7 +46,7 @@ class Leads extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.dispatch(getEntityColumnOrders.bind(this));
+    this.props.dispatch(getColumnsOfLeads.bind(this));
     this.props.dispatch(getAllLeads);
   }
   render() {
@@ -90,7 +90,7 @@ class Leads extends React.Component {
                 },
                 afterColumnMove: (columns, target) => {
                   this.props.dispatch(
-                    updateEntityColumnOrders(columns, target).bind(this)
+                    updateColumnsOfLeads(columns, target).bind(this)
                   );
                 }
               }}
@@ -104,7 +104,6 @@ class Leads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.leadsReducer.leads,
-  // leadsColumns: state.leadsReducer.leadsColumns,
   leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader
 });
 

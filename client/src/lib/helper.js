@@ -132,19 +132,20 @@ export function colPropsToIndices(colProps) {
 }
 
 export function getSortedColumnsByRank(columns) {
-  // set columns state ordered by rank
+  // set columns state sorted by rank
   const rankedColumns = [];
   const currentColumns = this.state.columns;
   for (let i = 0; i < currentColumns.length; i++) {
     rankedColumns.push(Object.assign({}, currentColumns[i], columns[i]));
   }
+  // sort rankedColumns by object rank value
   rankedColumns.sort((a, b) => {
     if (a.rank < b.rank) return -1;
     if (a.rank > b.rank) return 1;
     return 0;
   });
   this.setState({ columns: rankedColumns });
-  // get orderd column header by ran
+  // get colHeaders sorted by rank
   const columnsHeader = [];
   for (const column of rankedColumns) {
     columnsHeader.push(column.name);

@@ -64,7 +64,7 @@ export function deleteLeads(index, amount) {
   };
 }
 
-export function getEntityColumnOrders(dispatch) {
+export function getColumnsOfLeads(dispatch) {
   axios
     .get('/api/leads/columnorders')
     .then(response => {
@@ -83,7 +83,7 @@ export function getEntityColumnOrders(dispatch) {
     });
 }
 
-export function updateEntityColumnOrders(columns, target) {
+export function updateColumnsOfLeads(columns, target) {
   return function(dispatch) {
     if (target) {
       const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
@@ -100,7 +100,7 @@ export function updateEntityColumnOrders(columns, target) {
             ).then(updatedColumnOrders => {
               axios
                 .put('/api/leads/columnorders', { updatedColumnOrders })
-                .then(dispatch(getEntityColumnOrders));
+                .then(dispatch(getColumnsOfLeads));
             });
           });
       });
