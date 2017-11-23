@@ -6,9 +6,20 @@ import Leads from '../container/Leads.jsx';
 import Opportunities from '../container/Opportunities.jsx';
 import Contacts from '../container/Contacts.jsx';
 import Accounts from '../container/Accounts.jsx';
+import styled from 'styled-components';
+import { injectGlobal } from 'styled-components';
 
 class App extends React.Component {
   render() {
+    injectGlobal`
+      @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800');
+
+      body {
+        font-family: 'Nunito Sans', sans-serif;
+        margin: 0;
+        background: #fff;
+      }
+    `;
     return (
       <div>
         <Nav />
