@@ -1,6 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
+import Nav from './Nav.jsx';
 import Leads from '../container/Leads.jsx';
 import Opportunities from '../container/Opportunities.jsx';
 import Contacts from '../container/Contacts.jsx';
@@ -12,7 +13,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div>Header</div>
+        <Nav />
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/leads" component={Leads} />
