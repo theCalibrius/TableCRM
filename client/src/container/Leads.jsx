@@ -71,7 +71,7 @@ class Leads extends React.Component {
                 manualColumnMove: true,
                 rowHeaders: true,
                 stretchH: 'all',
-                contextMenu: ['remove_row', 'copy', 'cut'],
+                contextMenu: ['remove_row'],
                 filters: true,
                 dropdownMenu: [
                   'filter_by_condition',
