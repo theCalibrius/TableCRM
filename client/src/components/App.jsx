@@ -20,6 +20,10 @@ class App extends React.Component {
         background: #fff;
       }
     `;
+    const AppWrap = styled.div`
+			background: #ffffff;
+			height: 100%;
+		`;
     return (
       <div>
         <Nav />
