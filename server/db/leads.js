@@ -61,21 +61,18 @@ const getColumnOrders = (req, res) => {
 };
 
 const updateColumnOrders = (req, res) => {
-
   const updatedColumnOrders = req.body.updatedColumnOrders;
-  console.log(updatedColumnOrders);
   for (const column of updatedColumnOrders) {
     db.query(
       `UPDATE leadsColumns SET rank = ${column.columnOrder} WHERE id = ${
         column.columnId
       }`,
-      (err, columns) => {
+      err => {
         if (err) return console.log(err);
       }
     );
   }
   res.sendStatus(201);
-
 };
 
 module.exports = {

@@ -185,24 +185,24 @@ export function mapColumnIdToName() {
   });
 }
 
-export function getChangedColumnsObj(
+export function getUpdatedColumnsObj(
   entityColumnsObj,
-  movedRange,
+  movedRangeIndexes,
   afterColumnsArray
 ) {
   return new Promise(resolve => {
     const updatedColumnOrders = [];
-    const movedRangeStart = movedRange[0];
-    const movedRangeEnd = movedRange[movedRange.length - 1];
+    const movedRangeStart = movedRangeIndexes[0];
+    const movedRangeEnd = movedRangeIndexes[movedRangeIndexes.length - 1];
     for (let i = movedRangeStart; i <= movedRangeEnd; i++) {
-      const updatedColumn = {};
+      const updatedColumns = {};
       const columnName = afterColumnsArray[i];
       const columnId = entityColumnsObj[columnName];
       const columnOrder = i;
-      updatedColumn.columnName = columnName;
-      updatedColumn.columnId = columnId;
-      updatedColumn.columnOrder = columnOrder;
-      updatedColumnOrders.push(updatedColumn);
+      updatedColumns.columnName = columnName;
+      updatedColumns.columnId = columnId;
+      updatedColumns.columnOrder = columnOrder;
+      updatedColumnOrders.push(updatedColumns);
     }
     resolve(updatedColumnOrders);
   });

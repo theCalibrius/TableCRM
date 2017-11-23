@@ -6,7 +6,7 @@ import {
   getSortedColumnsByRank,
   getMovedColumnsIndexRange,
   mapColumnIdToName,
-  getChangedColumnsObj
+  getUpdatedColumnsObj
 } from '../lib/helper';
 
 export function getAllLeads(dispatch) {
@@ -66,7 +66,7 @@ export function deleteLeads(index, amount) {
 
 export function getColumnsOfLeads(dispatch) {
   axios
-    .get('/api/leads/columnorders')
+    .get('/api/leads/columns')
     .then(response => {
       const columns = response.data;
       const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
@@ -86,21 +86,21 @@ export function getColumnsOfLeads(dispatch) {
 export function updateColumnsOfLeads(columns, target) {
   return function(dispatch) {
     if (target) {
-      const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
       getMovedColumnsIndexRange(columns, target).then(movedRange => {
         const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
         mapColumnIdToNameBind()
           .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
-          .then(res => {
-            const ColumnIdToNameObj = res[0];
-            const movedRange = res[1];
-            getChangedColumnsObj(
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
               ColumnIdToNameObj,
-              movedRange,
+              movedRangeIndexes,
               afterColumnsArray
             ).then(updatedColumnOrders => {
               axios
-                .put('/api/leads/columnorders', { updatedColumnOrders })
+                .put('/api/leads/columns', { updatedColumnOrders })
                 .then(dispatch(getColumnsOfLeads));
             });
           });

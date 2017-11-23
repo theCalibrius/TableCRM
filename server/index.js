@@ -34,8 +34,14 @@ app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.put('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.delete('/api/opportunities', opportunities.deleteOpportunities);
 
-app.get('/api/opportunities/columns', opportunities.getHiddenColumnsOfOpportunities);
-app.put('/api/opportunities/columns', opportunities.updateHiddenColumnsOfOpportunities);
+app.get(
+  '/api/opportunities/columns',
+  opportunities.getHiddenColumnsOfOpportunities
+);
+app.put(
+  '/api/opportunities/columns',
+  opportunities.updateHiddenColumnsOfOpportunities
+);
 
 app.get('/api/accounts', accounts.getAllAccounts);
 
@@ -43,8 +49,8 @@ app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createAndUpdateLeads);
 app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);
-app.get('/api/leads/columnorders', leads.getColumnOrders);
-app.put('/api/leads/columnorders', leads.updateColumnOrders);
+app.get('/api/leads/columns', leads.getColumnOrders);
+app.put('/api/leads/columns', leads.updateColumnOrders);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Server
