@@ -153,15 +153,18 @@ export function getSortedColumnsByRank(columns) {
   return columnsHeader;
 }
 
-export function getMovedColumnRange(columns, target) {
+export function getMovedColumnsIndexRange(columns, target) {
   return new Promise(resolve => {
     let movedRange;
     let movedRight;
+    // determine if user moved column(s) to right or left
     columns[0] < target ? (movedRight = true) : (movedRight = false);
     if (movedRight) {
+      // if moved right
       const movedIndex = target - columns.length - 1;
       movedRange = [columns[0], movedIndex + columns.length];
     } else {
+      // if moved left
       const movedIndex = target;
       movedRange = [movedIndex, columns[columns.length - 1]];
     }
@@ -169,18 +172,16 @@ export function getMovedColumnRange(columns, target) {
   });
 }
 
-export function entityColumnsToObj() {
+export function mapColumnIdToName() {
   return new Promise(resolve => {
-    axios.get('/api/leads/columnorders').then(res => {
-      const columns = res.data;
-      const entityColumnsObj = {};
-      for (const column of columns) {
-        const columnName = column.name;
-        const columnId = column.id;
-        entityColumnsObj[columnName] = columnId;
-      }
-      resolve(entityColumnsObj);
-    });
+    const currentColumns = this.state.columns;
+    const ColumnIdToNameObj = {};
+    for (const column of currentColumns) {
+      const columnName = column.name;
+      const columnId = column.id;
+      ColumnIdToNameObj[columnName] = columnId;
+    }
+    resolve(ColumnIdToNameObj);
   });
 }
 

@@ -4,8 +4,8 @@ import {
   getNewAndUpdatedRows,
   getRemovedIds,
   getSortedColumnsByRank,
-  getMovedColumnRange,
-  entityColumnsToObj,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
   getChangedColumnsObj
 } from '../lib/helper';
 
@@ -87,14 +87,15 @@ export function updateColumnsOfLeads(columns, target) {
   return function(dispatch) {
     if (target) {
       const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
-      getMovedColumnRange(columns, target).then(movedRange => {
-        entityColumnsToObj()
-          .then(entityColumnsObj => [entityColumnsObj, movedRange])
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
           .then(res => {
-            const entityColumnsObj = res[0];
+            const ColumnIdToNameObj = res[0];
             const movedRange = res[1];
             getChangedColumnsObj(
-              entityColumnsObj,
+              ColumnIdToNameObj,
               movedRange,
               afterColumnsArray
             ).then(updatedColumnOrders => {
