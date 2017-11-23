@@ -3,7 +3,7 @@ import moment from 'moment';
 import {
   getNewAndUpdatedRows,
   getRemovedIds,
-  mergeRankColumns,
+  getSortedColumnsByRank,
   getMovedColumnRange,
   entityColumnsToObj,
   getChangedColumnsObj
@@ -69,20 +69,8 @@ export function getEntityColumnOrders(dispatch) {
     .get('/api/leads/columnorders')
     .then(response => {
       const columns = response.data;
-      // merge ranked columns
-      const mergeRankColumnsBind = mergeRankColumns.bind(this);
-      mergeRankColumnsBind(columns);
-      // sort columnHeader by rank and collect column names
-      const columnsHeader = [];
-      columns.sort((a, b) => {
-        if (a.rank < b.rank) return -1;
-        if (a.rank > b.rank) return 1;
-        return 0;
-      });
-      for (const column of columns) {
-        columnsHeader.push(column.name);
-      }
-      return columnsHeader;
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
     })
     .then(columnsHeader => {
       dispatch({
