@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavContainer = styled.div`
@@ -22,33 +22,50 @@ const ListItem = styled.li`
 		font-size: 16px;
 		line-height: 21px;
 		text-decoration: none;
-		color: #fff;
+		color: #ccc;
+		transition: 0.2s color ease;
 	}
 	> a:hover {
-		border-bottom: 2px solid #fff;
-		padding-bottom: 5px;
+		color: #fff;
 	}
 `;
 
 class Nav extends React.Component {
   render() {
+    const activeStyle = {
+      color: '#fff',
+      borderBottomWidth: '2px',
+      borderBottomStyle: 'solid',
+      borderBottomColor: '#fff',
+      paddingBottom: '5px'
+    };
     return (
       <NavContainer>
         <UnorderedList>
           <ListItem>
-            <Link to="/dashboard">Dashboard</Link>
+            <NavLink activeStyle={activeStyle} to="/dashboard">
+							Dashboard
+            </NavLink>
           </ListItem>
           <ListItem>
-            <Link to="/leads">Leads</Link>
+            <NavLink activeStyle={activeStyle} to="/leads">
+							Leads
+            </NavLink>
           </ListItem>
           <ListItem>
-            <Link to="/contacts">Contacts</Link>
+            <NavLink activeStyle={activeStyle} to="/contacts">
+							Contacts
+            </NavLink>
           </ListItem>
           <ListItem>
-            <Link to="/accounts">Accounts</Link>
+            <NavLink activeStyle={activeStyle} to="/accounts">
+							Accounts
+            </NavLink>
           </ListItem>
           <ListItem>
-            <Link to="/opportunities">Opportunities</Link>
+            <NavLink activeStyle={activeStyle} to="/opportunities">
+							Opportunities
+            </NavLink>
           </ListItem>
         </UnorderedList>
       </NavContainer>

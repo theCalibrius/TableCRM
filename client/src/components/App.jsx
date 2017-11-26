@@ -18,6 +18,7 @@ body {
   margin: 0;
   background: #fff;
   overflow: hidden;
+  color: #363636;
 }
 `;
 
