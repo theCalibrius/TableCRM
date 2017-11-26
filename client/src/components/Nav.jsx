@@ -1,28 +1,57 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const NavContainer = styled.div`
+	background-color: #2a3756;
+`;
+
+const UnorderedList = styled.ul`
+	padding: 20px;
+	text-align: center;
+	margin: 0;
+`;
+
+const ListItem = styled.li`
+	text-align: center;
+	margin: 0;
+	list-style: none;
+	display: inline-block;
+	margin-right: 30px;
+	> a {
+		font-size: 16px;
+		line-height: 21px;
+		text-decoration: none;
+		color: #fff;
+	}
+	> a:hover {
+		border-bottom: 2px solid #fff;
+		padding-bottom: 5px;
+	}
+`;
 
 class Nav extends React.Component {
   render() {
     return (
-      <div className="nav-container">
-        <ul>
-          <li className="nav-item">
-            <Link className="nav-link" to="/dashboard">Dashboard</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/leads">Leads</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/opportunities">Opportunities</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/contacts">Contacts</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/accounts">Accounts</Link>
-          </li>
-        </ul>
-      </div>
+      <NavContainer>
+        <UnorderedList>
+          <ListItem>
+            <Link to="/dashboard">Dashboard</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/leads">Leads</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/contacts">Contacts</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/accounts">Accounts</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/opportunities">Opportunities</Link>
+          </ListItem>
+        </UnorderedList>
+      </NavContainer>
     );
   }
 }

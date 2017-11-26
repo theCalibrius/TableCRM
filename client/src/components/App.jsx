@@ -9,32 +9,37 @@ import Accounts from '../container/Accounts.jsx';
 import styled from 'styled-components';
 import { injectGlobal } from 'styled-components';
 
+injectGlobal`
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700');
+
+body {
+  font-size: 12px;
+  font-family: 'Nunito Sans', sans-serif;
+  margin: 0;
+  background: #fff;
+  overflow: hidden;
+}
+`;
+
+const AppWrap = styled.div`
+	background: #ffffff;
+	height: 100%;
+	overflow: hidden;
+`;
+
 class App extends React.Component {
   render() {
-    injectGlobal`
-      @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800');
-
-      body {
-        font-family: 'Nunito Sans', sans-serif;
-        margin: 0;
-        background: #fff;
-      }
-    `;
-    const AppWrap = styled.div`
-			background: #ffffff;
-			height: 100%;
-		`;
     return (
-      <div>
+      <AppWrap>
         <Nav />
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/leads" component={Leads} />
-          <Route exact path="/opportunities" component={Opportunities} />
           <Route exact path="/contacts" component={Contacts} />
           <Route exact path="/accounts" component={Accounts} />
+          <Route exact path="/opportunities" component={Opportunities} />
         </Switch>
-      </div>
+      </AppWrap>
     );
   }
 }
