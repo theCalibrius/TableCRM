@@ -15,6 +15,7 @@ injectGlobal`
 body {
   font-size: 12px;
   font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
   margin: 0;
   background: #fff;
   overflow: hidden;

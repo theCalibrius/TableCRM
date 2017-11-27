@@ -8,7 +8,7 @@ const NavContainer = styled.div`
 
 const UnorderedList = styled.ul`
 	padding: 20px;
-	text-align: center;
+	text-align: left;
 	margin: 0;
 `;
 
@@ -17,13 +17,18 @@ const ListItem = styled.li`
 	margin: 0;
 	list-style: none;
 	display: inline-block;
-	margin-right: 30px;
+	margin-right: 40px;
 	> a {
 		font-size: 16px;
 		line-height: 21px;
 		text-decoration: none;
 		color: #ccc;
 		transition: 0.2s color ease;
+		display: flex;
+		align-items: center;
+		> p {
+			margin: 0 0 0 6px;
+		}
 	}
 	> a:hover {
 		color: #fff;
@@ -34,37 +39,43 @@ class Nav extends React.Component {
   render() {
     const activeStyle = {
       color: '#fff',
-      borderBottomWidth: '2px',
-      borderBottomStyle: 'solid',
-      borderBottomColor: '#fff',
-      paddingBottom: '5px'
+      fontWeight: '500'
+      // borderBottomWidth: '2px',
+      // borderBottomStyle: 'solid',
+      // borderBottomColor: '#fff',
+      // paddingBottom: '5px'
     };
     return (
       <NavContainer>
         <UnorderedList>
           <ListItem>
             <NavLink activeStyle={activeStyle} to="/dashboard">
-							Dashboard
+              <i className="material-icons">poll</i>
+              <p>Dashboard</p>
             </NavLink>
           </ListItem>
           <ListItem>
             <NavLink activeStyle={activeStyle} to="/leads">
-							Leads
+              <i className="material-icons">navigation</i>
+              <p>Leads</p>
             </NavLink>
           </ListItem>
           <ListItem>
             <NavLink activeStyle={activeStyle} to="/contacts">
-							Contacts
+              <i className="material-icons">people</i>
+              <p>Contacts</p>
             </NavLink>
           </ListItem>
           <ListItem>
             <NavLink activeStyle={activeStyle} to="/accounts">
-							Accounts
+              <i className="material-icons">domain</i>
+              <p>Accounts</p>
             </NavLink>
           </ListItem>
           <ListItem>
             <NavLink activeStyle={activeStyle} to="/opportunities">
-							Opportunities
+              <i className="material-icons">local_atm</i>
+              <p>Opportunities</p>
             </NavLink>
           </ListItem>
         </UnorderedList>
