@@ -40,10 +40,6 @@ class Nav extends React.Component {
     const activeStyle = {
       color: '#fff',
       fontWeight: '500'
-      // borderBottomWidth: '2px',
-      // borderBottomStyle: 'solid',
-      // borderBottomColor: '#fff',
-      // paddingBottom: '5px'
     };
     return (
       <NavContainer>
