@@ -17,7 +17,7 @@ const ListItem = styled.li`
 	margin: 0;
 	list-style: none;
 	display: inline-block;
-	margin-right: 40px;
+	margin-right: 30px;
 	> a {
 		font-size: 16px;
 		line-height: 21px;
