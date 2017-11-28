@@ -40,6 +40,7 @@ export function getAllAccounts(dispatch) {
 }
 
 export function createAndUpdateAccounts(changes, source) {
+  console.log('createAndUpdateAccounts client');
   return function(dispatch) {
     let postCallback = function(newRows) {
       axios.post('/api/accounts', { newRows }).then(() => {
@@ -60,6 +61,7 @@ export function createAndUpdateAccounts(changes, source) {
 
 export function deleteAccounts(index, amount) {
   return function(dispatch) {
+    console.log('deleteAccounts client');
     const selectedRows = this.refs.hot.hotInstance.getSelected();
     const getRemovedIdsBound = getRemovedIds.bind(this);
     const removedIds = getRemovedIdsBound(selectedRows);
