@@ -1,9 +1,6 @@
 // the presets property impacts pre-processing of ES6 and JSX in files being tested
 
 {
-  "plugins": ["transform-object-rest-spread", "transform-flow-strip-types"],
-  "presets": [
-     "react",
-     "es2015"
-  ]
+	"plugins": ["transform-object-rest-spread", "transform-flow-strip-types"],
+	"presets": ["react", "es2015"]
 }

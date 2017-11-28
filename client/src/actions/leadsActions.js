@@ -1,6 +1,13 @@
 import axios from 'axios';
 import moment from 'moment';
-import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
+import {
+  getNewAndUpdatedRows,
+  getRemovedIds,
+  getSortedColumnsByRank,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
+  getUpdatedColumnsObj
+} from '../lib/helper';
 
 export function getAllLeads(dispatch) {
   axios
@@ -57,28 +64,47 @@ export function deleteLeads(index, amount) {
   };
 }
 
-export function getLeadsColumnOrders(dispatch) {
+export function getColumnsOfLeads(dispatch) {
   axios
-    .get('/api/leadsColumnOrders')
+    .get('/api/leads/columns')
     .then(response => {
-      const columnsHeader = [];
       const columns = response.data;
-      for (const column of columns) {
-        columnsHeader.push(column.data);
-      }
-      return [response.data, columnsHeader];
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
     })
-    .then(response => {
-      dispatch({
-        type: 'GET_ALL_LEADS_COLUMNS',
-        payload: response[0]
-      });
+    .then(columnsHeader => {
       dispatch({
         type: 'GET_ALL_LEADS_COLUMNS_HEADER',
-        payload: response[1]
+        payload: columnsHeader
       });
     })
     .catch(err => {
       console.error.bind(err);
     });
+}
+
+export function updateColumnsOfLeads(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
+              ColumnIdToNameObj,
+              movedRangeIndexes,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              axios
+                .put('/api/leads/columns', { updatedColumnOrders })
+                .then(dispatch(getColumnsOfLeads));
+            });
+          });
+      });
+    }
+  };
 }

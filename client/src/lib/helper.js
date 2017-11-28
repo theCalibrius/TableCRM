@@ -1,22 +1,24 @@
+import axios from 'axios';
+
 // given changes array
 export function getNewAndUpdatedRows(changes, source) {
   // if changes array is not null
   if (changes && source !== 'loadData') {
     // create empty arrays to store new rows and updated rows as objects, respectively
-    let newRows = [];
-    let updatedRows = [];
+    const newRows = [];
+    const updatedRows = [];
 
     // for each change array in changes array
-    for (let change of changes) {
+    for (const change of changes) {
       // get change's corresponding row's index (per spreadsheet) and id (per database)
-      let rowIndex = change[0];
-      let rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+      const rowIndex = change[0];
+      const rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
       // get change's field-newValue pair
-      let field = change[1];
-      let newValue = change[3];
+      const field = change[1];
+      const newValue = change[3];
       // get change's corresponding cell
-      let colIndex = this.refs.hot.hotInstance.propToCol(change[1]);
-      let cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
+      const colIndex = this.refs.hot.hotInstance.propToCol(change[1]);
+      const cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
       // if change is of valid data type
       if (!cell.classList.value.split(' ').includes('htInvalid')) {
@@ -26,7 +28,7 @@ export function getNewAndUpdatedRows(changes, source) {
           let found = false;
 
           // for each row object in newRows array
-          for (let newRow of newRows) {
+          for (const newRow of newRows) {
             // if row object's index value is equal to row index
             if (newRow.index === rowIndex) {
               // add change's field-newValue pair to row object
@@ -41,20 +43,20 @@ export function getNewAndUpdatedRows(changes, source) {
           // subsquent to loop, if check variable is false
           if (!found) {
             // create an object with key-value pair: {index: change's row index}
-            let newRow = {index: rowIndex};
+            const newRow = { index: rowIndex };
             // add change's field-newValue pair to the object
             newRow[field] = newValue;
             // push the object to newRows array
             newRows.push(newRow);
           }
 
-        // otherwise, if change's corresponding row was not empty prior to change
+          // otherwise, if change's corresponding row was not empty prior to change
         } else {
           // create a variable to check whether row id is found in updatedRows array & set its initial value to false
           let found = false;
 
           // for each row object in updatedRows array
-          for (let updatedRow of updatedRows) {
+          for (const updatedRow of updatedRows) {
             // if row object's id value is equal to row id
             if (updatedRow.id === rowId) {
               // add change's field-newValue pair to row object
@@ -69,7 +71,7 @@ export function getNewAndUpdatedRows(changes, source) {
           // subsquent to loop, if check variable is false
           if (!found) {
             // create an object with key-value pair: {id: change's row id}
-            let updatedRow = {id: rowId};
+            const updatedRow = { id: rowId };
             // add change's field-newValue pair to the object
             updatedRow[field] = newValue;
             // push the object to updatedRows array
@@ -80,13 +82,13 @@ export function getNewAndUpdatedRows(changes, source) {
     }
 
     // for each new row in newRows array, remove row index before ajax call
-    for (let newRow of newRows) {
+    for (const newRow of newRows) {
       if ('index' in newRow) {
         delete newRow.index;
       }
     }
 
-    return {newRows, updatedRows};
+    return { newRows, updatedRows };
   }
 }
 
@@ -106,11 +108,11 @@ export function getRemovedIds() {
 }
 
 export function getHiddenCols(context) {
-  let hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
-  let hiddenColProps = [];
+  const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
+  const hiddenColProps = [];
 
-  for (let hiddenColIndex of hiddenColIndices) {
-    let hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
+  for (const hiddenColIndex of hiddenColIndices) {
+    const hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
     hiddenColProps.push(hiddenColProp);
   }
 
@@ -120,12 +122,88 @@ export function getHiddenCols(context) {
 export function colPropsToIndices(colProps) {
   const colIndices = [];
 
-  for (let colProp of colProps) {
-    let prop = colProp.name;
-    let index = this.refs.hot.hotInstance.propToCol(prop);
+  for (const colProp of colProps) {
+    const prop = colProp.name;
+    const index = this.refs.hot.hotInstance.propToCol(prop);
     colIndices.push(index);
   }
 
   return colIndices;
 }
 
+export function getSortedColumnsByRank(columns) {
+  // set columns state sorted by rank
+  const rankedColumns = [];
+  const currentColumns = this.state.columns;
+  for (let i = 0; i < currentColumns.length; i++) {
+    rankedColumns.push(Object.assign({}, currentColumns[i], columns[i]));
+  }
+  // sort rankedColumns by object rank value
+  rankedColumns.sort((a, b) => {
+    if (a.rank < b.rank) return -1;
+    if (a.rank > b.rank) return 1;
+    return 0;
+  });
+  this.setState({ columns: rankedColumns });
+  // get colHeaders sorted by rank
+  const columnsHeader = [];
+  for (const column of rankedColumns) {
+    columnsHeader.push(column.name);
+  }
+  return columnsHeader;
+}
+
+export function getMovedColumnsIndexRange(columns, target) {
+  return new Promise(resolve => {
+    let movedRange;
+    let movedRight;
+    // determine if user moved column(s) to right or left
+    columns[0] < target ? (movedRight = true) : (movedRight = false);
+    if (movedRight) {
+      // if moved right
+      const movedIndex = target - columns.length - 1;
+      movedRange = [columns[0], movedIndex + columns.length];
+    } else {
+      // if moved left
+      const movedIndex = target;
+      movedRange = [movedIndex, columns[columns.length - 1]];
+    }
+    resolve(movedRange);
+  });
+}
+
+export function mapColumnIdToName() {
+  return new Promise(resolve => {
+    const currentColumns = this.state.columns;
+    const ColumnIdToNameObj = {};
+    for (const column of currentColumns) {
+      const columnName = column.name;
+      const columnId = column.id;
+      ColumnIdToNameObj[columnName] = columnId;
+    }
+    resolve(ColumnIdToNameObj);
+  });
+}
+
+export function getUpdatedColumnsObj(
+  entityColumnsObj,
+  movedRangeIndexes,
+  afterColumnsArray
+) {
+  return new Promise(resolve => {
+    const updatedColumnOrders = [];
+    const movedRangeStart = movedRangeIndexes[0];
+    const movedRangeEnd = movedRangeIndexes[movedRangeIndexes.length - 1];
+    for (let i = movedRangeStart; i <= movedRangeEnd; i++) {
+      const updatedColumns = {};
+      const columnName = afterColumnsArray[i];
+      const columnId = entityColumnsObj[columnName];
+      const columnOrder = i;
+      updatedColumns.columnName = columnName;
+      updatedColumns.columnId = columnId;
+      updatedColumns.columnOrder = columnOrder;
+      updatedColumnOrders.push(updatedColumns);
+    }
+    resolve(updatedColumnOrders);
+  });
+}
