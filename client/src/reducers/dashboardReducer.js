@@ -8,7 +8,44 @@ export default function(
   case 'GET_TOTAL_OPP_VALUE_PER_STATUS':
     return {
       ...state,
-      totalOppValuePerStatus: action.payload
+      // totalOppValuePerStatus: action.payload
+      totalOppValuePerStatus: {
+        chart: {
+          type: 'column',
+          height: 260
+        },
+        title: {
+          text: null
+        },
+        xAxis: {
+          categories: ['Won', 'Lost', 'Abandoned', 'Open'],
+          title: {
+            // text: 'Closed Status'
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: null
+          }
+        },
+        series: [
+          {
+            showInLegend: false,
+            name: 'Total Value',
+            data: [
+              action.payload.Won,
+              action.payload.Lost,
+              action.payload.Abandoned,
+              action.payload.Open
+            ],
+            color: '#39ACFF'
+          }
+        ],
+        credits: {
+          enabled: false
+        }
+      }
     };
   }
   switch (action.type) {
@@ -18,12 +55,5 @@ export default function(
       totalOppValuePerStage: action.payload
     };
   }
-  // switch (action.type) {
-  // case 'GET_ALL_LEADS_COLUMNS_HEADER':
-  //   return {
-  //     ...state,
-  //     leadsColumnsHeader: action.payload
-  //   };
-  // }
   return state;
 }

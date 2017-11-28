@@ -4,9 +4,13 @@ const db = require('./config');
 const getTotalOppValuePerStatus = (req, res) => {
   db.query(
     'SELECT status, SUM (estimatedValue) from opportunities group by status',
-    (err, rows) => {
+    (err, values) => {
       if (err) console.log(err);
-      res.json(rows);
+      const mappedObj = {};
+      for (const i of values) {
+        mappedObj[i.status] = i['SUM (estimatedValue)'];
+      }
+      res.json(mappedObj);
     }
   );
 };

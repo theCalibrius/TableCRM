@@ -15,38 +15,6 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalOppValuePerStatus: {
-        chart: {
-          type: 'column',
-          height: 260
-        },
-        title: {
-          text: null
-        },
-        xAxis: {
-          categories: ['Won', 'Lost', 'Abandoned', 'Open'],
-          title: {
-            // text: 'Closed Status'
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: null
-          }
-        },
-        series: [
-          {
-            showInLegend: false,
-            name: 'Total Value',
-            data: [29.9, 71.5, 106.4, 1000],
-            color: '#39ACFF'
-          }
-        ],
-        credits: {
-          enabled: false
-        }
-      }
       // openOppsValuePerStages: {
       //   chart: {
       //     type: 'column',
@@ -94,10 +62,14 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
-        <ReactHighcharts
-          config={this.state.totalOppValuePerStatus}
-          ref="chart2"
-        />
+        {!this.props.totalOppValuePerStatus ? (
+          <p>loading...</p>
+        ) : (
+          <ReactHighcharts
+            config={this.props.totalOppValuePerStatus}
+            ref="chart2"
+          />
+        )}
         {/* <ReactHighcharts
           config={this.state.openOppsValuePerStages}
           ref="chart2"
