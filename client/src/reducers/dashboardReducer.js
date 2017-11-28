@@ -1,6 +1,7 @@
 export default function(
   state = {
-    totalOppValuePerStatus: null
+    totalOppValuePerStatus: null,
+    totalOppValuePerStage: null
   },
   action
 ) {
@@ -8,7 +9,6 @@ export default function(
   case 'GET_TOTAL_OPP_VALUE_PER_STATUS':
     return {
       ...state,
-      // totalOppValuePerStatus: action.payload
       totalOppValuePerStatus: {
         chart: {
           type: 'column',
@@ -52,7 +52,50 @@ export default function(
   case 'GET_TOTAL_OPP_VALUE_PER_STAGE':
     return {
       ...state,
-      totalOppValuePerStage: action.payload
+      totalOppValuePerStage: {
+        chart: {
+          type: 'column',
+          height: 260
+        },
+        title: {
+          text: null
+        },
+        xAxis: {
+          categories: [
+            'Qualified',
+            'Presentation',
+            'Negotiation',
+            'Contract Sent',
+            'Payment'
+          ],
+          title: {
+            // text: 'Closed Status'
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: null
+          }
+        },
+        series: [
+          {
+            showInLegend: false,
+            name: 'Total Value',
+            data: [
+              action.payload.Qualified,
+              action.payload.Presentation,
+              action.payload.Negotiation,
+              action.payload['Contract Sent'],
+              action.payload.Payment
+            ],
+            color: '#39ACFF'
+          }
+        ],
+        credits: {
+          enabled: false
+        }
+      }
     };
   }
   return state;

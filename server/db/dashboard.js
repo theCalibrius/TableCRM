@@ -18,9 +18,13 @@ const getTotalOppValuePerStatus = (req, res) => {
 const getTotalOppValuePerStage = (req, res) => {
   db.query(
     'SELECT stage, SUM (estimatedValue) from opportunities group by stage',
-    (err, rows) => {
+    (err, values) => {
       if (err) console.log(err);
-      res.json(rows);
+      const mappedObj = {};
+      for (const i of values) {
+        mappedObj[i.stage] = i['SUM (estimatedValue)'];
+      }
+      res.json(mappedObj);
     }
   );
 };
