@@ -19,7 +19,7 @@ const ListItem = styled.li`
 	display: inline-block;
 	margin-right: 30px;
 	> a {
-		font-size: 16px;
+		font-size: 14px;
 		line-height: 21px;
 		text-decoration: none;
 		color: #ccc;
