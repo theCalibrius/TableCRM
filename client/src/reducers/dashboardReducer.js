@@ -11,13 +11,13 @@ export default function(
       totalOppValuePerStatus: action.payload
     };
   }
-  // switch (action.type) {
-  // case 'GET_ALL_LEADS_COLUMNS':
-  //   return {
-  //     ...state,
-  //     leadsColumns: action.payload
-  //   };
-  // }
+  switch (action.type) {
+  case 'GET_TOTAL_OPP_VALUE_PER_STAGE':
+    return {
+      ...state,
+      totalOppValuePerStage: action.payload
+    };
+  }
   // switch (action.type) {
   // case 'GET_ALL_LEADS_COLUMNS_HEADER':
   //   return {

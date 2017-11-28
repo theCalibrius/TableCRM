@@ -57,6 +57,10 @@ app.get(
   '/api/dashboard/totaloppvalueperstatus',
   dashboard.getTotalOppValuePerStatus
 );
+app.get(
+  '/api/dashboard/totaloppvalueperstage',
+  dashboard.getTotalOppValuePerStage
+);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Server

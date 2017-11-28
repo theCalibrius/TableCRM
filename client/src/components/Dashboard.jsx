@@ -2,7 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getTotalOppValuePerStatus } from '../actions/dashboardActions';
+import {
+  getTotalOppValuePerStatus,
+  getTotalOppValuePerStage
+} from '../actions/dashboardActions';
 // highcharts
 import ReactHighcharts from 'react-highcharts';
 // styled-component
@@ -86,6 +89,7 @@ class Dashboard extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getTotalOppValuePerStatus);
+    this.props.dispatch(getTotalOppValuePerStage);
   }
   render() {
     return (
@@ -104,7 +108,8 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  totalOppValuePerStatus: state.dashboardReducer.totalOppValuePerStatus
+  totalOppValuePerStatus: state.dashboardReducer.totalOppValuePerStatus,
+  totalOppValuePerStage: state.dashboardReducer.totalOppValuePerStage
 });
 
 export default connect(mapStateToProps, null)(Dashboard);
