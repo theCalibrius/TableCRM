@@ -1,11 +1,18 @@
+// react & redux
 import React from 'react';
+import { connect } from 'react-redux';
+// redux actions
+import { getTotalOppValuePerStatus } from '../actions/dashboardActions';
+// highcharts
 import ReactHighcharts from 'react-highcharts';
+// styled-component
+import styled from 'styled-components';
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      closedOppsValueStatus: {
+      totalOppValuePerStatus: {
         chart: {
           type: 'column',
           height: 260
@@ -36,61 +43,68 @@ class Dashboard extends React.Component {
         credits: {
           enabled: false
         }
-      },
-      openOppsValuePerStages: {
-        chart: {
-          type: 'column',
-          height: 260
-        },
-        title: {
-          text: null
-        },
-        xAxis: {
-          categories: [
-            'Qualified',
-            'Presentation',
-            'Negotiation',
-            'Contract Sent',
-            'Payment'
-          ],
-          title: {
-            // text: 'Closed Status'
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: null
-          }
-        },
-        series: [
-          {
-            showInLegend: false,
-            name: 'Total Value',
-            data: [29.9, 71.5, 106.4, 300, 42],
-            color: '#39ACFF'
-          }
-        ],
-        credits: {
-          enabled: false
-        }
       }
+      // openOppsValuePerStages: {
+      //   chart: {
+      //     type: 'column',
+      //     height: 260
+      //   },
+      //   title: {
+      //     text: null
+      //   },
+      //   xAxis: {
+      //     categories: [
+      //       'Qualified',
+      //       'Presentation',
+      //       'Negotiation',
+      //       'Contract Sent',
+      //       'Payment'
+      //     ],
+      //     title: {
+      //       // text: 'Closed Status'
+      //     }
+      //   },
+      //   yAxis: {
+      //     min: 0,
+      //     title: {
+      //       text: null
+      //     }
+      //   },
+      //   series: [
+      //     {
+      //       showInLegend: false,
+      //       name: 'Total Value',
+      //       data: [29.9, 71.5, 106.4, 300, 42],
+      //       color: '#39ACFF'
+      //     }
+      //   ],
+      //   credits: {
+      //     enabled: false
+      //   }
+      // }
     };
   }
-
+  componentDidMount() {
+    this.props.dispatch(getTotalOppValuePerStatus);
+  }
   render() {
     return (
       <div>
         <ReactHighcharts
-          config={this.state.closedOppsValueStatus}
+          config={this.state.totalOppValuePerStatus}
           ref="chart2"
         />
-        <ReactHighcharts
+        {/* <ReactHighcharts
           config={this.state.openOppsValuePerStages}
           ref="chart2"
-        />
+        /> */}
       </div>
     );
   }
 }
-export default Dashboard;
+
+const mapStateToProps = state => ({
+  totalOppValuePerStatus: state.dashboardReducer.totalOppValuePerStatus
+});
+
+export default connect(mapStateToProps, null)(Dashboard);

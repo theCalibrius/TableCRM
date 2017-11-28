@@ -66,6 +66,13 @@ CREATE TABLE leads (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE leadsColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  rank int,
+  name varchar(50),
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE accounts (
   id int NOT NULL AUTO_INCREMENT,
   description text(255),
@@ -82,12 +89,6 @@ CREATE TABLE accounts (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE leadsColumns (
-  id int NOT NULL AUTO_INCREMENT,
-  rank int,
-  name varchar(50),
-  PRIMARY KEY (id)
-);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Actual Data
