@@ -17,7 +17,6 @@ https://redux.js.org/docs/api/Store.html#dispatch
 
 */
 import 'handsontable-pro/dist/handsontable.full.js';
-import 'handsontable-pro/dist/handsontable.full.css';
 import HotTable from 'react-handsontable';
 
 import React from 'react';
