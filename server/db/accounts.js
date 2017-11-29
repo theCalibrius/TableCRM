@@ -4,7 +4,6 @@ const moment = require('moment');
 
 
 const getAllAccounts = (req, res) => {
-  console.log('GETTING ALL ACCOUNTS');
   db.query('SELECT * from accounts', (err, rows) => {
     if (!err) {
       res.json(rows);
@@ -13,7 +12,6 @@ const getAllAccounts = (req, res) => {
 };
 
 const createAndUpdateAccounts = (req, res) => {
-  console.log('CREATING AND UPDATING ACCOUNTS server');
   let rows;
   if (req.method === 'POST') {
     rows = req.body.newRows;
@@ -39,7 +37,6 @@ const createAndUpdateAccounts = (req, res) => {
 };
 
 const deleteAccounts = (req, res) => {
-  console.log('DELETING ACCOUNTS server');
   const removedIds = req.body.removedIds;
   db.query(`DELETE FROM accounts WHERE id IN (${removedIds});`, err => {
     if (err) return console.log(err);
