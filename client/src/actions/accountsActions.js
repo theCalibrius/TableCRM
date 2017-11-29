@@ -40,31 +40,31 @@ export function getAllAccounts(dispatch) {
 }
 
 export function createAndUpdateAccounts(changes, source) {
-  console.log('createAndUpdateAccounts client');
   return function(dispatch) {
-    let postCallback = function(newRows) {
-      axios.post('/api/accounts', { newRows }).then(() => {
-        dispatch(getAllAccounts);
-      });
-    };
+    const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
+    const newAndUpdatedRows = getNewAndUpdatedRowsBound(changes, source);
 
-    let putCallback = function(updatedRows) {
-      axios.put('/api/accounts', { updatedRows }).then(() => {
-        dispatch(getAllAccounts);
-      });
-    };
+    if (newAndUpdatedRows) {
+      const newRows = newAndUpdatedRows.newRows;
+      const updatedRows = newAndUpdatedRows.updatedRows;
 
-    let getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
-    getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+      if (newRows.length > 0) {
+        axios.post('/api/accounts', {newRows})
+          .then(() => { dispatch(getAllAccounts); });
+      }
+
+      if (updatedRows.length > 0) {
+        axios.put('/api/accounts', {updatedRows})
+          .then(() => { dispatch(getAllAccounts); });
+      }
+    }
   };
 }
 
 export function deleteAccounts(index, amount) {
   return function(dispatch) {
-    console.log('deleteAccounts client');
-    const selectedRows = this.refs.hot.hotInstance.getSelected();
     const getRemovedIdsBound = getRemovedIds.bind(this);
-    const removedIds = getRemovedIdsBound(selectedRows);
+    const removedIds = getRemovedIdsBound();
     axios({
       method: 'DELETE',
       url: '/api/accounts',

@@ -3,7 +3,6 @@ import axios from 'axios';
 // given changes array
 export function getNewAndUpdatedRows(changes, source) {
   // if changes array is not null
-  console.log('getNewAndUpdatedRows helper');
   if (changes && source !== 'loadData') {
     // create empty arrays to store new rows and updated rows as objects, respectively
     const newRows = [];
@@ -88,7 +87,6 @@ export function getNewAndUpdatedRows(changes, source) {
         delete newRow.index;
       }
     }
-
     return { newRows, updatedRows };
   }
 }
