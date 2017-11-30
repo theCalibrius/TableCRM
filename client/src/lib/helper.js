@@ -1,4 +1,4 @@
-import axios from 'axios';
+import moment from 'moment';
 
 // given changes array
 export function getNewAndUpdatedRows(changes, source) {
@@ -15,13 +15,17 @@ export function getNewAndUpdatedRows(changes, source) {
       const rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
       // get change's field-newValue pair
       const field = change[1];
-      const newValue = change[3];
+      let newValue = change[3];
       // get change's corresponding cell
-      const colIndex = this.refs.hot.hotInstance.propToCol(change[1]);
+      const colIndex = this.refs.hot.hotInstance.propToCol(field);
       const cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
       // if change is of valid data type
       if (!cell.classList.value.split(' ').includes('htInvalid')) {
+        // format date for persisting in database
+        if (field === 'expectedCloseDate' || field === 'closeDate') {
+          newValue = moment(newValue).format('YYYY-MM-DD');
+        }
         // if change's corresponding row was empty prior to change
         if (rowId === null) {
           // create a variable to check whether row index is found in newRows array & set its initial value to false
@@ -50,7 +54,7 @@ export function getNewAndUpdatedRows(changes, source) {
             newRows.push(newRow);
           }
 
-          // otherwise, if change's corresponding row was not empty prior to change
+        // otherwise, if change's corresponding row was not empty prior to change
         } else {
           // create a variable to check whether row id is found in updatedRows array & set its initial value to false
           let found = false;
