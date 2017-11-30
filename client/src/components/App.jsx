@@ -21,7 +21,14 @@ body {
   overflow: hidden;
   color: #363636;
 }
+.htDropdownMenu {
+  top: -173px !important;
+  left: 699.9062px !important;
+}
 `;
+
+// top: -595px !important;
+// left: 872px !important;
 
 const AppWrap = styled.div`
 	background: #ffffff;

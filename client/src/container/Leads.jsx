@@ -5,6 +5,8 @@ import HotTable from 'react-handsontable';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
+// styled-component
+import styled from 'styled-components';
 // redux actions
 import {
   getAllLeads,
@@ -13,8 +15,6 @@ import {
   getColumnsOfLeads,
   updateColumnsOfLeads
 } from '../actions/leadsActions';
-// styled-component
-import styled from 'styled-components';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;

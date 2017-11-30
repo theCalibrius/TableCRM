@@ -1,6 +1,8 @@
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
+// styled-component
+import styled from 'styled-components';
 // redux actions
 import {
   getTotalOppValuePerStatus,
@@ -8,8 +10,6 @@ import {
 } from '../actions/dashboardActions';
 // highcharts
 import ReactHighcharts from 'react-highcharts';
-// styled-component
-import styled from 'styled-components';
 
 class Dashboard extends React.Component {
   constructor(props) {
