@@ -22,13 +22,10 @@ body {
   color: #363636;
 }
 .htDropdownMenu {
-  top: -173px !important;
-  left: 699.9062px !important;
+  top: -692px !important;
+  margin-left: 742px;
 }
 `;
-
-// top: -595px !important;
-// left: 872px !important;
 
 const AppWrap = styled.div`
 	background: #ffffff;
