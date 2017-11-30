@@ -1,96 +1,52 @@
+// react & redux
 import React from 'react';
+import { connect } from 'react-redux';
+// styled-component
+import styled from 'styled-components';
+// redux actions
+import {
+  getTotalOppValuePerStatus,
+  getTotalOppValuePerStage
+} from '../actions/dashboardActions';
+// highcharts
 import ReactHighcharts from 'react-highcharts';
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      closedOppsValueStatus: {
-        chart: {
-          type: 'column',
-          height: 260
-        },
-        title: {
-          text: null
-        },
-        xAxis: {
-          categories: ['Won', 'Lost', 'Abandoned', 'Open'],
-          title: {
-            // text: 'Closed Status'
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: null
-          }
-        },
-        series: [
-          {
-            showInLegend: false,
-            name: 'Total Value',
-            data: [29.9, 71.5, 106.4, 1000],
-            color: '#39ACFF'
-          }
-        ],
-        credits: {
-          enabled: false
-        }
-      },
-      openOppsValuePerStages: {
-        chart: {
-          type: 'column',
-          height: 260
-        },
-        title: {
-          text: null
-        },
-        xAxis: {
-          categories: [
-            'Qualified',
-            'Presentation',
-            'Negotiation',
-            'Contract Sent',
-            'Payment'
-          ],
-          title: {
-            // text: 'Closed Status'
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: null
-          }
-        },
-        series: [
-          {
-            showInLegend: false,
-            name: 'Total Value',
-            data: [29.9, 71.5, 106.4, 300, 42],
-            color: '#39ACFF'
-          }
-        ],
-        credits: {
-          enabled: false
-        }
-      }
-    };
+    this.state = {};
   }
-
+  componentDidMount() {
+    this.props.dispatch(getTotalOppValuePerStatus);
+    this.props.dispatch(getTotalOppValuePerStage);
+  }
   render() {
     return (
       <div>
-        <ReactHighcharts
-          config={this.state.closedOppsValueStatus}
-          ref="chart2"
-        />
-        <ReactHighcharts
-          config={this.state.openOppsValuePerStages}
-          ref="chart2"
-        />
+        {!this.props.totalOppValuePerStatus ? (
+          <p>loading...</p>
+        ) : (
+          <ReactHighcharts
+            config={this.props.totalOppValuePerStatus}
+            ref="chart2"
+          />
+        )}
+        {!this.props.totalOppValuePerStage ? (
+          <p>loading...</p>
+        ) : (
+          <ReactHighcharts
+            config={this.props.totalOppValuePerStage}
+            ref="chart2"
+          />
+        )}
       </div>
     );
   }
 }
-export default Dashboard;
+
+const mapStateToProps = state => ({
+  totalOppValuePerStatus: state.dashboardReducer.totalOppValuePerStatus,
+  totalOppValuePerStage: state.dashboardReducer.totalOppValuePerStage
+});
+
+export default connect(mapStateToProps, null)(Dashboard);

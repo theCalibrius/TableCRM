@@ -5,6 +5,8 @@ import HotTable from 'react-handsontable';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
+// styled-component
+import styled from 'styled-components';
 // redux actions
 import {
   getAllLeads,
@@ -13,6 +15,12 @@ import {
   getColumnsOfLeads,
   updateColumnsOfLeads
 } from '../actions/leadsActions';
+
+const TableWrap = styled.div`
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
+`;
 
 class Leads extends React.Component {
   constructor(props) {
@@ -51,7 +59,7 @@ class Leads extends React.Component {
   }
   render() {
     return (
-      <div>
+      <TableWrap>
         <div id="table">
           {!this.props.leads || !this.props.leadsColumnsHeader ? (
             <p>loading...</p>
@@ -70,7 +78,9 @@ class Leads extends React.Component {
                 },
                 manualColumnMove: true,
                 rowHeaders: true,
-                stretchH: 'all',
+                // stretchH: 'all',
+                height: window.innerHeight - 60,
+                colWidths: 120,
                 contextMenu: ['remove_row'],
                 filters: true,
                 dropdownMenu: [
@@ -97,7 +107,7 @@ class Leads extends React.Component {
             />
           )}
         </div>
-      </div>
+      </TableWrap>
     );
   }
 }
