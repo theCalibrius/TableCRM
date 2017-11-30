@@ -21,7 +21,7 @@ export function getAllAccounts(dispatch) {
   axios
     .get('/api/accounts')
     .then(response => {
-      for ( let row of response.data ) {
+      for ( const row of response.data ) {
         if (row.createdAt) { 
           row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
         }

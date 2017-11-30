@@ -16,7 +16,7 @@ documentation:
 https://redux.js.org/docs/api/Store.html#dispatch
 
 */
-import 'handsontable-pro/dist/handsontable.full.js';
+import 'handsontable-pro/dist/handsontable.full';
 import HotTable from 'react-handsontable';
 
 import React from 'react';
@@ -31,7 +31,6 @@ class Accounts extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    console.log('Component Did Mount!');
     this.props.dispatch(getAllAccounts);
   }
   render() {
@@ -101,17 +100,10 @@ class Accounts extends React.Component {
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
                 afterChange: (changes, source) => {
-                  // console.log(`afterChange: change: ${change}, source: ${source}`);
                   this.props.dispatch(createAndUpdateAccounts(changes, source).bind(this));
                 },
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(deleteAccounts(index, amount).bind(this));
-                },
-                afterCopy: (index, amount) => {
-                  console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-                },
-                afterPaste: (index, amount) => {
-                  console.log(`afterPaste: index: ${index}, amount: ${amount}`);
                 }
               }}
             />
