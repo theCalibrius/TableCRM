@@ -69,16 +69,17 @@ CREATE TABLE leads (
 CREATE TABLE accounts (
   id int NOT NULL AUTO_INCREMENT,
   description text(255),
-  email varchar(255),
-  phoneNumber varchar(255),
-  street varchar(255),
-  city varchar(255),
-  state varchar(255),
-  postalCode varchar(255),
-  country varchar(255),
-  website varchar(255),
-  createdDate timestamp,
-  updatedDate date,
+  industryID int,
+  email varchar(60),
+  phoneNumber varchar(15),
+  street varchar(120),
+  city varchar(20),
+  state varchar(15),
+  postalCode varchar(7),
+  country varchar(20),
+  website varchar(120),
+  createdAt timestamp DEFAULT NOW(),
+  updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
   PRIMARY KEY (id)
 );
 

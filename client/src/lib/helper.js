@@ -87,7 +87,6 @@ export function getNewAndUpdatedRows(changes, source) {
         delete newRow.index;
       }
     }
-
     return { newRows, updatedRows };
   }
 }
