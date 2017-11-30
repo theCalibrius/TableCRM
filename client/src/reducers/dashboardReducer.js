@@ -34,10 +34,10 @@ export default function(
             showInLegend: false,
             name: 'Total Value',
             data: [
-              action.payload.Won,
-              action.payload.Lost,
-              action.payload.Abandoned,
-              action.payload.Open
+              action.payload.Won ? action.payload.Won : 0,
+              action.payload.Lost ? action.payload.Lost : 0,
+              action.payload.Abandoned ? action.payload.Abandoned : 0,
+              action.payload.Open ? action.payload.Open : 0
             ],
             color: '#39ACFF'
           }
@@ -83,11 +83,13 @@ export default function(
             showInLegend: false,
             name: 'Total Value',
             data: [
-              action.payload.Qualified,
-              action.payload.Presentation,
-              action.payload.Negotiation,
-              action.payload['Contract Sent'],
-              action.payload.Payment
+              action.payload.Qualified ? action.payload.Qualified : 0,
+              action.payload.Presentation ? action.payload.Presentation : 0,
+              action.payload.Negotiation ? action.payload.Negotiation : 0,
+              action.payload['Contract Sent']
+                ? action.payload['Contract Sent']
+                : 0,
+              action.payload.Paymen ? action.payload.Payment : 0
             ],
             color: '#39ACFF'
           }
