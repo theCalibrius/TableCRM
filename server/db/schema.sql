@@ -115,6 +115,7 @@ INSERT INTO accounts (description, email, phoneNumber, street, city, state, post
 ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
 ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
 
+//
 CREATE PROCEDURE `inset_leads`()
 BEGIN
   DECLARE i int DEFAULT 1;
