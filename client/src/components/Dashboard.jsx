@@ -11,6 +11,27 @@ import {
 // highcharts
 import ReactHighcharts from 'react-highcharts';
 
+const DashboardWrap = styled.div`
+	background: #ededed;
+	padding: 40px 40px 0 40px;
+	overflow-y: scroll;
+	height: calc(100vh - 110px);
+`;
+
+const DashboardCard = styled.div`
+	background: #ffffff;
+	padding: 28px;
+	height: 300px;
+	border-radius: 2px;
+	margin: 0 0 40px 0;
+`;
+
+const CardTitle = styled.p`
+	font-size: 18px;
+	margin: 0 0 32px 0;
+	font-weight: 500;
+`;
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -22,24 +43,30 @@ class Dashboard extends React.Component {
   }
   render() {
     return (
-      <div>
-        {!this.props.totalOppValuePerStatus ? (
-          <p>loading...</p>
-        ) : (
-          <ReactHighcharts
-            config={this.props.totalOppValuePerStatus}
-            ref="chart2"
-          />
-        )}
-        {!this.props.totalOppValuePerStage ? (
-          <p>loading...</p>
-        ) : (
-          <ReactHighcharts
-            config={this.props.totalOppValuePerStage}
-            ref="chart2"
-          />
-        )}
-      </div>
+      <DashboardWrap>
+        <DashboardCard>
+          <CardTitle>Sales Performance</CardTitle>
+          {!this.props.totalOppValuePerStatus ? (
+            <p>loading...</p>
+          ) : (
+            <ReactHighcharts
+              config={this.props.totalOppValuePerStatus}
+              ref="chart2"
+            />
+          )}
+        </DashboardCard>
+        <DashboardCard>
+          <CardTitle>Pipeline Summary Total</CardTitle>
+          {!this.props.totalOppValuePerStage ? (
+            <p>loading...</p>
+          ) : (
+            <ReactHighcharts
+              config={this.props.totalOppValuePerStage}
+              ref="chart2"
+            />
+          )}
+        </DashboardCard>
+      </DashboardWrap>
     );
   }
 }
