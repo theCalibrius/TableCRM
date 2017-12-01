@@ -1,4 +1,4 @@
-/* 
+/*
 A container is a normal react component that has been linked to application stae
 containers are the link between state, managed by redux, and views, managed by react
 the react-redux library, from which we import 'connect' function below, is how we bridge these two libraries
@@ -23,7 +23,11 @@ import React from 'react';
 // connects the Accounts component to the redux store
 import { connect } from 'react-redux';
 
-import { getAllAccounts, createAndUpdateAccounts, deleteAccounts } from '../actions/accountsActions';
+import {
+  getAllAccounts,
+  createAndUpdateAccounts,
+  deleteAccounts
+} from '../actions/accountsActions';
 
 class Accounts extends React.Component {
   constructor(props) {
@@ -60,7 +64,6 @@ class Accounts extends React.Component {
                   website: null,
                   createdAt: null,
                   updatedAt: null
-
                 },
                 colHeaders: [
                   'id',
@@ -97,10 +100,16 @@ class Accounts extends React.Component {
                 stretchH: 'all',
                 contextMenu: ['remove_row'],
                 filters: true,
-                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
                 columnSorting: true,
                 afterChange: (changes, source) => {
-                  this.props.dispatch(createAndUpdateAccounts(changes, source).bind(this));
+                  this.props.dispatch(
+                    createAndUpdateAccounts(changes, source).bind(this)
+                  );
                 },
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(deleteAccounts(index, amount).bind(this));
@@ -114,22 +123,22 @@ class Accounts extends React.Component {
   }
 } // end of class
 
-/* 
+/*
 mapStateToProps is a function that takes in application state and returns a portion of it
-in this case, mapStateToProps takes in application state and returns the accounts property 
+in this case, mapStateToProps takes in application state and returns the accounts property
 and adds it to the Accounts component's props.  It is used to pull data from the store when it changes
 and pass those values as props to the component.
 
 mapStateToProps tells how to transform the current Redux store state into the props you want to pass to
-a presentational component (Account) that you are wrapping. 
+a presentational component (Account) that you are wrapping.
 
-The return value of the mapStateToProps function will be added to props on the Accounts component.  
-When we export and evoke the connect function below, the Accounts component will merge with the object 
+The return value of the mapStateToProps function will be added to props on the Accounts component.
+When we export and evoke the connect function below, the Accounts component will merge with the object
 returned from mapStateToPropse, creating a container
 
 If the state changes at any point, the new state will be added to props and the container will automatically re-render
 
-documentation: 
+documentation:
 https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options
 */
 
@@ -137,7 +146,7 @@ const mapStateToProps = state => ({
   accounts: state.accountsReducer.accounts
 });
 
-/* 
+/*
 the connect function takes in a function (mapStateToProps) and a component (Accounts) and
 produces a container, that container is what we are exporting below
 the second, optional, argument of connect is mapDispatchToProps.  When one is not provided,

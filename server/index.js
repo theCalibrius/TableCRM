@@ -9,6 +9,7 @@ const contacts = require('./db/contacts');
 const opportunities = require('./db/opportunities');
 const leads = require('./db/leads');
 const accounts = require('./db/accounts');
+const dashboard = require('./db/dashboard');
 
 const app = express();
 
@@ -54,6 +55,15 @@ app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);
 app.get('/api/leads/columns', leads.getColumnOrders);
 app.put('/api/leads/columns', leads.updateColumnOrders);
+
+app.get(
+  '/api/dashboard/totaloppvalueperstatus',
+  dashboard.getTotalOppValuePerStatus
+);
+app.get(
+  '/api/dashboard/totaloppvalueperstage',
+  dashboard.getTotalOppValuePerStage
+);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Server

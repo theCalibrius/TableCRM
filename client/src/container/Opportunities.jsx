@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
+import 'handsontable-pro/dist/handsontable.full.css';
 
 import {
   getAllOpportunities,
@@ -70,7 +71,7 @@ class Opportunities extends React.Component {
                   { data: 'createdAt', type: 'date', readOnly: true },
                   { data: 'updatedAt', type: 'date', readOnly: true }
                 ],
-                colWidths: [10, 80, 120, 20, 22, 25, 25, 25],
+                // colWidths: [10, 80, 120, 20, 22, 25, 25, 25],
                 columnSorting: true,
                 filters: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],

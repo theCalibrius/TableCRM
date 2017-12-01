@@ -1,9 +1,14 @@
 import axios from 'axios';
 
-import { getNewAndUpdatedRows, getRemovedIds, getHiddenCols, colPropsToIndices } from '../lib/helper';
+import {
+  getNewAndUpdatedRows,
+  getRemovedIds,
+  getHiddenCols,
+  colPropsToIndices
+} from '../lib/helper';
 
 export function getAllOpportunities() {
-  let request = axios.get('/api/opportunities');
+  const request = axios.get('/api/opportunities');
   return {
     type: 'GET_ALL_OPPORTUNITIES',
     payload: request
@@ -20,13 +25,15 @@ export function createAndUpdateOpportunities(changes, source) {
       const updatedRows = newAndUpdatedRows.updatedRows;
 
       if (newRows.length > 0) {
-        axios.post('/api/opportunities', {newRows})
-          .then(() => { dispatch(getAllOpportunities()); });
+        axios.post('/api/opportunities', { newRows }).then(() => {
+          dispatch(getAllOpportunities());
+        });
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/opportunities', {updatedRows})
-          .then(() => { dispatch(getAllOpportunities()); });
+        axios.put('/api/opportunities', { updatedRows }).then(() => {
+          dispatch(getAllOpportunities());
+        });
       }
     }
   };
@@ -39,7 +46,7 @@ export function deleteOpportunities(index, amount) {
     axios({
       method: 'DELETE',
       url: '/api/opportunities',
-      data: {removedIds}
+      data: { removedIds }
     });
   };
 }
@@ -47,8 +54,7 @@ export function deleteOpportunities(index, amount) {
 export function getHiddenColumnsOfOpportunities(dispatch) {
   const colPropsToIndicesBound = colPropsToIndices.bind(this);
 
-  axios.get('/api/opportunities/columns')
-  .then((response) => {
+  axios.get('/api/opportunities/columns').then(response => {
     const hiddenColIndices = colPropsToIndicesBound(response.data);
     dispatch({
       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
@@ -61,7 +67,8 @@ export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
     const getHiddenColsBound = getHiddenCols.bind(this);
     const hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/opportunities/columns', {hiddenColumns})
-    .then(() => { dispatch(getHiddenColumnsOfOpportunities.bind(this)) });
+    axios.put('/api/opportunities/columns', { hiddenColumns }).then(() => {
+      dispatch(getHiddenColumnsOfOpportunities.bind(this));
+    });
   };
 }

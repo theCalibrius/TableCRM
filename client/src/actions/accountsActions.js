@@ -6,7 +6,7 @@ that action is then automatically sent to all reducers within the application
 
 below, the function getAccounts is an action creator.
 
-it's customary for redux action types to be all upper-case with words separated by 
+it's customary for redux action types to be all upper-case with words separated by
 underscores (snake-casing), like GET_ALL_ACCOUNTS below
 
 
@@ -21,8 +21,8 @@ export function getAllAccounts(dispatch) {
   axios
     .get('/api/accounts')
     .then(response => {
-      for ( const row of response.data ) {
-        if (row.createdAt) { 
+      for (const row of response.data) {
+        if (row.createdAt) {
           row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
         }
       }
@@ -49,13 +49,15 @@ export function createAndUpdateAccounts(changes, source) {
       const updatedRows = newAndUpdatedRows.updatedRows;
 
       if (newRows.length > 0) {
-        axios.post('/api/accounts', {newRows})
-          .then(() => { dispatch(getAllAccounts); });
+        axios.post('/api/accounts', { newRows }).then(() => {
+          dispatch(getAllAccounts);
+        });
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/accounts', {updatedRows})
-          .then(() => { dispatch(getAllAccounts); });
+        axios.put('/api/accounts', { updatedRows }).then(() => {
+          dispatch(getAllAccounts);
+        });
       }
     }
   };
@@ -68,7 +70,7 @@ export function deleteAccounts(index, amount) {
     axios({
       method: 'DELETE',
       url: '/api/accounts',
-      data: {removedIds}
+      data: { removedIds }
     });
   };
 }
