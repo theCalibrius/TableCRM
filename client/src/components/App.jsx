@@ -21,11 +21,11 @@ body {
   overflow: hidden;
   color: #363636;
 }
-.htDropdownMenu {
-  top: -692px !important;
-  margin-left: 742px;
-}
 `;
+// .htDropdownMenu {
+//   top: -692px !important;
+//   margin-left: 742px;
+// }
 
 const AppWrap = styled.div`
 	background: #ffffff;
