@@ -90,6 +90,7 @@ class Leads extends React.Component {
                 ],
                 columnSorting: true,
                 minSpareRows: 1,
+                fixedRowsBottom: 1,
                 afterChange: (changes, source) => {
                   this.props.dispatch(
                     createAndUpdateLeads(changes, source).bind(this)
