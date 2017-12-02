@@ -72,3 +72,25 @@ export function updateHiddenColumnsOfOpportunities(context) {
     });
   };
 }
+
+export function getAllOpportunityNames() {
+  let request = axios.get('/api/opportunities/names');
+  return {
+    type: 'GET_ALL_OPPORTUNITY_NAMES',
+    payload: request
+  };
+}
+
+export function relateOppToContact(changes,source) {
+  return function(dispatch) {
+    // get ID of the opportunity name that was selected
+    if (changes) {
+      const rowIndex = changes[0][0];
+      const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+      // retrieve the opportunity ID
+      const selectedOpportunity = changes[0][3];
+      const selectedContact = changes[0][1];
+      axios.get('/api/opportunity/'+ selectedOpportunity + '/' + contactID).then(response => console.log(response));
+    }
+  };
+}

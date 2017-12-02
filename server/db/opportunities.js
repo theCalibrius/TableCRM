@@ -66,3 +66,27 @@ module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
     }
   });
 };
+
+module.exports.getAllOpportunityNames = (req, res) => {
+  db.query('SELECT name from opportunities', (err, rows) => {
+    if (!err) {
+      const result = rows.map(function(opp){
+        return opp['name'];
+      })
+      res.json(result);
+    }
+  });
+};
+
+module.exports.relateOppToContact = (req, res) => {
+  const contactID = req.params.contactID;
+  const selectedOpportunity = req.params.oppName;
+  db.query(`SELECT id from opportunities WHERE name='${selectedOpportunity}' limit 1;`, (err, rows) => {
+    if (!err) {
+      res.json(rows);
+      const opportunityID = JSON.stringify(rows[0].id);
+      //store opp id and contact id in joint table   //use on dup key update
+      db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${contactID},${opportunityID}) ON DUPLICATE KEY UPDATE opportunityID=${opportunityID};`);
+    }
+  });
+};

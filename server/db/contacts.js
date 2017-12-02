@@ -2,7 +2,7 @@ const db = require('./config');
 const lib = require('../lib/helper');
 
 const getAllContacts = (req, res) => {
-  db.query('SELECT * from contacts', (err, rows) => {
+  db.query('SELECT c.*,o.name FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id', (err, rows) => {
     if (err) console.log(err);
     res.json(rows);
   });

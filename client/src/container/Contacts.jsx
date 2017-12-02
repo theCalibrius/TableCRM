@@ -2,14 +2,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // redux actions
-import { getContacts, createAndUpdateContacts, deleteContacts } from '../actions/contactsActions';
+import { getContacts,
+  createAndUpdateContacts,
+  deleteContacts
+} from '../actions/contactsActions';
+import {
+  getAllOpportunityNames,
+  relateOppToContact
+} from '../actions/opportunitiesActions';
+
 // api call
 import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
 // import 'handsontable-pro/dist/handsontable.full.css';
- 
+
 class Contacts extends React.Component {
   // start of class
   constructor(props) {
@@ -18,36 +26,25 @@ class Contacts extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getContacts);
+    this.props.dispatch(getAllOpportunityNames());
   }
   render() {
     return (
       <div>
         <div id="table">
-          {!this.props.contacts ? (
+          {!this.props.contacts &&
+          !this.props.opportunityNames ? (
             <p>loading...</p>
           ) : (
             <HotTable
               root="hot"
               ref="hot"
               settings={{
-                licenseKey: '',
+                licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.contacts,
-                dataSchema: {
-                  id: null,
-                  firstName: null,
-                  lastName: null,
-                  suffix: null,
-                  title: null,
-                  department: null,
-                  description: null,
-                  email: null,
-                  workPhoneNumber: null,
-                  personalPhoneNumber: null,
-                  createdAt: null,
-                  updatedAt: null
-                },
                 colHeaders: [
                   'ID',
+                  'Opportunity Name',
                   'First Name',
                   'Last Name',
                   'Suffix',
@@ -62,6 +59,12 @@ class Contacts extends React.Component {
                 ],
                 columns: [
                   { data: 'id' },
+                  {
+                    data: 'name',
+                    type: 'autocomplete',
+                    source: this.props.opportunityNames,
+                    strict: false
+                  },
                   { data: 'firstName' },
                   { data: 'lastName' },
                   { data: 'suffix' },
@@ -98,7 +101,13 @@ class Contacts extends React.Component {
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
                 afterChange: (changes, source) => {
-                  this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
+                  console.log(changes)
+                  if (changes && changes[0][1] != 'name') {
+                    this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
+                  }
+                  if (changes && changes[0][1] === 'name') {
+                    this.props.dispatch(relateOppToContact(changes, source).bind(this));
+                  }
                 },
                 beforeRemoveRow: (index, amount) => {
                   console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
@@ -114,14 +123,15 @@ class Contacts extends React.Component {
             />
           )}
         </div>
-        {JSON.stringify(this.props.contacts)}
       </div>
     );
   }
 } // end of class
 
 const mapStateToProps = state => ({
-  contacts: state.contactsReducer.contacts
+  contacts: state.contactsReducer.contacts,
+  opportunityNames: state.opportunitiesReducer.opportunityNames,
+  opportunityIDs: state.opportunitiesReducer.opportunityIDs,
 });
 
 export default connect(mapStateToProps, null)(Contacts);
