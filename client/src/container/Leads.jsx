@@ -1,7 +1,7 @@
 // handsontable
+import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
 import 'handsontable-pro/dist/handsontable.full.css';
-import HotTable from 'react-handsontable';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
