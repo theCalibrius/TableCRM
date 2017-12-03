@@ -191,14 +191,14 @@ export function getUpdatedColumnsObj(
   });
 }
 
-export function getHiddenColumnIndexes(response) {
+export function getHiddenColsFromResponse(response) {
   const hiddenColumnsIndexes = response.data
     .filter(column => column.hidden === 1)
     .map(column => column.rank);
   return hiddenColumnsIndexes;
 }
 
-export function getHiddenCols(context) {
+export function getHiddenColsFromContext(context) {
   const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
   const hiddenColProps = [];
 
