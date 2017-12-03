@@ -21,7 +21,11 @@ export function getNewAndUpdatedRows(changes, source) {
       const cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
       // if change is of valid data type
-      if (!cell.classList.value.split(' ').includes('htInvalid')) {
+      if (
+        cell === null ||
+				cell === undefined ||
+				!cell.classList.value.split(' ').includes('htInvalid')
+      ) {
         // format date for persisting in database
         if (field === 'expectedCloseDate' || field === 'closeDate') {
           newValue = moment(newValue).format('YYYY-MM-DD');
@@ -54,7 +58,7 @@ export function getNewAndUpdatedRows(changes, source) {
             newRows.push(newRow);
           }
 
-        // otherwise, if change's corresponding row was not empty prior to change
+          // otherwise, if change's corresponding row was not empty prior to change
         } else {
           // create a variable to check whether row id is found in updatedRows array & set its initial value to false
           let found = false;

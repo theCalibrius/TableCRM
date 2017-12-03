@@ -15,8 +15,8 @@ import {
 // start of class
 class Opportunities extends React.Component {
   componentDidMount() {
+    // this.props.dispatch(getHiddenColumnsOfOpportunities.bind(this));
     this.props.dispatch(getAllOpportunities());
-    this.props.dispatch(getHiddenColumnsOfOpportunities.bind(this));
   }
   render() {
     return (
@@ -51,15 +51,33 @@ class Opportunities extends React.Component {
                   { data: 'id' },
                   { data: 'name' },
                   { data: 'description' },
-                  { data: 'pipeline', type: 'dropdown', source: ['Sales', 'Biz Dev'] },
+                  {
+                    data: 'pipeline',
+                    type: 'dropdown',
+                    source: ['Sales', 'Biz Dev']
+                  },
                   { data: 'estimatedValue', type: 'numeric' },
                   { data: 'winProbability', type: 'numeric' },
-                  { data: 'priority', type: 'dropdown', source: ['High', 'Medium', 'Low'] },
-                  { data: 'status', type: 'dropdown', source: ['Open', 'Won', 'Lost', 'Abandoned'] },
+                  {
+                    data: 'priority',
+                    type: 'dropdown',
+                    source: ['High', 'Medium', 'Low']
+                  },
+                  {
+                    data: 'status',
+                    type: 'dropdown',
+                    source: ['Open', 'Won', 'Lost', 'Abandoned']
+                  },
                   {
                     data: 'stage',
                     type: 'dropdown',
-                    source: ['Qualified', 'Presentation', 'Negotiation', 'Contract Sent', 'Payment']
+                    source: [
+                      'Qualified',
+                      'Presentation',
+                      'Negotiation',
+                      'Contract Sent',
+                      'Payment'
+                    ]
                   },
                   { data: 'expectedCloseDate', type: 'date' },
                   {
@@ -67,27 +85,48 @@ class Opportunities extends React.Component {
                     type: 'dropdown',
                     source: ['Not Applicable', 'Feature', 'Price', 'Competitor']
                   },
-                  { data: 'origin', type: 'dropdown', source: ['Reference', 'Network', 'Other'] },
+                  {
+                    data: 'origin',
+                    type: 'dropdown',
+                    source: ['Reference', 'Network', 'Other']
+                  },
                   { data: 'createdAt', type: 'date', readOnly: true },
                   { data: 'updatedAt', type: 'date', readOnly: true }
                 ],
                 // colWidths: [10, 80, 120, 20, 22, 25, 25, 25],
                 columnSorting: true,
                 filters: true,
-                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
                 rowHeaders: true,
                 stretchH: 'all',
                 minSpareRows: 1,
-                contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
-                hiddenColumns: { columns: this.props.hiddenColIndices, indicators: true },
+                contextMenu: [
+                  'remove_row',
+                  'hidden_columns_show',
+                  'hidden_columns_hide'
+                ],
+                hiddenColumns: {
+                  columns: this.props.hiddenColIndices,
+                  indicators: true
+                },
                 afterChange: (changes, source) => {
-                  this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
+                  this.props.dispatch(
+                    createAndUpdateOpportunities(changes, source).bind(this)
+                  );
                 },
                 beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(deleteOpportunities(index, amount).bind(this));
+                  this.props.dispatch(
+                    deleteOpportunities(index, amount).bind(this)
+                  );
                 },
                 afterContextMenuHide: context => {
-                  this.props.dispatch(updateHiddenColumnsOfOpportunities(context).bind(this));
+                  this.props.dispatch(
+                    updateHiddenColumnsOfOpportunities(context).bind(this)
+                  );
                 }
               }}
             />
