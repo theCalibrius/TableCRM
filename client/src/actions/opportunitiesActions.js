@@ -81,15 +81,13 @@ export function getAllOpportunityIDsNames() {
   };
 }
 
-export function relateOppToContact(changes,source) {
+export function relateOppToContact(changes,source,oppID) {
   return function(dispatch) {
     // get ID of the opportunity name that was selected
     if (changes) {
       const rowIndex = changes[0][0];
       const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      // retrieve the opportunity ID
-      const selectedOpportunityID = changes[0][3].split('|')[0];
-      axios.get('/api/opportunity/'+ selectedOpportunityID + '/' + contactID).then(response => console.log(response));
+      axios.get('/api/opportunity/'+ oppID + '/' + contactID).then(response => console.log(response));
     }
   };
 }

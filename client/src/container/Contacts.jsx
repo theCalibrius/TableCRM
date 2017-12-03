@@ -29,6 +29,9 @@ class Contacts extends React.Component {
     this.props.dispatch(getAllOpportunityIDsNames());
   }
   render() {
+    const opportunityIDsNames = this.props.opportunityIDsNames
+      ? this.props.opportunityIDsNames.map(opp => opp.name)
+      : null;
     return (
       <div>
         <div id="table">
@@ -62,7 +65,7 @@ class Contacts extends React.Component {
                   {
                     data: 'name',
                     type: 'autocomplete',
-                    source: this.props.opportunityIDsNames,
+                    source: opportunityIDsNames,
                     strict: false
                   },
                   { data: 'firstName' },
@@ -102,16 +105,15 @@ class Contacts extends React.Component {
                 columnSorting: true,
                 afterChange: (changes, source) => {
                   const opportunityIDsNames = this.props.opportunityIDsNames;
-                  //console.log(opportunityIDsNames)
-                  console.log(changes)
                   if (changes && changes[0][1] != 'name') {
                     this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
                   }
                   if (changes) {
-                    console.log(source)
-                    const selectedOpportunity = changes[0][3];
-                    if (changes[0][1] === 'name' && selectedOpportunity !== null && opportunityIDsNames.indexOf(selectedOpportunity) !== -1) {
-                      this.props.dispatch(relateOppToContact(changes, source).bind(this));
+                    const selectedOpportunityName = changes[0][3];
+                    //get Opp ID
+                    const oppID = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id)[0];
+                    if (changes[0][1] === 'name' && selectedOpportunityName !== null && opportunityIDsNames.find(o => o.name === selectedOpportunityName)) {
+                      this.props.dispatch(relateOppToContact(changes, source, oppID).bind(this));
                     }
                   }
                 },
@@ -139,8 +141,4 @@ const mapStateToProps = state => ({
   opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
 });
 
-/*const oppNames = this.props.opportunityIDsNames.map(function(opp){
-  return opp.split('|')[1];
-})
-*/
 export default connect(mapStateToProps, null)(Contacts);

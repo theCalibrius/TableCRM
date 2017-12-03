@@ -71,7 +71,9 @@ module.exports.getAllOpportunityIDsNames = (req, res) => {
   db.query('SELECT id,name from opportunities', (err, rows) => {
     if (!err) {
       const result = rows.map((opp) => {
-        return opp['id'] + '|' + opp['name'];
+        const id = opp.id;
+        const name = opp.name;
+        return {id, name};
       });
       res.json(result);
     }
