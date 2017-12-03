@@ -44,8 +44,8 @@ app.put(
   opportunities.updateHiddenColumnsOfOpportunities
 );
 
-app.get('/api/opportunities/names', opportunities.getAllOpportunityNames);
-app.get('/api/opportunity/:oppName/:contactID', opportunities.relateOppToContact);
+app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
+app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
 
 
 app.get('/api/accounts', accounts.getAllAccounts);

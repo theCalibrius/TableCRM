@@ -7,7 +7,7 @@ import { getContacts,
   deleteContacts
 } from '../actions/contactsActions';
 import {
-  getAllOpportunityNames,
+  getAllOpportunityIDsNames,
   relateOppToContact
 } from '../actions/opportunitiesActions';
 
@@ -26,14 +26,14 @@ class Contacts extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getContacts);
-    this.props.dispatch(getAllOpportunityNames());
+    this.props.dispatch(getAllOpportunityIDsNames());
   }
   render() {
     return (
       <div>
         <div id="table">
           {!this.props.contacts &&
-          !this.props.opportunityNames ? (
+          !this.props.opportunityIDsNames ? (
             <p>loading...</p>
           ) : (
             <HotTable
@@ -62,7 +62,7 @@ class Contacts extends React.Component {
                   {
                     data: 'name',
                     type: 'autocomplete',
-                    source: this.props.opportunityNames,
+                    source: this.props.opportunityIDsNames,
                     strict: false
                   },
                   { data: 'firstName' },
@@ -101,12 +101,18 @@ class Contacts extends React.Component {
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
                 afterChange: (changes, source) => {
+                  const opportunityIDsNames = this.props.opportunityIDsNames;
+                  //console.log(opportunityIDsNames)
                   console.log(changes)
                   if (changes && changes[0][1] != 'name') {
                     this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
                   }
-                  if (changes && changes[0][1] === 'name') {
-                    this.props.dispatch(relateOppToContact(changes, source).bind(this));
+                  if (changes) {
+                    console.log(source)
+                    const selectedOpportunity = changes[0][3];
+                    if (changes[0][1] === 'name' && selectedOpportunity !== null && opportunityIDsNames.indexOf(selectedOpportunity) !== -1) {
+                      this.props.dispatch(relateOppToContact(changes, source).bind(this));
+                    }
                   }
                 },
                 beforeRemoveRow: (index, amount) => {
@@ -130,8 +136,11 @@ class Contacts extends React.Component {
 
 const mapStateToProps = state => ({
   contacts: state.contactsReducer.contacts,
-  opportunityNames: state.opportunitiesReducer.opportunityNames,
-  opportunityIDs: state.opportunitiesReducer.opportunityIDs,
+  opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
 });
 
+/*const oppNames = this.props.opportunityIDsNames.map(function(opp){
+  return opp.split('|')[1];
+})
+*/
 export default connect(mapStateToProps, null)(Contacts);

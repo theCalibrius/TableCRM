@@ -73,10 +73,10 @@ export function updateHiddenColumnsOfOpportunities(context) {
   };
 }
 
-export function getAllOpportunityNames() {
-  let request = axios.get('/api/opportunities/names');
+export function getAllOpportunityIDsNames() {
+  const request = axios.get('/api/opportunities/names');
   return {
-    type: 'GET_ALL_OPPORTUNITY_NAMES',
+    type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
     payload: request
   };
 }
@@ -88,9 +88,8 @@ export function relateOppToContact(changes,source) {
       const rowIndex = changes[0][0];
       const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
       // retrieve the opportunity ID
-      const selectedOpportunity = changes[0][3];
-      const selectedContact = changes[0][1];
-      axios.get('/api/opportunity/'+ selectedOpportunity + '/' + contactID).then(response => console.log(response));
+      const selectedOpportunityID = changes[0][3].split('|')[0];
+      axios.get('/api/opportunity/'+ selectedOpportunityID + '/' + contactID).then(response => console.log(response));
     }
   };
 }
