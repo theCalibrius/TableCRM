@@ -73,6 +73,17 @@ export function getColumnsOfLeads(dispatch) {
   axios
     .get('/api/leads/columns')
     .then(response => {
+      console.log(response.data);
+      const hiddenColumns = response.data
+        .filter(column => column.hidden === 1)
+        .map(column => column.rank);
+      dispatch({
+        type: 'GET_HIDDENCOLUMNS_OF_LEADS',
+        payload: hiddenColumns
+      });
+      return response;
+    })
+    .then(response => {
       const columns = response.data;
       const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
       return getSortedColumnsByRankBind(columns);
