@@ -53,8 +53,9 @@ app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createAndUpdateLeads);
 app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);
-app.get('/api/leads/columns', leads.getColumns);
-app.put('/api/leads/columns/order', leads.updateColumnOrders);
+app.get('/api/leads/columns', leads.getColumnsOfLeads);
+app.put('/api/leads/columns/order', leads.updateColumnOrdersOfLeads);
+app.put('/api/leads/columns/hidden', leads.updateHiddenColumnsOfLeads);
 
 app.get(
   '/api/dashboard/totaloppvalueperstatus',

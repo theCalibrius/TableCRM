@@ -110,30 +110,6 @@ export function getRemovedIds() {
   return removedIds;
 }
 
-export function getHiddenCols(context) {
-  const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
-  const hiddenColProps = [];
-
-  for (const hiddenColIndex of hiddenColIndices) {
-    const hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
-    hiddenColProps.push(hiddenColProp);
-  }
-
-  return hiddenColProps;
-}
-
-export function colPropsToIndices(colProps) {
-  const colIndices = [];
-
-  for (const colProp of colProps) {
-    const prop = colProp.name;
-    const index = this.refs.hot.hotInstance.propToCol(prop);
-    colIndices.push(index);
-  }
-
-  return colIndices;
-}
-
 export function getSortedColumnsByRank(columns) {
   // set columns state sorted by rank
   const rankedColumns = [];
@@ -209,4 +185,16 @@ export function getUpdatedColumnsObj(
     }
     resolve(updatedColumnOrders);
   });
+}
+
+export function getHiddenCols(context) {
+  const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
+  const hiddenColProps = [];
+
+  for (const hiddenColIndex of hiddenColIndices) {
+    const hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
+    hiddenColProps.push(hiddenColProp);
+  }
+
+  return hiddenColProps;
 }

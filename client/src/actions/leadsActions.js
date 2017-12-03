@@ -74,11 +74,9 @@ export function getColumnsOfLeads(dispatch) {
   axios
     .get('/api/leads/columns')
     .then(response => {
-      console.log(response.data);
       const hiddenColumns = response.data
         .filter(column => column.hidden === 1)
         .map(column => column.rank);
-      console.log(hiddenColumns);
       dispatch({
         type: 'GET_LEADS_HIDDENCOLUMNS',
         payload: hiddenColumns
@@ -126,25 +124,13 @@ export function updateColumnOrderOfLeads(columns, target) {
     }
   };
 }
-//
-// export function getHiddenColumnsOfLeads(dispatch) {
-//   const colPropsToIndicesBound = colPropsToIndices.bind(this);
-//
-//   axios.get('/api/leads/columns').then(response => {
-//     const hiddenColIndices = colPropsToIndicesBound(response.data);
-//     dispatch({
-//       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
-//       payload: hiddenColIndices
-//     });
-//   });
-// }
-//
-// export function getHiddenColumnsOfLeads(context) {
-//   return function(dispatch) {
-//     const getHiddenColsBound = getHiddenCols.bind(this);
-//     const hiddenColumns = getHiddenColsBound(context);
-//     axios.put('/api/leads/columns', { hiddenColumns }).then(() => {
-//       dispatch(getHiddenColumnsOfOpportunities.bind(this));
-//     });
-//   };
-// }
+
+export function updateHiddenColumnsOfLeads(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenCols.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/leads/columns/hidden', { hiddenColumns }).then(() => {
+      dispatch(updateColumnOrderOfLeads.bind(this));
+    });
+  };
+}
