@@ -6,6 +6,7 @@ import {
   getSortedColumnsByRank,
   getMovedColumnsIndexRange,
   mapColumnIdToName,
+  getHiddenColumnIndexes,
   getHiddenCols,
   getUpdatedColumnsObj
 } from '../lib/helper';
@@ -74,12 +75,10 @@ export function getColumnsOfLeads(dispatch) {
   axios
     .get('/api/leads/columns')
     .then(response => {
-      const hiddenColumns = response.data
-        .filter(column => column.hidden === 1)
-        .map(column => column.rank);
+      const hiddenColumnsIndexes = getHiddenColumnIndexes(response);
       dispatch({
         type: 'GET_LEADS_HIDDENCOLUMNS',
-        payload: hiddenColumns
+        payload: hiddenColumnsIndexes
       });
       return response;
     })
