@@ -56,6 +56,7 @@ export function getHiddenColumnsOfOpportunities(dispatch) {
 
   axios.get('/api/opportunities/columns').then(response => {
     const hiddenColIndices = colPropsToIndicesBound(response.data);
+    console.log(hiddenColIndices);
     dispatch({
       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
       payload: hiddenColIndices

@@ -13,7 +13,9 @@ import {
   createAndUpdateLeads,
   deleteLeads,
   getColumnsOfLeads,
-  updateColumnsOfLeads
+  getHiddenColumnsOfOpportunities,
+  updateHiddenColumnsOfOpportunities,
+
 } from '../actions/leadsActions';
 
 const TableWrap = styled.div`
@@ -81,7 +83,8 @@ class Leads extends React.Component {
                 // stretchH: 'all',
                 height: window.innerHeight - 60,
                 colWidths: 120,
-                contextMenu: ['remove_row'],
+                contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
+                // hiddenColumns: { columns: this.props.hiddenColIndices, indicators: true },
                 filters: true,
                 dropdownMenu: [
                   'filter_by_condition',
@@ -103,6 +106,9 @@ class Leads extends React.Component {
                   this.props.dispatch(
                     updateColumnsOfLeads(columns, target).bind(this)
                   );
+                },
+                afterContextMenuHide: context => {
+                  this.props.dispatch(updateHiddenColumnsOfOpportunities(context).bind(this));
                 }
               }}
             />

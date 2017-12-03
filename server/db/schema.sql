@@ -70,6 +70,7 @@ CREATE TABLE leadsColumns (
   id int NOT NULL AUTO_INCREMENT,
   rank int,
   name varchar(50),
+  hidden boolean DEFAULT false,
   PRIMARY KEY (id)
 );
 
@@ -119,7 +120,7 @@ DELIMITER //
 CREATE PROCEDURE `inset_leads`()
 BEGIN
   DECLARE i int DEFAULT 1;
-  WHILE i <= 1000 DO
+  WHILE i <= 200 DO
     SET i = i + 1;
     INSERT INTO leads (description, firstName, lastName, suffix, title, value, email, phoneNumber, ownerId) VALUES ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1);
   END WHILE;
