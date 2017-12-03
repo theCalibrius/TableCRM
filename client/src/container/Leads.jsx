@@ -14,8 +14,7 @@ import {
   deleteLeads,
   getColumnsOfLeads,
   getHiddenColumnsOfOpportunities,
-  updateHiddenColumnsOfOpportunities,
-
+  updateHiddenColumnsOfOpportunities
 } from '../actions/leadsActions';
 
 const TableWrap = styled.div`
@@ -63,56 +62,66 @@ class Leads extends React.Component {
     return (
       <TableWrap>
         <div id="table">
-          {!this.props.leads || !this.props.leadsColumnsHeader ? (
-            <p>loading...</p>
-          ) : (
-            <HotTable
-              root="hot"
-              ref="hot"
-              settings={{
-                licenseKey: '7fb69-d3720-89c63-24040-8e45b',
-                data: this.props.leads,
-                colHeaders: this.props.leadsColumnsHeader,
-                columns: this.state.columns,
-                hiddenColumns: {
-                  columns: [0],
-                  indicators: false
-                },
-                manualColumnMove: true,
-                rowHeaders: true,
-                // stretchH: 'all',
-                height: window.innerHeight - 60,
-                colWidths: 120,
-                contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
-                // hiddenColumns: { columns: this.props.hiddenColIndices, indicators: true },
-                filters: true,
-                dropdownMenu: [
-                  'filter_by_condition',
-                  'filter_by_value',
-                  'filter_action_bar'
-                ],
-                columnSorting: true,
-                minSpareRows: 1,
-                fixedRowsBottom: 1,
-                afterChange: (changes, source) => {
-                  this.props.dispatch(
-                    createAndUpdateLeads(changes, source).bind(this)
-                  );
-                },
-                beforeRemoveRow: (index, amount) => {
-                  this.props.dispatch(deleteLeads(index, amount).bind(this));
-                },
-                afterColumnMove: (columns, target) => {
-                  this.props.dispatch(
-                    updateColumnsOfLeads(columns, target).bind(this)
-                  );
-                },
-                afterContextMenuHide: context => {
-                  this.props.dispatch(updateHiddenColumnsOfOpportunities(context).bind(this));
-                }
-              }}
-            />
-          )}
+          {!this.props.leads ||
+					!this.props.leadsColumnsHeader ||
+					!this.props.leadsHiddenColIndices ? (
+              <p>loading...</p>
+            ) : (
+              <HotTable
+                root="hot"
+                ref="hot"
+                settings={{
+                  licenseKey: '7fb69-d3720-89c63-24040-8e45b',
+                  data: this.props.leads,
+                  colHeaders: this.props.leadsColumnsHeader,
+                  columns: this.state.columns,
+                  hiddenColumns: {
+                    columns: [0],
+                    indicators: false
+                  },
+                  manualColumnMove: true,
+                  rowHeaders: true,
+                  height: window.innerHeight - 60,
+                  colWidths: 120,
+                  contextMenu: [
+                    'remove_row',
+                    'hidden_columns_show',
+                    'hidden_columns_hide'
+                  ],
+                  hiddenColumns: {
+                    columns: this.props.leadsHiddenColIndices,
+                    indicators: true
+                  },
+                  filters: true,
+                  dropdownMenu: [
+                    'filter_by_condition',
+                    'filter_by_value',
+                    'filter_action_bar'
+                  ],
+                  columnSorting: true,
+                  minSpareRows: 1,
+                  fixedRowsBottom: 1,
+                  afterChange: (changes, source) => {
+                    this.props.dispatch(
+                      createAndUpdateLeads(changes, source).bind(this)
+                    );
+                  },
+                  beforeRemoveRow: (index, amount) => {
+                    this.props.dispatch(deleteLeads(index, amount).bind(this));
+                  },
+                  afterColumnMove: (columns, target) => {
+                    this.props.dispatch(
+                      updateColumnsOfLeads(columns, target).bind(this)
+                    );
+                  },
+                  afterContextMenuHide: context => {
+                    this.props.dispatch(
+                      updateHiddenColumnsOfOpportunities(context).bind(this)
+                    );
+                  }
+                }}
+              />
+            )}
         </div>
       </TableWrap>
     );
@@ -121,7 +130,8 @@ class Leads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.leadsReducer.leads,
-  leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader
+  leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader,
+  leadsHiddenColIndices: state.leadsReducer.leadsHiddenColIndices
 });
 
 export default connect(mapStateToProps, null)(Leads);

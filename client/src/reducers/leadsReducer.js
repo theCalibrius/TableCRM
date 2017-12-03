@@ -19,10 +19,10 @@ export default function(
     };
   }
   switch (action.type) {
-  case 'GET_HIDDENCOLUMNS_OF_LEADS':
+  case 'GET_LEADS_HIDDENCOLUMNS':
     return {
       ...state,
-      hiddenColIndices: action.payload
+      leadsHiddenColIndices: action.payload
     };
   }
   return state;

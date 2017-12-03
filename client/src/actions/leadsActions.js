@@ -77,8 +77,9 @@ export function getColumnsOfLeads(dispatch) {
       const hiddenColumns = response.data
         .filter(column => column.hidden === 1)
         .map(column => column.rank);
+      console.log(hiddenColumns);
       dispatch({
-        type: 'GET_HIDDENCOLUMNS_OF_LEADS',
+        type: 'GET_LEADS_HIDDENCOLUMNS',
         payload: hiddenColumns
       });
       return response;
