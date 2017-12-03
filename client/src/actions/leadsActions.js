@@ -6,6 +6,7 @@ import {
   getSortedColumnsByRank,
   getMovedColumnsIndexRange,
   mapColumnIdToName,
+  getHiddenCols,
   getUpdatedColumnsObj
 } from '../lib/helper';
 
@@ -100,7 +101,7 @@ export function getColumnsOfLeads(dispatch) {
     });
 }
 
-export function updateColumnsOfLeads(columns, target) {
+export function updateColumnOrderOfLeads(columns, target) {
   return function(dispatch) {
     if (target) {
       getMovedColumnsIndexRange(columns, target).then(movedRange => {
@@ -117,7 +118,7 @@ export function updateColumnsOfLeads(columns, target) {
               afterColumnsArray
             ).then(updatedColumnOrders => {
               axios
-                .put('/api/leads/columns', { updatedColumnOrders })
+                .put('/api/leads/columns/order', { updatedColumnOrders })
                 .then(dispatch(getColumnsOfLeads));
             });
           });
@@ -125,25 +126,25 @@ export function updateColumnsOfLeads(columns, target) {
     }
   };
 }
-
-export function getHiddenColumnsOfOpportunities(dispatch) {
-  const colPropsToIndicesBound = colPropsToIndices.bind(this);
-
-  axios.get('/api/leads/columns').then(response => {
-    const hiddenColIndices = colPropsToIndicesBound(response.data);
-    dispatch({
-      type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
-      payload: hiddenColIndices
-    });
-  });
-}
-
-export function updateHiddenColumnsOfOpportunities(context) {
-  return function(dispatch) {
-    const getHiddenColsBound = getHiddenCols.bind(this);
-    const hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/opportunities/columns', { hiddenColumns }).then(() => {
-      dispatch(getHiddenColumnsOfOpportunities.bind(this));
-    });
-  };
-}
+//
+// export function getHiddenColumnsOfLeads(dispatch) {
+//   const colPropsToIndicesBound = colPropsToIndices.bind(this);
+//
+//   axios.get('/api/leads/columns').then(response => {
+//     const hiddenColIndices = colPropsToIndicesBound(response.data);
+//     dispatch({
+//       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
+//       payload: hiddenColIndices
+//     });
+//   });
+// }
+//
+// export function getHiddenColumnsOfLeads(context) {
+//   return function(dispatch) {
+//     const getHiddenColsBound = getHiddenCols.bind(this);
+//     const hiddenColumns = getHiddenColsBound(context);
+//     axios.put('/api/leads/columns', { hiddenColumns }).then(() => {
+//       dispatch(getHiddenColumnsOfOpportunities.bind(this));
+//     });
+//   };
+// }

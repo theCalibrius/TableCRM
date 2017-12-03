@@ -13,8 +13,9 @@ import {
   createAndUpdateLeads,
   deleteLeads,
   getColumnsOfLeads,
-  getHiddenColumnsOfOpportunities,
-  updateHiddenColumnsOfOpportunities
+  updateColumnOrderOfLeads
+  // getHiddenColumnsOfLeads,
+  // getHiddenColumnsOfLeads
 } from '../actions/leadsActions';
 
 const TableWrap = styled.div`
@@ -111,7 +112,7 @@ class Leads extends React.Component {
                   },
                   afterColumnMove: (columns, target) => {
                     this.props.dispatch(
-                      updateColumnsOfLeads(columns, target).bind(this)
+                      updateColumnOrderOfLeads(columns, target).bind(this)
                     );
                   },
                   afterContextMenuHide: context => {
