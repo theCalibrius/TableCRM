@@ -53,15 +53,7 @@ class Contacts extends React.Component {
           correctFormat: false,
           readOnly: true
         }
-      ]
-    };
-  }
-  componentDidMount() {
-    this.props.dispatch(getContacts);
-  }
-  render() {
-    const contactsTableSetting = {
-      data: this.props.contacts,
+      ],
       colHeaders: [
         'ID',
         'First Name',
@@ -75,7 +67,16 @@ class Contacts extends React.Component {
         'Personal Phone Number',
         'Created Date',
         'Updated Date'
-      ],
+      ]
+    };
+  }
+  componentDidMount() {
+    this.props.dispatch(getContacts);
+  }
+  render() {
+    const contactsTableSetting = {
+      data: this.props.contacts,
+      colHeaders: this.state.colHeaders,
       columns: this.state.columns,
       hiddenColumns: {
         columns: [0],

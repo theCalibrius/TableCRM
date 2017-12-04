@@ -25,13 +25,9 @@ const TableWrap = styled.div`
 
 // start of class
 class Opportunities extends React.Component {
-  componentDidMount() {
-    // this.props.dispatch(getHiddenColumnsOfOpportunities.bind(this));
-    this.props.dispatch(getAllOpportunities());
-  }
-  render() {
-    const opportunitiesTableSetting = {
-      data: this.props.opportunities,
+  constructor(props) {
+    super(props);
+    this.state = {
       colHeaders: [
         'id',
         'Opportunity Name',
@@ -93,7 +89,18 @@ class Opportunities extends React.Component {
         },
         { data: 'createdAt', type: 'date', readOnly: true },
         { data: 'updatedAt', type: 'date', readOnly: true }
-      ],
+      ]
+    };
+  }
+  componentDidMount() {
+    // this.props.dispatch(getHiddenColumnsOfOpportunities.bind(this));
+    this.props.dispatch(getAllOpportunities());
+  }
+  render() {
+    const opportunitiesTableSetting = {
+      data: this.props.opportunities,
+      colHeaders: this.state.colHeaders,
+      columns: this.state.columns,
       hiddenColumns: {
         columns: this.props.hiddenColIndices,
         indicators: true
