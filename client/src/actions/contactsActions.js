@@ -17,20 +17,21 @@ export function getContacts(dispatch) {
 
 export function createAndUpdateContacts(changes, source) {
   return function(dispatch) {
-    const postCallback = function(newRows) {
-      axios.post('/api/contacts', { newRows }).then(() => {
-        dispatch(getContacts());
-      });
-    };
-
-    const putCallback = function(updatedRows) {
-      axios.put('/api/contacts', { updatedRows }).then(() => {
-        dispatch(getContacts());
-      });
-    };
-
     const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
-    getNewAndUpdatedRowsBound(changes, source, postCallback, putCallback);
+    const newAndUpdatedRows = getNewAndUpdatedRowsBound(changes, source);
+    console.log(changes);
+    if (newAndUpdatedRows) {
+      const newRows = newAndUpdatedRows.newRows;
+      const updatedRows = newAndUpdatedRows.updatedRows;
+
+      if (newRows.length > 0) {
+        axios.post('/api/contacts', {newRows}).then(() => { dispatch(getContacts); });
+      }
+
+      if (updatedRows.length > 0) {
+        axios.put('/api/contacts', {updatedRows}).then(() => { dispatch(getContacts); });
+      }
+    }
   };
 }
 

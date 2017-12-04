@@ -10,6 +10,11 @@ export default function(state = { opportunities: null }, action) {
       ...state,
       hiddenColIndices: action.payload
     };
+  case 'GET_ALL_OPPORTUNITY_IDS_NAMES':
+    return {
+      ...state,
+      opportunityIDsNames: action.payload.data
+    };
   }
   return state;
 }

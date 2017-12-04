@@ -44,6 +44,10 @@ app.put(
   opportunities.updateHiddenColumnsOfOpportunities
 );
 
+app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
+app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
+
+
 app.get('/api/accounts', accounts.getAllAccounts);
 app.delete('/api/accounts', accounts.deleteAccounts);
 app.post('/api/accounts', accounts.createAndUpdateAccounts);
