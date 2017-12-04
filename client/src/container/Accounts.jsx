@@ -49,7 +49,7 @@ class Accounts extends React.Component {
   }
   render() {
     return (
-      <div>
+      <TableWrap>
         <div id="table">
           {!this.props.accounts ? (
             <p>loading...</p>
@@ -128,7 +128,7 @@ class Accounts extends React.Component {
             />
           )}
         </div>
-      </div>
+      </TableWrap>
     );
   }
 } // end of class
