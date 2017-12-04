@@ -210,3 +210,17 @@ export function getHiddenColsFromContext(context) {
 
   return hiddenColProps;
 }
+
+export const commonTableSetting = {
+  licenseKey: '7fb69-d3720-89c63-24040-8e45b',
+  manualColumnMove: true,
+  rowHeaders: true,
+  height: window.innerHeight - 60,
+  colWidths: 120,
+  contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
+  dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+  filters: true,
+  columnSorting: true,
+  minSpareRows: 1,
+  fixedRowsBottom: 1
+};
