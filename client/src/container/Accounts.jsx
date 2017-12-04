@@ -18,16 +18,26 @@ https://redux.js.org/docs/api/Store.html#dispatch
 */
 import 'handsontable-pro/dist/handsontable.full';
 import HotTable from 'react-handsontable';
+import { commonTableSetting } from '../lib/helper';
 
 import React from 'react';
 // connects the Accounts component to the redux store
 import { connect } from 'react-redux';
+
+// styled-component
+import styled from 'styled-components';
 
 import {
   getAllAccounts,
   createAndUpdateAccounts,
   deleteAccounts
 } from '../actions/accountsActions';
+
+const TableWrap = styled.div`
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
+`;
 
 class Accounts extends React.Component {
   constructor(props) {

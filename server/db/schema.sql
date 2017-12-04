@@ -103,20 +103,32 @@ INSERT INTO opportunitiesColumns (name) VALUES
   Dummy Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
-('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
-
 DELIMITER //
+CREATE PROCEDURE `inset_accounts`()
+BEGIN
+  DECLARE i int DEFAULT 1;
+  WHILE i <= 200 DO
+    SET i = i + 1;
+    INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
+    ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
+  END WHILE;
+END //
+
+CALL `inset_accounts`();
+
+-- INSERT INTO accounts (description, email, phoneNumber, street, city, state, postalCode, country, website) VALUES
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website'),
+-- ('description', 'email', 'phoneNumber', 'street', 'city', 'state', '98072', 'country', 'website');
+
 CREATE PROCEDURE `inset_leads`()
 BEGIN
   DECLARE i int DEFAULT 1;
@@ -163,13 +175,30 @@ CALL `inset_opportunities`();
 -- ('contractor work with Google', 'Started conversation with Debby. Pending response from Jessica.', 200000, 30, '2017-12-9'),
 -- ('teaching assistance application', 'software engineering role', 15000, 30, '2017-11-30');
 
-INSERT INTO contacts (firstName, lastName, suffix, title, department, description, email, workPhoneNumber, personalPhoneNumber, createdAt) VALUES
-('John','Jones','Mr.','Sales Manager','Sales','text1','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 02:18:22'),
-('Sarah','Jones','Mrs.','Sales Coordinator','Sales','text2','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:20:22'),
-('Larry','David','Mr.','Sales Manager','Sales','text3','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:22'),
-('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
-('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
-('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
+CREATE PROCEDURE `inset_contacts`()
+BEGIN
+  DECLARE i int DEFAULT 1;
+  WHILE i <= 20 DO
+    SET i = i + 1;
+    INSERT INTO contacts (firstName, lastName, suffix, title, department, description, email, workPhoneNumber, personalPhoneNumber, createdAt) VALUES
+    ('John','Jones','Mr.','Sales Manager','Sales','text1','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 02:18:22'),
+    ('Sarah','Jones','Mrs.','Sales Coordinator','Sales','text2','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:20:22'),
+    ('Larry','David','Mr.','Sales Manager','Sales','text3','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:22'),
+    ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
+    ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
+    ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
+  END WHILE;
+END //
+
+CALL `inset_contacts`();
+
+-- INSERT INTO contacts (firstName, lastName, suffix, title, department, description, email, workPhoneNumber, personalPhoneNumber, createdAt) VALUES
+-- ('John','Jones','Mr.','Sales Manager','Sales','text1','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 02:18:22'),
+-- ('Sarah','Jones','Mrs.','Sales Coordinator','Sales','text2','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:20:22'),
+-- ('Larry','David','Mr.','Sales Manager','Sales','text3','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:22'),
+-- ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
+-- ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
+-- ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
 
 
 INSERT INTO leadsColumns (rank, name) VALUES

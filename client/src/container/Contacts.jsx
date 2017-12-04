@@ -1,15 +1,28 @@
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
+// styled-component
+import styled from 'styled-components';
 // redux actions
-import { getContacts, createAndUpdateContacts, deleteContacts } from '../actions/contactsActions';
+import {
+  getContacts,
+  createAndUpdateContacts,
+  deleteContacts
+} from '../actions/contactsActions';
 // api call
 import axios from 'axios';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
 // import 'handsontable-pro/dist/handsontable.full.css';
- 
+import { commonTableSetting } from '../lib/helper';
+
+const TableWrap = styled.div`
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
+`;
+
 class Contacts extends React.Component {
   // start of class
   constructor(props) {
@@ -95,13 +108,21 @@ class Contacts extends React.Component {
                 stretchH: 'all',
                 contextMenu: ['remove_row'],
                 filters: true,
-                dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+                dropdownMenu: [
+                  'filter_by_condition',
+                  'filter_by_value',
+                  'filter_action_bar'
+                ],
                 columnSorting: true,
                 afterChange: (changes, source) => {
-                  this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
+                  this.props.dispatch(
+                    createAndUpdateContacts(changes, source).bind(this)
+                  );
                 },
                 beforeRemoveRow: (index, amount) => {
-                  console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
+                  console.log(
+                    `beforeRemoveRow: index: ${index}, amount: ${amount}`
+                  );
                   this.props.dispatch(deleteContacts(index, amount).bind(this));
                 },
                 afterCopy: (index, amount) => {

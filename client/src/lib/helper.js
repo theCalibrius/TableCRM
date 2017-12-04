@@ -217,6 +217,7 @@ export const commonTableSetting = {
   rowHeaders: true,
   height: window.innerHeight - 60,
   colWidths: 120,
+  wordWrap: false,
   contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
   dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
   filters: true,
