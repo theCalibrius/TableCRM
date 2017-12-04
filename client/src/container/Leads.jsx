@@ -75,10 +75,6 @@ class Leads extends React.Component {
                   data: this.props.leads,
                   colHeaders: this.props.leadsColumnsHeader,
                   columns: this.state.columns,
-                  hiddenColumns: {
-                    columns: [0],
-                    indicators: false
-                  },
                   manualColumnMove: true,
                   rowHeaders: true,
                   height: window.innerHeight - 60,

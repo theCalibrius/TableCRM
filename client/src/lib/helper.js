@@ -100,6 +100,7 @@ export function getNewAndUpdatedRows(changes, source) {
 }
 
 export function getRemovedIds() {
+  console.log(this);
   const selectedRows = this.refs.hot.hotInstance.getSelected();
   const startRow = selectedRows[0];
   const endRow = selectedRows[2];

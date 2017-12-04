@@ -1,16 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
+// handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
 import 'handsontable-pro/dist/handsontable.full.css';
-
+// react & redux
+import React from 'react';
+import { connect } from 'react-redux';
+// styled-component
+import styled from 'styled-components';
+// redux actions
 import {
   getAllOpportunities,
   createAndUpdateOpportunities,
-  deleteOpportunities,
-  getHiddenColumnsOfOpportunities,
-  updateHiddenColumnsOfOpportunities
+  deleteOpportunities
+  // getHiddenColumnsOfOpportunities,
+  // updateHiddenColumnsOfOpportunities
 } from '../actions/opportunitiesActions';
+
+const TableWrap = styled.div`
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
+`;
 
 // start of class
 class Opportunities extends React.Component {
@@ -20,7 +30,7 @@ class Opportunities extends React.Component {
   }
   render() {
     return (
-      <div>
+      <TableWrap>
         <div id="table">
           {!this.props.opportunities ? (
             <p>loading...</p>
@@ -93,7 +103,6 @@ class Opportunities extends React.Component {
                   { data: 'createdAt', type: 'date', readOnly: true },
                   { data: 'updatedAt', type: 'date', readOnly: true }
                 ],
-                // colWidths: [10, 80, 120, 20, 22, 25, 25, 25],
                 columnSorting: true,
                 filters: true,
                 dropdownMenu: [
@@ -102,8 +111,10 @@ class Opportunities extends React.Component {
                   'filter_action_bar'
                 ],
                 rowHeaders: true,
-                stretchH: 'all',
+                height: window.innerHeight - 60,
+                // colWidths: 120,
                 minSpareRows: 1,
+                fixedRowsBottom: 1,
                 contextMenu: [
                   'remove_row',
                   'hidden_columns_show',
@@ -132,7 +143,7 @@ class Opportunities extends React.Component {
             />
           )}
         </div>
-      </div>
+      </TableWrap>
     );
   }
 } // end of class

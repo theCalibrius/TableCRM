@@ -138,13 +138,30 @@ CALL `inset_leads`();
 -- ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1),
 -- ('description', 'firstName', 'lastName', 'suffix', 'title', 10000000, 'hi@masato.io', 0001112222, 1),
 
-INSERT INTO opportunities (name, description, estimatedValue, winProbability, expectedCloseDate) VALUES
-('retail pricing app', 'Entrepreneur Rachel just got funding and is looking to add more features to her app.', 50000, 80, '2017-12-31'),
-('contractor work with Apple', 'Their design team is looking to outsource for a period of 2-3 months.', 60000, 50, '2017-11-15'),
-('recruitment app', 'Steve is looking for a technical cofounder. Prior experience with two startups that got sold.', 210000, 75, '2017-12-1'),
-('IT support', 'Connection at MIT; not so exicting, but will wait to hear more update from Allen.', 210000, 30, '2017-12-1'),
-('contractor work with Google', 'Started conversation with Debby. Pending response from Jessica.', 200000, 30, '2017-12-9'),
-('teaching assistance application', 'software engineering role', 15000, 30, '2017-11-30');
+CREATE PROCEDURE `inset_opportunities`()
+BEGIN
+  DECLARE i int DEFAULT 1;
+  WHILE i <= 20 DO
+    SET i = i + 1;
+    INSERT INTO opportunities (name, description, estimatedValue, winProbability, expectedCloseDate) VALUES
+    ('retail pricing app', 'Entrepreneur Rachel just got funding and is looking to add more features to her app.', 50000, 80, '2017-12-31'),
+    ('contractor work with Apple', 'Their design team is looking to outsource for a period of 2-3 months.', 60000, 50, '2017-11-15'),
+    ('recruitment app', 'Steve is looking for a technical cofounder. Prior experience with two startups that got sold.', 210000, 75, '2017-12-1'),
+    ('IT support', 'Connection at MIT; not so exicting, but will wait to hear more update from Allen.', 210000, 30, '2017-12-1'),
+    ('contractor work with Google', 'Started conversation with Debby. Pending response from Jessica.', 200000, 30, '2017-12-9'),
+    ('teaching assistance application', 'software engineering role', 15000, 30, '2017-11-30');
+  END WHILE;
+END //
+
+CALL `inset_opportunities`();
+
+-- INSERT INTO opportunities (name, description, estimatedValue, winProbability, expectedCloseDate) VALUES
+-- ('retail pricing app', 'Entrepreneur Rachel just got funding and is looking to add more features to her app.', 50000, 80, '2017-12-31'),
+-- ('contractor work with Apple', 'Their design team is looking to outsource for a period of 2-3 months.', 60000, 50, '2017-11-15'),
+-- ('recruitment app', 'Steve is looking for a technical cofounder. Prior experience with two startups that got sold.', 210000, 75, '2017-12-1'),
+-- ('IT support', 'Connection at MIT; not so exicting, but will wait to hear more update from Allen.', 210000, 30, '2017-12-1'),
+-- ('contractor work with Google', 'Started conversation with Debby. Pending response from Jessica.', 200000, 30, '2017-12-9'),
+-- ('teaching assistance application', 'software engineering role', 15000, 30, '2017-11-30');
 
 INSERT INTO contacts (firstName, lastName, suffix, title, department, description, email, workPhoneNumber, personalPhoneNumber, createdAt) VALUES
 ('John','Jones','Mr.','Sales Manager','Sales','text1','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 02:18:22'),
