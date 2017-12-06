@@ -51,25 +51,46 @@ export function deleteOpportunities(index, amount) {
   };
 }
 
-// export function getHiddenColumnsOfOpportunities(dispatch) {
-//   const colPropsToIndicesBound = colPropsToIndices.bind(this);
-//
-//   axios.get('/api/opportunities/columns').then(response => {
-//     const hiddenColIndices = colPropsToIndicesBound(response.data);
-//     console.log(hiddenColIndices);
-//     dispatch({
-//       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
-//       payload: hiddenColIndices
-//     });
-//   });
-// }
-//
-// export function updateHiddenColumnsOfOpportunities(context) {
-//   return function(dispatch) {
-//     const getHiddenColsBound = getHiddenColsFromContext.bind(this);
-//     const hiddenColumns = getHiddenColsBound(context);
-//     axios.put('/api/opportunities/columns', { hiddenColumns }).then(() => {
-//       dispatch(getHiddenColumnsOfOpportunities.bind(this));
-//     });
-//   };
-// }
+export function getHiddenColumnsOfOpportunities(dispatch) {
+  const colPropsToIndicesBound = colPropsToIndices.bind(this);
+
+  axios.get('/api/opportunities/columns').then(response => {
+    const hiddenColIndices = colPropsToIndicesBound(response.data);
+    dispatch({
+      type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
+      payload: hiddenColIndices
+    });
+  });
+}
+
+export function updateHiddenColumnsOfOpportunities(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenCols.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/opportunities/columns', { hiddenColumns }).then(() => {
+      dispatch(getHiddenColumnsOfOpportunities.bind(this));
+    });
+  };
+}
+
+export function getAllOpportunityIDsNames() {
+  const request = axios.get('/api/opportunities/names');
+  return {
+    type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
+    payload: request
+  };
+}
+
+export function relateOppToContact(changes, source, oppID) {
+  return function(dispatch) {
+    // get ID of the opportunity name that was selected
+    if (changes) {
+      const rowIndex = changes[0][0];
+      const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex)
+        .id;
+      axios
+        .get(`/api/opportunity/${  oppID  }/${  contactID}`)
+        .then(response => console.log(response));
+    }
+  };
+}
