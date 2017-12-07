@@ -74,11 +74,31 @@ export function updateHiddenColumnsOfOpportunities(context) {
 }
 
 export function getAllOpportunityIDsNames() {
-  const request = axios.get('/api/opportunities/names');
-  return {
-    type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
-    payload: request
+  return function(dispatch) {
+    axios
+      .get('/api/opportunities/names')
+      .then(res => {
+        dispatch({
+          type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
+          payload: res
+        });
+        return res;
+      })
+      .then(res => {
+        const oppNameIds = res.data;
+        const oppName = oppNameIds.map(i => i.name);
+        console.log(oppName);
+        dispatch({
+          type: 'GET_ALL_OPPORTUNITY_NAMES',
+          payload: res.data
+        });
+      });
   };
+  // const request = axios.get('/api/opportunities/names');
+  // return {
+  //   type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
+  //   payload: request
+  // };
 }
 
 export function relateOppToContact(changes, source, oppID) {
@@ -89,7 +109,7 @@ export function relateOppToContact(changes, source, oppID) {
       const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex)
         .id;
       axios
-        .get(`/api/opportunity/${  oppID  }/${  contactID}`)
+        .get(`/api/opportunity/${oppID}/${contactID}`)
         .then(response => console.log(response));
     }
   };

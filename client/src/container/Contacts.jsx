@@ -48,54 +48,14 @@ class Contacts extends React.Component {
         'Created Date',
         'Updated Date'
       ],
-      columns: null
-      // columns: [
-      //   { data: 'id' },
-      //   {
-      //     data: 'name',
-      //     type: 'autocomplete',
-      //     source: this.props.opportunityIDsNames
-      //       ? this.props.opportunityIDsNames.map(opp => opp.name)
-      //       : null,
-      //     strict: false
-      //   },
-      //   { data: 'firstName' },
-      //   { data: 'lastName' },
-      //   { data: 'suffix' },
-      //   { data: 'title' },
-      //   { data: 'department' },
-      //   { data: 'description' },
-      //   { data: 'email' },
-      //   { data: 'workPhoneNumber' },
-      //   { data: 'personalPhoneNumber' },
-      //   {
-      //     data: 'createdAt',
-      //     type: 'date',
-      //     dateFormat: 'MM/DD/YYYY',
-      //     correctFormat: false,
-      //     readOnly: true
-      //   },
-      //   {
-      //     data: 'updatedAt',
-      //     type: 'date',
-      //     dateFormat: 'MM/DD/YYYY',
-      //     correctFormat: false,
-      //     readOnly: true
-      //   }
-      // ]
-    };
-  }
-  setColumns(opportunityIDsNames) {
-    this.setState({
       columns: [
         { data: 'id' },
         {
           data: 'name',
           type: 'autocomplete',
-          source: opportunityIDsNames,
-          // source: this.props.opportunityIDsNames
-          //   ? this.props.opportunityIDsNames.map(opp => opp.name)
-          //   : null,
+          source: this.props.opportunityIDsNames
+            ? this.props.opportunityIDsNames.map(opp => opp.name)
+            : null,
           strict: false
         },
         { data: 'firstName' },
@@ -122,7 +82,7 @@ class Contacts extends React.Component {
           readOnly: true
         }
       ]
-    });
+    };
   }
   componentDidMount() {
     this.props.dispatch(getAllOpportunityIDsNames());
@@ -130,7 +90,6 @@ class Contacts extends React.Component {
     const opportunityIDsNames = this.props.opportunityIDsNames
       ? this.props.opportunityIDsNames.map(opp => opp.name)
       : null;
-    this.setColumns(opportunityIDsNames);
   }
   render() {
     const contactsTableSetting = {
