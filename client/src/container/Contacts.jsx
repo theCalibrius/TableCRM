@@ -47,38 +47,6 @@ class Contacts extends React.Component {
         'Personal Phone Number',
         'Created Date',
         'Updated Date'
-      ],
-      columns: [
-        { data: 'id' },
-        {
-          data: 'name',
-          type: 'autocomplete',
-          source: this.props.opportunityNames,
-          strict: false
-        },
-        { data: 'firstName' },
-        { data: 'lastName' },
-        { data: 'suffix' },
-        { data: 'title' },
-        { data: 'department' },
-        { data: 'description' },
-        { data: 'email' },
-        { data: 'workPhoneNumber' },
-        { data: 'personalPhoneNumber' },
-        {
-          data: 'createdAt',
-          type: 'date',
-          dateFormat: 'MM/DD/YYYY',
-          correctFormat: false,
-          readOnly: true
-        },
-        {
-          data: 'updatedAt',
-          type: 'date',
-          dateFormat: 'MM/DD/YYYY',
-          correctFormat: false,
-          readOnly: true
-        }
       ]
     };
   }
@@ -87,10 +55,42 @@ class Contacts extends React.Component {
     this.props.dispatch(getContacts);
   }
   render() {
+    const columns = [
+      { data: 'id' },
+      {
+        data: 'name',
+        type: 'autocomplete',
+        source: this.props.opportunityNames,
+        strict: false
+      },
+      { data: 'firstName' },
+      { data: 'lastName' },
+      { data: 'suffix' },
+      { data: 'title' },
+      { data: 'department' },
+      { data: 'description' },
+      { data: 'email' },
+      { data: 'workPhoneNumber' },
+      { data: 'personalPhoneNumber' },
+      {
+        data: 'createdAt',
+        type: 'date',
+        dateFormat: 'MM/DD/YYYY',
+        correctFormat: false,
+        readOnly: true
+      },
+      {
+        data: 'updatedAt',
+        type: 'date',
+        dateFormat: 'MM/DD/YYYY',
+        correctFormat: false,
+        readOnly: true
+      }
+    ];
     const contactsTableSetting = {
       data: this.props.contacts,
       colHeaders: this.state.colHeaders,
-      columns: this.state.columns,
+      columns,
       hiddenColumns: {
         columns: [0],
         indicators: false
@@ -121,6 +121,10 @@ class Contacts extends React.Component {
       },
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteContacts(index, amount).bind(this));
+      },
+      afterInit: () => {
+        const opportunityNames = this.props.opportunityNames;
+        this.setState({ columns });
       }
     };
     const tableSettingMerged = Object.assign(
