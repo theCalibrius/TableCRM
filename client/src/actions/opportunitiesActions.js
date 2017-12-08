@@ -86,19 +86,13 @@ export function getAllOpportunityIDsNames() {
       })
       .then(res => {
         const oppNameIds = res.data;
-        const oppName = oppNameIds.map(i => i.name);
-        console.log(oppName);
+        const oppNames = oppNameIds.map(i => i.name);
         dispatch({
           type: 'GET_ALL_OPPORTUNITY_NAMES',
-          payload: res.data
+          payload: oppNames
         });
       });
   };
-  // const request = axios.get('/api/opportunities/names');
-  // return {
-  //   type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
-  //   payload: request
-  // };
 }
 
 export function relateOppToContact(changes, source, oppID) {

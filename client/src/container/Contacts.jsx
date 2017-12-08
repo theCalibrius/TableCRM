@@ -53,9 +53,7 @@ class Contacts extends React.Component {
         {
           data: 'name',
           type: 'autocomplete',
-          source: this.props.opportunityIDsNames
-            ? this.props.opportunityIDsNames.map(opp => opp.name)
-            : null,
+          source: this.props.opportunityNames,
           strict: false
         },
         { data: 'firstName' },
@@ -87,9 +85,6 @@ class Contacts extends React.Component {
   componentDidMount() {
     this.props.dispatch(getAllOpportunityIDsNames());
     this.props.dispatch(getContacts);
-    const opportunityIDsNames = this.props.opportunityIDsNames
-      ? this.props.opportunityIDsNames.map(opp => opp.name)
-      : null;
   }
   render() {
     const contactsTableSetting = {
@@ -135,11 +130,13 @@ class Contacts extends React.Component {
     return (
       <TableWrap>
         <div id="table">
-          {!this.props.contacts || !this.props.opportunityIDsNames ? (
-            <p>loading...</p>
-          ) : (
-            <HotTable root="hot" ref="hot" settings={contactsTableSetting} />
-          )}
+          {!this.props.contacts ||
+					!this.props.opportunityIDsNames ||
+					!this.props.opportunityNames ? (
+              <p>loading...</p>
+            ) : (
+              <HotTable root="hot" ref="hot" settings={contactsTableSetting} />
+            )}
         </div>
       </TableWrap>
     );
@@ -148,7 +145,8 @@ class Contacts extends React.Component {
 
 const mapStateToProps = state => ({
   contacts: state.contactsReducer.contacts,
-  opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames
+  opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
+  opportunityNames: state.opportunitiesReducer.opportunityNames
 });
 
 export default connect(mapStateToProps, null)(Contacts);
