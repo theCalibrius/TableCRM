@@ -75,23 +75,12 @@ export function updateHiddenColumnsOfOpportunities(context) {
 
 export function getAllOpportunityIDsNames() {
   return function(dispatch) {
-    axios
-      .get('/api/opportunities/names')
-      .then(res => {
-        dispatch({
-          type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
-          payload: res
-        });
-        return res;
-      })
-      .then(res => {
-        const oppNameIds = res.data;
-        const oppNames = oppNameIds.map(i => i.name);
-        dispatch({
-          type: 'GET_ALL_OPPORTUNITY_NAMES',
-          payload: oppNames
-        });
+    axios.get('/api/opportunities/names').then(res => {
+      dispatch({
+        type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
+        payload: res
       });
+    });
   };
 }
 

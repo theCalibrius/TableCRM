@@ -90,7 +90,7 @@ export function updateSource() {
   const columns = this.state.columns;
   for (const column of columns) {
     if (column.data === 'name') {
-      column.source = this.props.opportunityNames;
+      column.source = this.props.opportunityIDsNames.map(i => i.name);
     }
   }
   this.forceUpdate();

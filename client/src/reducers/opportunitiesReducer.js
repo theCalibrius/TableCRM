@@ -15,11 +15,6 @@ export default function(state = { opportunities: null }, action) {
       ...state,
       opportunityIDsNames: action.payload.data
     };
-  case 'GET_ALL_OPPORTUNITY_NAMES':
-    return {
-      ...state,
-      opportunityNames: action.payload
-    };
   }
   return state;
 }
