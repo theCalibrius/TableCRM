@@ -29,6 +29,7 @@ app.get('/api/contacts', contacts.getAllContacts);
 app.post('/api/contacts', contacts.createAndUpdateContacts);
 app.put('/api/contacts', contacts.createAndUpdateContacts);
 app.delete('/api/contacts', contacts.deleteContacts);
+app.get('/api/contacts/columns', contacts.getColumnsOfContacts);
 
 app.get('/api/opportunities', opportunities.getAllOpportunities);
 app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
@@ -46,7 +47,6 @@ app.put(
 
 app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
 app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
-
 
 app.get('/api/accounts', accounts.getAllAccounts);
 app.delete('/api/accounts', accounts.deleteAccounts);

@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
+import {
+  getNewAndUpdatedRows,
+  getRemovedIds,
+  getHiddenColsFromResponse
+} from '../lib/helper';
 
 export function getContacts(dispatch) {
   axios
@@ -25,11 +29,15 @@ export function createAndUpdateContacts(changes, source) {
       const updatedRows = newAndUpdatedRows.updatedRows;
 
       if (newRows.length > 0) {
-        axios.post('/api/contacts', {newRows}).then(() => { dispatch(getContacts); });
+        axios.post('/api/contacts', { newRows }).then(() => {
+          dispatch(getContacts);
+        });
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/contacts', {updatedRows}).then(() => { dispatch(getContacts); });
+        axios.put('/api/contacts', { updatedRows }).then(() => {
+          dispatch(getContacts);
+        });
       }
     }
   };
@@ -48,4 +56,32 @@ export function deleteContacts(index, amount) {
       }
     });
   };
+}
+
+export function getColumnsOfContacts(dispatch) {
+  axios
+    .get('/api/contacts/columns')
+    .then(response => {
+      const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+      console.log(hiddenColumnsIndexes);
+      dispatch({
+        type: 'GET_CONTACTS_HIDDENCOLUMNS',
+        payload: hiddenColumnsIndexes
+      });
+      return response;
+    })
+  // .then(response => {
+  //   const columns = response.data;
+  //   const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+  //   return getSortedColumnsByRankBind(columns);
+  // })
+  // .then(columnsHeader => {
+  //   dispatch({
+  //     type: 'GET_ALL_LEADS_COLUMNS_HEADER',
+  //     payload: columnsHeader
+  //   });
+  // })
+    .catch(err => {
+      console.error.bind(err);
+    });
 }

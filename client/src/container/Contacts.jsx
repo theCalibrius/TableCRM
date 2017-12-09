@@ -7,7 +7,8 @@ import styled from 'styled-components';
 import {
   getContacts,
   createAndUpdateContacts,
-  deleteContacts
+  deleteContacts,
+  getColumnsOfContacts
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
@@ -52,6 +53,7 @@ class Contacts extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getAllOpportunityIDsNames());
+    this.props.dispatch(getColumnsOfContacts.bind(this));
     this.props.dispatch(getContacts);
   }
   render() {
@@ -92,8 +94,8 @@ class Contacts extends React.Component {
       colHeaders: this.state.colHeaders,
       columns,
       hiddenColumns: {
-        columns: [0],
-        indicators: false
+        columns: this.props.contactsHiddenColIndices,
+        indicators: true
       },
       afterChange: (changes, source) => {
         const opportunityIDsNames = this.props.opportunityIDsNames;
@@ -150,7 +152,8 @@ class Contacts extends React.Component {
 const mapStateToProps = state => ({
   contacts: state.contactsReducer.contacts,
   opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
-  opportunityNames: state.opportunitiesReducer.opportunityNames
+  opportunityNames: state.opportunitiesReducer.opportunityNames,
+  contactsHiddenColIndices: state.contactsReducer.contactsHiddenColIndices
 });
 
 export default connect(mapStateToProps, null)(Contacts);

@@ -50,6 +50,14 @@ CREATE TABLE contacts (
   /*FOREIGN KEY (accountId) REFERENCES opportunities (contactPersonId)*/
 );
 
+CREATE TABLE contactsColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  rank int,
+  name varchar(50),
+  hidden boolean DEFAULT false,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE leads (
   id int NOT NULL AUTO_INCREMENT,
   ownerId int,
@@ -103,6 +111,34 @@ CREATE TABLE opportunity_contact (
 
 INSERT INTO opportunitiesColumns (name) VALUES
 ('name'), ('description'), ('pipeline'), ('estimatedValue'), ('winProbability'), ('priority'), ('status'), ('stage'), ('expectedCloseDate'), ('lostReason'), ('origin'), ('createdAt'), ('updatedAt');
+
+INSERT INTO contactsColumns (rank, name) VALUES
+(0, 'id'),
+(1, 'name'),
+(2, 'firstName'),
+(3, 'lastName'),
+(4, 'suffix'),
+(5, 'title'),
+(6, 'department'),
+(7, 'description'),
+(8, 'email'),
+(9, 'workPhoneNumber'),
+(10, 'personalPhoneNumber'),
+(11, 'createdAt'),
+(12, 'updatedAt');
+
+INSERT INTO leadsColumns (rank, name) VALUES
+(0, 'id'),
+(1, 'firstName'),
+(2, 'lastName'),
+(3, 'suffix'),
+(4, 'title'),
+(5, 'value'),
+(6, 'email'),
+(7, 'phoneNumber'),
+(8, 'description'),
+(9, 'createdAt'),
+(10, 'ownerId');
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data
@@ -204,17 +240,3 @@ CALL `inset_contacts`();
 -- ('Sam','Johnson','Miss','Account Executive','Sales','text4','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 04:18:23'),
 -- ('Adam','Wills','Mr.','Vice President','Sales','text5','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 08:18:22'),
 -- ('Janet','Stone','Mrs.','CEO','Sales','text6','yasaman109@gmail.com','4082041351','4082041351','2017-11-04 05:18:22');
-
-
-INSERT INTO leadsColumns (rank, name) VALUES
-(0, 'id'),
-(1, 'firstName'),
-(2, 'lastName'),
-(3, 'suffix'),
-(4, 'title'),
-(5, 'value'),
-(6, 'email'),
-(7, 'phoneNumber'),
-(8, 'description'),
-(9, 'createdAt'),
-(10, 'ownerId');

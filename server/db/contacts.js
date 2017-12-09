@@ -2,10 +2,13 @@ const db = require('./config');
 const lib = require('../lib/helper');
 
 const getAllContacts = (req, res) => {
-  db.query('SELECT c.*,o.name FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id ORDER BY c.id', (err, rows) => {
-    if (err) console.log(err);
-    res.json(rows);
-  });
+  db.query(
+    'SELECT c.*,o.name FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id ORDER BY c.id',
+    (err, rows) => {
+      if (err) console.log(err);
+      res.json(rows);
+    }
+  );
 };
 
 const createAndUpdateContacts = (req, res) => {
@@ -17,7 +20,10 @@ const createAndUpdateContacts = (req, res) => {
   }
 
   for (const row of rows) {
-    if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('YYYY-MM-DD HH:mm:ss');
+    if (row.createdAt)
+      row.createdAt = moment(new Date(row.createdAt)).format(
+        'YYYY-MM-DD HH:mm:ss'
+      );
     const fieldsArr = lib.getFieldsArr(row);
     const fields = lib.getFields(fieldsArr);
     const values = lib.getValues(row, fieldsArr);
@@ -26,7 +32,11 @@ const createAndUpdateContacts = (req, res) => {
       db.query(`INSERT INTO contacts(${fields}) VALUES (${values});`);
     } else if (req.method === 'PUT') {
       const updateQuery = lib.getUpdateQuery(fieldsArr);
-      db.query(`INSERT INTO contacts(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
+      db.query(
+        `INSERT INTO contacts(${fields}) VALUES (${
+          values
+        }) ON DUPLICATE KEY UPDATE ${updateQuery};`
+      );
     }
   }
 
@@ -41,8 +51,16 @@ const deleteContacts = (req, res) => {
   });
 };
 
+const getColumnsOfContacts = (req, res) => {
+  db.query('SELECT * from contactsColumns ORDER BY id ASC', (err, rows) => {
+    if (err) return console.log(err);
+    res.json(rows);
+  });
+};
+
 module.exports = {
   getAllContacts,
   deleteContacts,
-  createAndUpdateContacts
+  createAndUpdateContacts,
+  getColumnsOfContacts
 };
