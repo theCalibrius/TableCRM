@@ -81,6 +81,8 @@ module.exports.getAllOpportunityIDsNames = (req, res) => {
 };
 
 module.exports.relateOppToContact = (req, res) => {
+  //Remove if anything is passed as NULL
+  Object.keys(req.body).forEach((key) => (key == 'null') && delete req.body[key]);
   const contactID = req.body.contactID;
   const selectedOpportunityID = req.body.oppID;
   if (contactID && selectedOpportunityID) {
@@ -90,26 +92,21 @@ module.exports.relateOppToContact = (req, res) => {
     db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${values}) ON DUPLICATE KEY UPDATE opportunityID=${selectedOpportunityID};`);
   } else {
     //handle relating opp to multiple contacts after paste
-    const insert = false;
     for (const pair in req.body) {
       const contactID = pair;
       const oppID = req.body[pair];
       db.query(`SELECT contactID from opportunity_contact WHERE contactID = ${contactID};`, (err, rows) => {
         if (!err) {
-          if (rows) {
+          if (rows.length != 0) {
             // check if any duplicate contact ID is found, update Opp ID
             db.query(`UPDATE opportunity_contact SET opportunityID='${oppID}' WHERE contactID='${contactID}';`);
           }
           else {
-            insert = true;
+            //if not found, insert
+            db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${contactID},${oppID});`);
           }
         }
       });
-    }
-    // else insert
-    if (insert) {
-      const values = JSON.stringify(req.body).replace(/\"([^(\")"]+)\":/g,"$1:").replace(/,/,"),(").replace(/{/, "(").replace(/}/,")");
-      db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${values};`);
     }
   }
   res.sendStatus(201);
