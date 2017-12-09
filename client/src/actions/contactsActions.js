@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
   getNewAndUpdatedRows,
   getRemovedIds,
-  getHiddenColsFromResponse
+  getHiddenColsFromResponse,
+  getSortedColumnsByRank
 } from '../lib/helper';
 
 export function getContacts(dispatch) {
@@ -63,24 +64,23 @@ export function getColumnsOfContacts(dispatch) {
     .get('/api/contacts/columns')
     .then(response => {
       const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
-      console.log(hiddenColumnsIndexes);
       dispatch({
         type: 'GET_CONTACTS_HIDDENCOLUMNS',
         payload: hiddenColumnsIndexes
       });
       return response;
     })
-  // .then(response => {
-  //   const columns = response.data;
-  //   const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
-  //   return getSortedColumnsByRankBind(columns);
-  // })
-  // .then(columnsHeader => {
-  //   dispatch({
-  //     type: 'GET_ALL_LEADS_COLUMNS_HEADER',
-  //     payload: columnsHeader
-  //   });
-  // })
+    .then(response => {
+      const columns = response.data;
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
+    })
+    .then(columnsHeader => {
+      dispatch({
+        type: 'GET_ALL_CONTACTS_COLUMNS_HEADER',
+        payload: columnsHeader
+      });
+    })
     .catch(err => {
       console.error.bind(err);
     });

@@ -18,5 +18,12 @@ export default function(
       contactsHiddenColIndices: action.payload
     };
   }
+  switch (action.type) {
+  case 'GET_ALL_CONTACTS_COLUMNS_HEADER':
+    return {
+      ...state,
+      contactsColumnsHeader: action.payload
+    };
+  }
   return state;
 }
