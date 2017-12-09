@@ -12,7 +12,7 @@ export function getNewAndUpdatedRows(changes, source) {
     for (const change of changes) {
       // get change's corresponding row's index (per spreadsheet) and id (per database)
       const rowIndex = change[0];
-      const rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+      const rowId = this.refs.hot.hotInstance.getDataAtRow(rowIndex)[0];
       // get change's field-newValue pair
       const field = change[1];
       let newValue = change[3];
@@ -54,7 +54,7 @@ export function getNewAndUpdatedRows(changes, source) {
             newRows.push(newRow);
           }
 
-        // otherwise, if change's corresponding row was not empty prior to change
+          // otherwise, if change's corresponding row was not empty prior to change
         } else {
           // create a variable to check whether row id is found in updatedRows array & set its initial value to false
           let found = false;
@@ -188,11 +188,7 @@ export function mapColumnIdToName() {
   });
 }
 
-export function getUpdatedColumnsObj(
-  entityColumnsObj,
-  movedRangeIndexes,
-  afterColumnsArray
-) {
+export function getUpdatedColumnsObj(entityColumnsObj, movedRangeIndexes, afterColumnsArray) {
   return new Promise(resolve => {
     const updatedColumnOrders = [];
     const movedRangeStart = movedRangeIndexes[0];
