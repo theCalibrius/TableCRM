@@ -81,13 +81,35 @@ export function getAllOpportunityIDsNames() {
   };
 }
 
-export function relateOppToContact(changes,source,oppID) {
+export function relateOppToContact(changes,source,oppIDs) {
   return function(dispatch) {
-    // get ID of the opportunity name that was selected
     if (changes) {
-      const rowIndex = changes[0][0];
-      const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      axios.get('/api/opportunity/'+ oppID + '/' + contactID).then(response => console.log(response));
+      // if changing multiple rows
+      if (changes.length > 1) {
+        // build object to store OppIDs and contactIDs
+        const contactIDs = [];
+        for (const change of changes) {
+          const rowIndex = change[0];
+          const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+          contactIDs.push(contactID);
+        }
+        const data = {};
+        contactIDs.forEach(function(contactID, oppID) {
+            data[contactID] = oppIDs[oppID];
+        });
+        axios.post('/api/opportunities/contacts', data )
+          .then(response => console.log(response))
+          .catch(e => {console.log(e);});
+      }
+      // if changing one row
+      else {
+        const oppID = oppIDs[0];
+        const rowIndex = changes[0][0];
+        const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+        axios.post('/api/opportunity/contact', {oppID: oppID, contactID: contactID} )
+          .then(response => console.log(response))
+          .catch(e => {console.log(e);});
+      }
     }
   };
 }

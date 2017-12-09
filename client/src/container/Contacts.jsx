@@ -35,8 +35,7 @@ class Contacts extends React.Component {
     return (
       <div>
         <div id="table">
-          {!this.props.contacts &&
-          !this.props.opportunityIDsNames ? (
+          {!this.props.contacts && !this.props.opportunityIDsNames ? (
             <p>loading...</p>
           ) : (
             <HotTable
@@ -103,29 +102,42 @@ class Contacts extends React.Component {
                 filters: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
-                afterChange: (changes, source) => {
+                afterChange: (changes, source,index, amount) => {
                   const opportunityIDsNames = this.props.opportunityIDsNames;
                   if (changes && changes[0][1] != 'name') {
                     this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
                   }
                   if (changes) {
-                    const selectedOpportunityName = changes[0][3];
-                    //get Opp ID
-                    const oppID = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id)[0];
-                    if (changes[0][1] === 'name' && selectedOpportunityName !== null && opportunityIDsNames.find(o => o.name === selectedOpportunityName)) {
-                      this.props.dispatch(relateOppToContact(changes, source, oppID).bind(this));
+                     //handle relating opp to multiple contacts after paste
+                    if (changes.length > 1) {
+                      const selectedOpportunities = changes.map((selectedOpp) => {
+                        return selectedOpp[3];
+                      });
+                      const oppIDs = [];
+                      for (const selectedOpportunity of selectedOpportunities) {
+                          for (const opportunityIDName of opportunityIDsNames) {
+                            if (opportunityIDName.name === selectedOpportunity) {
+                              oppIDs.push(opportunityIDName.id)
+                            }
+                          }
+                      }
+                      if (changes[0][1] === 'name' && selectedOpportunities && opportunityIDsNames.find(o => selectedOpportunities.indexOf(o.name) !== -1)) {
+                          this.props.dispatch(relateOppToContact(changes, source, oppIDs).bind(this));
+                      }
+                    } else {
+                      //handle dropdown select and assign to a single contact
+                      //get oppID
+                      const selectedOpportunityName = changes[0][3];
+                      const oppIDs = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
+                      if (changes[0][1] === 'name' && selectedOpportunityName !== null && opportunityIDsNames.find(o => o.name === selectedOpportunityName)) {
+                          this.props.dispatch(relateOppToContact(changes, source, oppIDs).bind(this));
+                      }
                     }
                   }
                 },
                 beforeRemoveRow: (index, amount) => {
                   console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
                   this.props.dispatch(deleteContacts(index, amount).bind(this));
-                },
-                afterCopy: (index, amount) => {
-                  console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-                },
-                afterPaste: (index, amount) => {
-                  console.log(`afterPaste: index: ${index}, amount: ${amount}`);
                 }
               }}
             />

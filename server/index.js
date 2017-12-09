@@ -45,8 +45,8 @@ app.put(
 );
 
 app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
-app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
-
+app.post('/api/opportunity/contact', opportunities.relateOppToContact);
+app.post('/api/opportunities/contacts', opportunities.relateOppToContact);
 
 app.get('/api/accounts', accounts.getAllAccounts);
 app.delete('/api/accounts', accounts.deleteAccounts);
