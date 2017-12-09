@@ -8,7 +8,8 @@ import {
   getContacts,
   createAndUpdateContacts,
   deleteContacts,
-  getColumnsOfContacts
+  getColumnsOfContacts,
+  updateSource
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
@@ -110,14 +111,7 @@ class Contacts extends React.Component {
         this.props.dispatch(deleteContacts(index, amount).bind(this));
       },
       afterInit: () => {
-        const columns = this.state.columns;
-        for (const i of columns) {
-          if (i.data === 'name') {
-            console.log(i);
-            i.source = this.props.opportunityNames;
-          }
-        }
-        this.forceUpdate();
+        this.props.dispatch(updateSource.bind(this));
       }
     };
     const tableSettingMerged = Object.assign(

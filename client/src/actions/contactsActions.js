@@ -85,3 +85,13 @@ export function getColumnsOfContacts(dispatch) {
       console.error.bind(err);
     });
 }
+
+export function updateSource() {
+  const columns = this.state.columns;
+  for (const column of columns) {
+    if (column.data === 'name') {
+      column.source = this.props.opportunityNames;
+    }
+  }
+  this.forceUpdate();
+}
