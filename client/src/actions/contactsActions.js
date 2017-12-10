@@ -95,3 +95,42 @@ export function updateSource() {
   }
   this.forceUpdate();
 }
+
+export function updateColumnOrderOfContacts(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
+              ColumnIdToNameObj,
+              movedRangeIndexes,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              axios
+                .put('/api/contacts/columns/order', { updatedColumnOrders })
+                .then(dispatch(getColumnsOfLeads));
+            });
+          });
+      });
+    }
+  };
+}
+
+export function updateHiddenColumnsOfContacts(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/contacts/columns/hidden', { hiddenColumns }).then(() => {
+      dispatch(updateColumnOrderOfContacts.bind(this));
+    });
+    // .then(() => {
+    //   dispatch(getColumnsOfLeads);
+    // });
+  };
+}

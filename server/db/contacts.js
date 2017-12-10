@@ -58,9 +58,35 @@ const getColumnsOfContacts = (req, res) => {
   });
 };
 
+const updateHiddenColumnsOfContacts = (req, res) => {
+  const hiddenColumns = req.body.hiddenColumns;
+
+  db.query('SELECT name, hidden FROM contactsColumns;', (err, columns) => {
+    if (!err) {
+      for (const column of columns) {
+        const name = column.name;
+        const hidden = column.hidden;
+        if (hidden && !hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE contactsColumns SET hidden=false WHERE name='${name}';`
+          );
+        } else if (!hidden && hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE contactsColumns SET hidden=true WHERE name='${name}';`
+          );
+        }
+      }
+      res.sendStatus(201);
+    } else {
+      console.log(err);
+    }
+  });
+};
+
 module.exports = {
   getAllContacts,
   deleteContacts,
   createAndUpdateContacts,
-  getColumnsOfContacts
+  getColumnsOfContacts,
+  updateHiddenColumnsOfContacts
 };

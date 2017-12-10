@@ -77,7 +77,6 @@ module.exports.updateColumnOrdersOfLeads = (req, res) => {
 
 module.exports.updateHiddenColumnsOfLeads = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
-
   db.query('SELECT name, hidden FROM leadsColumns;', (err, columns) => {
     if (!err) {
       for (const column of columns) {

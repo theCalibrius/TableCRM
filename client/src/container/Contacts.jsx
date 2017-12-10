@@ -114,6 +114,14 @@ class Contacts extends React.Component {
       },
       afterInit: () => {
         this.props.dispatch(updateSource.bind(this));
+      },
+      afterColumnMove: (columns, target) => {
+        // this.props.dispatch(
+        //   updateColumnOrderOfLeads(columns, target).bind(this)
+        // );
+      },
+      afterContextMenuHide: context => {
+        this.props.dispatch(updateHiddenColumnsOfContacts(context).bind(this));
       }
     };
     const tableSettingMerged = Object.assign(

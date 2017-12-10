@@ -201,12 +201,10 @@ export function getHiddenColsFromResponse(response) {
 export function getHiddenColsFromContext(context) {
   const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
   const hiddenColProps = [];
-
   for (const hiddenColIndex of hiddenColIndices) {
     const hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
     hiddenColProps.push(hiddenColProp);
   }
-
   return hiddenColProps;
 }
 
