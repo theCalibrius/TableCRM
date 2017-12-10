@@ -4,7 +4,9 @@ import {
   getNewAndUpdatedRows,
   getRemovedIds,
   getHiddenColsFromContext,
-  colPropsToIndices
+  colPropsToIndices,
+  getHiddenColsFromResponse,
+  getSortedColumnsByRank
 } from '../lib/helper';
 
 export function getAllOpportunities() {
@@ -51,17 +53,44 @@ export function deleteOpportunities(index, amount) {
   };
 }
 
-export function getHiddenColumnsOfOpportunities(dispatch) {
-  const colPropsToIndicesBound = colPropsToIndices.bind(this);
-
-  axios.get('/api/opportunities/columns').then(response => {
-    const hiddenColIndices = colPropsToIndicesBound(response.data);
-    dispatch({
-      type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
-      payload: hiddenColIndices
+export function getColumnsOfOpportunities(dispatch) {
+  axios
+    .get('/api/opportunities/columns')
+    .then(response => {
+      const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+      dispatch({
+        type: 'GET_OPPORTUNITIES_HIDDENCOLUMNS',
+        payload: hiddenColumnsIndexes
+      });
+      return response;
+    })
+    .then(response => {
+      const columns = response.data;
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
+    })
+    .then(columnsHeader => {
+      dispatch({
+        type: 'GET_ALL_OPPORTUNITIES_COLUMNS_HEADER',
+        payload: columnsHeader
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
     });
-  });
 }
+
+// export function getHiddenColumnsOfOpportunities(dispatch) {
+//   const colPropsToIndicesBound = colPropsToIndices.bind(this);
+//
+//   axios.get('/api/opportunities/columns').then(response => {
+//     const hiddenColIndices = colPropsToIndicesBound(response.data);
+//     dispatch({
+//       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
+//       payload: hiddenColIndices
+//     });
+//   });
+// }
 
 export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {

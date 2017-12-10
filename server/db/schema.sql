@@ -25,13 +25,6 @@ CREATE TABLE opportunities (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE opportunitiesColumns (
-  id int NOT NULL AUTO_INCREMENT,
-  name varchar(50),
-  hidden boolean DEFAULT false,
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE contacts (
   id int NOT NULL AUTO_INCREMENT,
   firstName varchar(50),
@@ -49,15 +42,6 @@ CREATE TABLE contacts (
   /*,accountId int,*/
   /*FOREIGN KEY (accountId) REFERENCES opportunities (contactPersonId)*/
 );
-
-CREATE TABLE contactsColumns (
-  id int NOT NULL AUTO_INCREMENT,
-  rank int,
-  name varchar(50),
-  hidden boolean DEFAULT false,
-  PRIMARY KEY (id)
-);
-
 CREATE TABLE leads (
   id int NOT NULL AUTO_INCREMENT,
   ownerId int,
@@ -71,14 +55,6 @@ CREATE TABLE leads (
   phoneNumber varchar(255),
   createdAt timestamp DEFAULT NOW(),
   updatedAt timestamp DEFAULT NOW() ON UPDATE NOW(),
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE leadsColumns (
-  id int NOT NULL AUTO_INCREMENT,
-  rank int,
-  name varchar(50),
-  hidden boolean DEFAULT false,
   PRIMARY KEY (id)
 );
 
@@ -99,6 +75,30 @@ CREATE TABLE accounts (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE opportunitiesColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  rank int,
+  name varchar(50),
+  hidden boolean DEFAULT false,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE contactsColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  rank int,
+  name varchar(50),
+  hidden boolean DEFAULT false,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE leadsColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  rank int,
+  name varchar(50),
+  hidden boolean DEFAULT false,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE opportunity_contact (
   contactID int,
   opportunityID int,
@@ -109,8 +109,21 @@ CREATE TABLE opportunity_contact (
   Actual Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-INSERT INTO opportunitiesColumns (name) VALUES
-('name'), ('description'), ('pipeline'), ('estimatedValue'), ('winProbability'), ('priority'), ('status'), ('stage'), ('expectedCloseDate'), ('lostReason'), ('origin'), ('createdAt'), ('updatedAt');
+INSERT INTO opportunitiesColumns (rank, name) VALUES
+(0, 'id'),
+(1, 'name'),
+(2, 'description'),
+(3,'pipeline'),
+(4, 'estimatedValue'),
+(5, 'winProbability'),
+(6, 'priority'),
+(7, 'status'),
+(8, 'stage'),
+(9, 'expectedCloseDate'),
+(10, 'lostReason'),
+(11, 'origin'),
+(12, 'createdAt'),
+(13, 'updatedAt');
 
 INSERT INTO contactsColumns (rank, name) VALUES
 (0, 'id'),

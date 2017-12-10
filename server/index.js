@@ -38,10 +38,7 @@ app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.put('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.delete('/api/opportunities', opportunities.deleteOpportunities);
 
-app.get(
-  '/api/opportunities/columns',
-  opportunities.getHiddenColumnsOfOpportunities
-);
+app.get('/api/opportunities/columns', opportunities.getColumnsOfOpportunities);
 app.put(
   '/api/opportunities/columns',
   opportunities.updateHiddenColumnsOfOpportunities

@@ -128,7 +128,7 @@ export function updateHiddenColumnsOfLeads(context) {
   return function(dispatch) {
     const getHiddenColsBound = getHiddenColsFromContext.bind(this);
     const hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/leads/columns/hidden', { hiddenColumns }).then(res => {
+    axios.put('/api/leads/columns/hidden', { hiddenColumns }).then(() => {
       dispatch(getColumnsOfLeads.bind(this));
     });
   };

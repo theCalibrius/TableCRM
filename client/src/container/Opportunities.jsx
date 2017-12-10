@@ -12,7 +12,8 @@ import styled from 'styled-components';
 import {
   getAllOpportunities,
   createAndUpdateOpportunities,
-  deleteOpportunities
+  deleteOpportunities,
+  getColumnsOfOpportunities
   // getHiddenColumnsOfOpportunities,
   // updateHiddenColumnsOfOpportunities
 } from '../actions/opportunitiesActions';
@@ -93,7 +94,7 @@ class Opportunities extends React.Component {
     };
   }
   componentDidMount() {
-    // this.props.dispatch(getHiddenColumnsOfOpportunities.bind(this));
+    this.props.dispatch(getColumnsOfOpportunities.bind(this));
     this.props.dispatch(getAllOpportunities());
   }
   render() {
@@ -102,7 +103,7 @@ class Opportunities extends React.Component {
       colHeaders: this.state.colHeaders,
       columns: this.state.columns,
       hiddenColumns: {
-        columns: this.props.hiddenColIndices,
+        columns: this.props.opportunitiesHiddenColIndices,
         indicators: true
       },
       afterChange: (changes, source) => {
@@ -139,7 +140,10 @@ class Opportunities extends React.Component {
 
 const mapStateToProps = state => ({
   opportunities: state.opportunitiesReducer.opportunities,
-  hiddenColIndices: state.opportunitiesReducer.hiddenColIndices
+  opportunitiesColumnsHeader:
+		state.opportunitiesReducer.opportunitiesColumnsHeader,
+  opportunitiesHiddenColIndices:
+		state.opportunitiesReducer.opportunitiesHiddenColIndices
 });
 
 export default connect(mapStateToProps)(Opportunities);
