@@ -9,7 +9,9 @@ import {
   createAndUpdateContacts,
   deleteContacts,
   getColumnsOfContacts,
-  updateSource
+  updateSource,
+  updateHiddenColumnsOfContacts,
+  updateColumnOrderOfContacts
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
@@ -116,9 +118,9 @@ class Contacts extends React.Component {
         this.props.dispatch(updateSource.bind(this));
       },
       afterColumnMove: (columns, target) => {
-        // this.props.dispatch(
-        //   updateColumnOrderOfLeads(columns, target).bind(this)
-        // );
+        this.props.dispatch(
+          updateColumnOrderOfContacts(columns, target).bind(this)
+        );
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfContacts(context).bind(this));

@@ -30,6 +30,7 @@ app.post('/api/contacts', contacts.createAndUpdateContacts);
 app.put('/api/contacts', contacts.createAndUpdateContacts);
 app.delete('/api/contacts', contacts.deleteContacts);
 app.get('/api/contacts/columns', contacts.getColumnsOfContacts);
+app.put('/api/contacts/columns/order', contacts.updateColumnOrdersOfContacts);
 app.put('/api/contacts/columns/hidden', contacts.updateHiddenColumnsOfContacts);
 
 app.get('/api/opportunities', opportunities.getAllOpportunities);

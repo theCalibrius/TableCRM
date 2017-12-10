@@ -3,7 +3,11 @@ import {
   getNewAndUpdatedRows,
   getRemovedIds,
   getHiddenColsFromResponse,
-  getSortedColumnsByRank
+  getSortedColumnsByRank,
+  getHiddenColsFromContext,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
+  getUpdatedColumnsObj
 } from '../lib/helper';
 
 export function getContacts(dispatch) {
@@ -114,7 +118,7 @@ export function updateColumnOrderOfContacts(columns, target) {
             ).then(updatedColumnOrders => {
               axios
                 .put('/api/contacts/columns/order', { updatedColumnOrders })
-                .then(dispatch(getColumnsOfLeads));
+                .then(dispatch(getColumnsOfContacts));
             });
           });
       });
@@ -127,10 +131,7 @@ export function updateHiddenColumnsOfContacts(context) {
     const getHiddenColsBound = getHiddenColsFromContext.bind(this);
     const hiddenColumns = getHiddenColsBound(context);
     axios.put('/api/contacts/columns/hidden', { hiddenColumns }).then(() => {
-      dispatch(updateColumnOrderOfContacts.bind(this));
+      dispatch(getColumnsOfContacts.bind(this));
     });
-    // .then(() => {
-    //   dispatch(getColumnsOfLeads);
-    // });
   };
 }

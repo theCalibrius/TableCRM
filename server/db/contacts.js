@@ -58,6 +58,21 @@ const getColumnsOfContacts = (req, res) => {
   });
 };
 
+const updateColumnOrdersOfContacts = (req, res) => {
+  const updatedColumnOrders = req.body.updatedColumnOrders;
+  for (const column of updatedColumnOrders) {
+    db.query(
+      `UPDATE contactsColumns SET rank = ${column.columnOrder} WHERE id = ${
+        column.columnId
+      }`,
+      err => {
+        if (err) return console.log(err);
+      }
+    );
+  }
+  res.sendStatus(201);
+};
+
 const updateHiddenColumnsOfContacts = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
 
@@ -88,5 +103,6 @@ module.exports = {
   deleteContacts,
   createAndUpdateContacts,
   getColumnsOfContacts,
+  updateColumnOrdersOfContacts,
   updateHiddenColumnsOfContacts
 };
