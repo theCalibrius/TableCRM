@@ -100,7 +100,7 @@ class Opportunities extends React.Component {
   render() {
     const opportunitiesTableSetting = {
       data: this.props.opportunities,
-      colHeaders: this.state.colHeaders,
+      colHeaders: this.props.opportunitiesColumnsHeader,
       columns: this.state.columns,
       hiddenColumns: {
         columns: this.props.opportunitiesHiddenColIndices,
