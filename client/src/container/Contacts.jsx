@@ -129,7 +129,7 @@ class Contacts extends React.Component {
                       //get oppID
                       const selectedOpportunityName = changes[0][3];
                       const oppIDs = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
-                      if (changes[0][1] === 'name' && selectedOpportunityName !== null && opportunityIDsNames.find(o => o.name === selectedOpportunityName)) {
+                      if (changes[0][1] === 'name' && selectedOpportunityName !== null && (opportunityIDsNames.find(o => o.name === selectedOpportunityName) || selectedOpportunityName === ""))  {
                           this.props.dispatch(relateOppToContact(changes, source, oppIDs).bind(this));
                       }
                     }
