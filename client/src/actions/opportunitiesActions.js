@@ -94,11 +94,13 @@ export function getColumnsOfOpportunities(dispatch) {
 
 export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
-    const getHiddenColsBound = getHiddenCols.bind(this);
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
     const hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/opportunities/columns', { hiddenColumns }).then(() => {
-      dispatch(getHiddenColumnsOfOpportunities.bind(this));
-    });
+    axios
+      .put('/api/opportunities/columns/hidden', { hiddenColumns })
+      .then(() => {
+        dispatch(getColumnsOfOpportunities.bind(this));
+      });
   };
 }
 

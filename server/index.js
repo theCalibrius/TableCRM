@@ -40,7 +40,7 @@ app.delete('/api/opportunities', opportunities.deleteOpportunities);
 
 app.get('/api/opportunities/columns', opportunities.getColumnsOfOpportunities);
 app.put(
-  '/api/opportunities/columns',
+  '/api/opportunities/columns/hidden',
   opportunities.updateHiddenColumnsOfOpportunities
 );
 

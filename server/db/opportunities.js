@@ -58,12 +58,11 @@ module.exports.getColumnsOfOpportunities = (req, res) => {
 
 module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
-
-  db.query('SELECT name, hidden FROM opportunitiesColumns;', (err, rows) => {
+  db.query('SELECT name, hidden FROM opportunitiesColumns;', (err, columns) => {
     if (!err) {
-      for (const row of rows) {
-        const name = row.name;
-        const hidden = row.hidden;
+      for (const column of columns) {
+        const name = column.name;
+        const hidden = column.hidden;
         if (hidden && !hiddenColumns.includes(name)) {
           db.query(
             `UPDATE opportunitiesColumns SET hidden=false WHERE name='${name}';`
@@ -75,6 +74,8 @@ module.exports.updateHiddenColumnsOfOpportunities = (req, res) => {
         }
       }
       res.sendStatus(201);
+    } else {
+      console.log(err);
     }
   });
 };

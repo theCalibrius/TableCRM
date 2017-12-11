@@ -13,9 +13,8 @@ import {
   getAllOpportunities,
   createAndUpdateOpportunities,
   deleteOpportunities,
-  getColumnsOfOpportunities
-  // getHiddenColumnsOfOpportunities,
-  // updateHiddenColumnsOfOpportunities
+  getColumnsOfOpportunities,
+  updateHiddenColumnsOfOpportunities
 } from '../actions/opportunitiesActions';
 
 const TableWrap = styled.div`
@@ -113,12 +112,12 @@ class Opportunities extends React.Component {
       },
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteOpportunities(index, amount).bind(this));
+      },
+      afterContextMenuHide: context => {
+        this.props.dispatch(
+          updateHiddenColumnsOfOpportunities(context).bind(this)
+        );
       }
-      // afterContextMenuHide: context => {
-      //   this.props.dispatch(
-      //     updateHiddenColumnsOfOpportunities(context).bind(this)
-      //   );
-      // }
     };
     const tableSettingMerged = Object.assign(
       opportunitiesTableSetting,
