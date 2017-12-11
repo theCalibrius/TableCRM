@@ -29,22 +29,6 @@ class Opportunities extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      colHeaders: [
-        'id',
-        'Opportunity Name',
-        'Description',
-        'Pipeline',
-        'Est Value ($)',
-        'Win Probability (%)',
-        'Priority',
-        'Status',
-        'Stage',
-        'Expected Close Date',
-        'Lost Reason',
-        'Origin',
-        'Created At',
-        'Updated At'
-      ],
       columns: [
         { data: 'id' },
         { data: 'name' },

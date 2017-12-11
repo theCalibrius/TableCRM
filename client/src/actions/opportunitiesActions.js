@@ -83,18 +83,6 @@ export function getColumnsOfOpportunities(dispatch) {
     });
 }
 
-// export function getHiddenColumnsOfOpportunities(dispatch) {
-//   const colPropsToIndicesBound = colPropsToIndices.bind(this);
-//
-//   axios.get('/api/opportunities/columns').then(response => {
-//     const hiddenColIndices = colPropsToIndicesBound(response.data);
-//     dispatch({
-//       type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
-//       payload: hiddenColIndices
-//     });
-//   });
-// }
-
 export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
     const getHiddenColsBound = getHiddenColsFromContext.bind(this);

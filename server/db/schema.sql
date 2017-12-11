@@ -75,7 +75,7 @@ CREATE TABLE accounts (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE opportunitiesColumns (
+CREATE TABLE leadsColumns (
   id int NOT NULL AUTO_INCREMENT,
   rank int,
   name varchar(50),
@@ -91,7 +91,15 @@ CREATE TABLE contactsColumns (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE leadsColumns (
+CREATE TABLE accountsColumns (
+  id int NOT NULL AUTO_INCREMENT,
+  rank int,
+  name varchar(50),
+  hidden boolean DEFAULT false,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE opportunitiesColumns (
   id int NOT NULL AUTO_INCREMENT,
   rank int,
   name varchar(50),
@@ -109,21 +117,18 @@ CREATE TABLE opportunity_contact (
   Actual Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-INSERT INTO opportunitiesColumns (rank, name) VALUES
+INSERT INTO leadsColumns (rank, name) VALUES
 (0, 'id'),
-(1, 'name'),
-(2, 'description'),
-(3,'pipeline'),
-(4, 'estimatedValue'),
-(5, 'winProbability'),
-(6, 'priority'),
-(7, 'status'),
-(8, 'stage'),
-(9, 'expectedCloseDate'),
-(10, 'lostReason'),
-(11, 'origin'),
-(12, 'createdAt'),
-(13, 'updatedAt');
+(1, 'firstName'),
+(2, 'lastName'),
+(3, 'suffix'),
+(4, 'title'),
+(5, 'value'),
+(6, 'email'),
+(7, 'phoneNumber'),
+(8, 'description'),
+(9, 'createdAt'),
+(10, 'ownerId');
 
 INSERT INTO contactsColumns (rank, name) VALUES
 (0, 'id'),
@@ -140,19 +145,36 @@ INSERT INTO contactsColumns (rank, name) VALUES
 (11, 'createdAt'),
 (12, 'updatedAt');
 
-INSERT INTO leadsColumns (rank, name) VALUES
+INSERT INTO accountsColumns (rank, name) VALUES
 (0, 'id'),
-(1, 'firstName'),
-(2, 'lastName'),
-(3, 'suffix'),
-(4, 'title'),
-(5, 'value'),
-(6, 'email'),
-(7, 'phoneNumber'),
-(8, 'description'),
-(9, 'createdAt'),
-(10, 'ownerId');
+(1, 'description'),
+(2, 'industryID'),
+(3, 'email'),
+(4, 'phoneNumber'),
+(5, 'street'),
+(6, 'city'),
+(7, 'state'),
+(8, 'postalCode'),
+(9, 'country'),
+(10, 'website'),
+(11, 'createdAt'),
+(12, 'updatedAt');
 
+INSERT INTO opportunitiesColumns (rank, name) VALUES
+(0, 'id'),
+(1, 'name'),
+(2, 'description'),
+(3,'pipeline'),
+(4, 'estimatedValue'),
+(5, 'winProbability'),
+(6, 'priority'),
+(7, 'status'),
+(8, 'stage'),
+(9, 'expectedCloseDate'),
+(10, 'lostReason'),
+(11, 'origin'),
+(12, 'createdAt'),
+(13, 'updatedAt');
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Dummy Data
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
