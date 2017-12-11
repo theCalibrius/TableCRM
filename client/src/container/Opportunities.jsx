@@ -14,7 +14,8 @@ import {
   createAndUpdateOpportunities,
   deleteOpportunities,
   getColumnsOfOpportunities,
-  updateHiddenColumnsOfOpportunities
+  updateHiddenColumnsOfOpportunities,
+  updateColumnOrderOfOpportunities
 } from '../actions/opportunitiesActions';
 
 const TableWrap = styled.div`
@@ -112,6 +113,11 @@ class Opportunities extends React.Component {
       },
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteOpportunities(index, amount).bind(this));
+      },
+      afterColumnMove: (columns, target) => {
+        this.props.dispatch(
+          updateColumnOrderOfOpportunities(columns, target).bind(this)
+        );
       },
       afterContextMenuHide: context => {
         this.props.dispatch(

@@ -6,7 +6,10 @@ import {
   getHiddenColsFromContext,
   colPropsToIndices,
   getHiddenColsFromResponse,
-  getSortedColumnsByRank
+  getSortedColumnsByRank,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
+  getUpdatedColumnsObj
 } from '../lib/helper';
 
 export function getAllOpportunities() {
@@ -125,6 +128,34 @@ export function relateOppToContact(changes, source, oppID) {
       axios
         .get(`/api/opportunity/${oppID}/${contactID}`)
         .then(response => console.log(response));
+    }
+  };
+}
+
+export function updateColumnOrderOfOpportunities(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
+              ColumnIdToNameObj,
+              movedRangeIndexes,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              axios
+                .put('/api/opportunities/columns/order', {
+                  updatedColumnOrders
+                })
+                .then(dispatch(getColumnsOfOpportunities));
+            });
+          });
+      });
     }
   };
 }

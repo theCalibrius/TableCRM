@@ -105,3 +105,18 @@ module.exports.relateOppToContact = (req, res) => {
     };`
   );
 };
+
+module.exports.updateColumnOrdersOfOpportunities = (req, res) => {
+  const updatedColumnOrders = req.body.updatedColumnOrders;
+  for (const column of updatedColumnOrders) {
+    db.query(
+      `UPDATE opportunitiesColumns SET rank = ${
+        column.columnOrder
+      } WHERE id = ${column.columnId}`,
+      err => {
+        if (err) return console.log(err);
+      }
+    );
+  }
+  res.sendStatus(201);
+};

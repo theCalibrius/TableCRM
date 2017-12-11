@@ -43,6 +43,10 @@ app.put(
   '/api/opportunities/columns/hidden',
   opportunities.updateHiddenColumnsOfOpportunities
 );
+app.put(
+  '/api/opportunities/columns/order',
+  opportunities.updateColumnOrdersOfOpportunities
+);
 
 app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
 app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
