@@ -74,3 +74,29 @@ export function deleteAccounts(index, amount) {
     });
   };
 }
+
+export function getColumnsOfAccounts(dispatch) {
+  axios.get('/api/contacts/columns').then(response => {
+    console.log(response);
+    // const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+    // dispatch({
+    //   type: 'GET_CONTACTS_HIDDENCOLUMNS',
+    //   payload: hiddenColumnsIndexes
+    // });
+    // return response;
+  });
+  // .then(response => {
+  //   const columns = response.data;
+  //   const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+  //   return getSortedColumnsByRankBind(columns);
+  // })
+  // .then(columnsHeader => {
+  //   dispatch({
+  //     type: 'GET_ALL_CONTACTS_COLUMNS_HEADER',
+  //     payload: columnsHeader
+  //   });
+  // })
+  // .catch(err => {
+  //   console.error.bind(err);
+  // });
+}

@@ -12,7 +12,8 @@ import styled from 'styled-components';
 import {
   getAllAccounts,
   createAndUpdateAccounts,
-  deleteAccounts
+  deleteAccounts,
+  getColumnsOfAccounts
 } from '../actions/accountsActions';
 
 const TableWrap = styled.div`
@@ -59,6 +60,7 @@ class Accounts extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getAllAccounts);
+    this.props.dispatch(getColumnsOfAccounts.bind(this));
   }
   render() {
     const accountsTableSetting = {
