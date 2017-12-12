@@ -18,7 +18,8 @@ import {
   getNewAndUpdatedRows,
   getRemovedIds,
   getHiddenColsFromResponse,
-  getSortedColumnsByRank
+  getSortedColumnsByRank,
+  getHiddenColsFromContext
 } from '../lib/helper';
 
 export function getAllAccounts(dispatch) {
@@ -97,11 +98,21 @@ export function getColumnsOfAccounts(dispatch) {
     })
     .then(columnsHeader => {
       dispatch({
-        type: 'GET_ALL_CONTACTS_COLUMNS_HEADER',
+        type: 'GET_ALL_ACCOUNTS_COLUMNS_HEADER',
         payload: columnsHeader
       });
     })
     .catch(err => {
       console.error.bind(err);
     });
+}
+
+export function updateHiddenColumnsOfAccounts(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/accounts/columns/hidden', { hiddenColumns }).then(() => {
+      dispatch(getColumnsOfAccounts.bind(this));
+    });
+  };
 }

@@ -57,9 +57,34 @@ const getColumnsOfAccounts = (req, res) => {
   });
 };
 
+const updateHiddenColumnsOfAccounts = (req, res) => {
+  const hiddenColumns = req.body.hiddenColumns;
+  db.query('SELECT name, hidden FROM accountsColumns;', (err, columns) => {
+    if (!err) {
+      for (const column of columns) {
+        const name = column.name;
+        const hidden = column.hidden;
+        if (hidden && !hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE accountsColumns SET hidden=false WHERE name='${name}';`
+          );
+        } else if (!hidden && hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE accountsColumns SET hidden=true WHERE name='${name}';`
+          );
+        }
+      }
+      res.sendStatus(201);
+    } else {
+      console.log(err);
+    }
+  });
+};
+
 module.exports = {
   getAllAccounts,
   createAndUpdateAccounts,
   deleteAccounts,
-  getColumnsOfAccounts
+  getColumnsOfAccounts,
+  updateHiddenColumnsOfAccounts
 };

@@ -47,7 +47,6 @@ app.put(
   '/api/opportunities/columns/order',
   opportunities.updateColumnOrdersOfOpportunities
 );
-
 app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
 app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
 
@@ -56,6 +55,7 @@ app.delete('/api/accounts', accounts.deleteAccounts);
 app.post('/api/accounts', accounts.createAndUpdateAccounts);
 app.put('/api/accounts', accounts.createAndUpdateAccounts);
 app.get('/api/accounts/columns', accounts.getColumnsOfAccounts);
+app.put('/api/accounts/columns/hidden', accounts.updateHiddenColumnsOfAccounts);
 
 app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createAndUpdateLeads);

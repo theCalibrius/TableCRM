@@ -13,7 +13,8 @@ import {
   getAllAccounts,
   createAndUpdateAccounts,
   deleteAccounts,
-  getColumnsOfAccounts
+  getColumnsOfAccounts,
+  updateHiddenColumnsOfAccounts
 } from '../actions/accountsActions';
 
 const TableWrap = styled.div`
@@ -63,6 +64,14 @@ class Accounts extends React.Component {
       },
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteAccounts(index, amount).bind(this));
+      },
+      afterColumnMove: (columns, target) => {
+        // this.props.dispatch(
+        //   updateColumnOrderOfOpportunities(columns, target).bind(this)
+        // );
+      },
+      afterContextMenuHide: context => {
+        this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
       }
     };
     const tableSettingMerged = Object.assign(
