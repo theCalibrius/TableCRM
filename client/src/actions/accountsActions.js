@@ -17,7 +17,8 @@ import moment from 'moment';
 import {
   getNewAndUpdatedRows,
   getRemovedIds,
-  getHiddenColsFromResponse
+  getHiddenColsFromResponse,
+  getSortedColumnsByRank
 } from '../lib/helper';
 
 export function getAllAccounts(dispatch) {
@@ -79,26 +80,28 @@ export function deleteAccounts(index, amount) {
 }
 
 export function getColumnsOfAccounts(dispatch) {
-  axios.get('/api/accounts/columns').then(response => {
-    const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
-    dispatch({
-      type: 'GET_ACCOUNTS_HIDDENCOLUMNS',
-      payload: hiddenColumnsIndexes
+  axios
+    .get('/api/accounts/columns')
+    .then(response => {
+      const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+      dispatch({
+        type: 'GET_ACCOUNTS_HIDDENCOLUMNS',
+        payload: hiddenColumnsIndexes
+      });
+      return response;
+    })
+    .then(response => {
+      const columns = response.data;
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
+    })
+    .then(columnsHeader => {
+      dispatch({
+        type: 'GET_ALL_CONTACTS_COLUMNS_HEADER',
+        payload: columnsHeader
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
     });
-    return response;
-  });
-  // .then(response => {
-  //   const columns = response.data;
-  //   const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
-  //   return getSortedColumnsByRankBind(columns);
-  // })
-  // .then(columnsHeader => {
-  //   dispatch({
-  //     type: 'GET_ALL_CONTACTS_COLUMNS_HEADER',
-  //     payload: columnsHeader
-  //   });
-  // })
-  // .catch(err => {
-  //   console.error.bind(err);
-  // });
 }

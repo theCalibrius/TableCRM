@@ -40,21 +40,6 @@ class Accounts extends React.Component {
         { data: 'website' },
         { data: 'createdAt', type: 'date', readOnly: true },
         { data: 'updatedAt', type: 'date', readOnly: true }
-      ],
-      colHeaders: [
-        'id',
-        'description',
-        'industryID',
-        'email',
-        'phoneNumber',
-        'street',
-        'city',
-        'state',
-        'postalCode',
-        'country',
-        'website',
-        'createdAt',
-        'updatedAt'
       ]
     };
   }
@@ -65,7 +50,7 @@ class Accounts extends React.Component {
   render() {
     const accountsTableSetting = {
       data: this.props.accounts,
-      colHeaders: this.state.colHeaders,
+      colHeaders: this.props.accountsColumnsHeader,
       columns: this.state.columns,
       hiddenColumns: {
         columns: this.props.accountsHiddenColIndices,
@@ -100,7 +85,8 @@ class Accounts extends React.Component {
 
 const mapStateToProps = state => ({
   accounts: state.accountsReducer.accounts,
-  accountsHiddenColIndices: state.accountsReducer.accountsHiddenColIndices
+  accountsHiddenColIndices: state.accountsReducer.accountsHiddenColIndices,
+  accountsColumnsHeader: state.accountsReducer.accountsColumnsHeader
 });
 
 export default connect(mapStateToProps, null)(Accounts);

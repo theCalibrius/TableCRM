@@ -41,6 +41,11 @@ export default function(
       ...state,
       accountsHiddenColIndices: action.payload
     };
+  case 'GET_ALL_CONTACTS_COLUMNS_HEADER':
+    return {
+      ...state,
+      accountsColumnsHeader: action.payload
+    };
   }
   return state;
 }
