@@ -9,13 +9,16 @@ below, the function getAccounts is an action creator.
 it's customary for redux action types to be all upper-case with words separated by
 underscores (snake-casing), like GET_ALL_ACCOUNTS below
 
-
 */
 
 import axios from 'axios';
 import moment from 'moment';
 
-import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
+import {
+  getNewAndUpdatedRows,
+  getRemovedIds,
+  getHiddenColsFromResponse
+} from '../lib/helper';
 
 export function getAllAccounts(dispatch) {
   axios
@@ -76,14 +79,13 @@ export function deleteAccounts(index, amount) {
 }
 
 export function getColumnsOfAccounts(dispatch) {
-  axios.get('/api/contacts/columns').then(response => {
-    console.log(response);
-    // const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
-    // dispatch({
-    //   type: 'GET_CONTACTS_HIDDENCOLUMNS',
-    //   payload: hiddenColumnsIndexes
-    // });
-    // return response;
+  axios.get('/api/accounts/columns').then(response => {
+    const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+    dispatch({
+      type: 'GET_ACCOUNTS_HIDDENCOLUMNS',
+      payload: hiddenColumnsIndexes
+    });
+    return response;
   });
   // .then(response => {
   //   const columns = response.data;

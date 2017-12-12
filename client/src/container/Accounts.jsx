@@ -67,6 +67,10 @@ class Accounts extends React.Component {
       data: this.props.accounts,
       colHeaders: this.state.colHeaders,
       columns: this.state.columns,
+      hiddenColumns: {
+        columns: this.props.accountsHiddenColIndices,
+        indicators: true
+      },
       afterChange: (changes, source) => {
         this.props.dispatch(
           createAndUpdateAccounts(changes, source).bind(this)
@@ -95,7 +99,8 @@ class Accounts extends React.Component {
 } // end of class
 
 const mapStateToProps = state => ({
-  accounts: state.accountsReducer.accounts
+  accounts: state.accountsReducer.accounts,
+  accountsHiddenColIndices: state.accountsReducer.accountsHiddenColIndices
 });
 
 export default connect(mapStateToProps, null)(Accounts);
