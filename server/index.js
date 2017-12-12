@@ -55,6 +55,7 @@ app.delete('/api/accounts', accounts.deleteAccounts);
 app.post('/api/accounts', accounts.createAndUpdateAccounts);
 app.put('/api/accounts', accounts.createAndUpdateAccounts);
 app.get('/api/accounts/columns', accounts.getColumnsOfAccounts);
+app.put('/api/accounts/columns/order', accounts.updateColumnOrdersOfAccounts);
 app.put('/api/accounts/columns/hidden', accounts.updateHiddenColumnsOfAccounts);
 
 app.get('/api/leads', leads.getAllLeads);

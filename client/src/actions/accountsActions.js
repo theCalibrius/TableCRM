@@ -19,7 +19,10 @@ import {
   getRemovedIds,
   getHiddenColsFromResponse,
   getSortedColumnsByRank,
-  getHiddenColsFromContext
+  getHiddenColsFromContext,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
+  getUpdatedColumnsObj
 } from '../lib/helper';
 
 export function getAllAccounts(dispatch) {
@@ -114,5 +117,31 @@ export function updateHiddenColumnsOfAccounts(context) {
     axios.put('/api/accounts/columns/hidden', { hiddenColumns }).then(() => {
       dispatch(getColumnsOfAccounts.bind(this));
     });
+  };
+}
+
+export function updateColumnOrderOfAccounts(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
+              ColumnIdToNameObj,
+              movedRangeIndexes,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              axios
+                .put('/api/accounts/columns/order', { updatedColumnOrders })
+                .then(dispatch(getColumnsOfAccounts));
+            });
+          });
+      });
+    }
   };
 }

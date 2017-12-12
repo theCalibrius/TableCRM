@@ -81,10 +81,26 @@ const updateHiddenColumnsOfAccounts = (req, res) => {
   });
 };
 
+const updateColumnOrdersOfAccounts = (req, res) => {
+  const updatedColumnOrders = req.body.updatedColumnOrders;
+  for (const column of updatedColumnOrders) {
+    db.query(
+      `UPDATE accountsColumns SET rank = ${column.columnOrder} WHERE id = ${
+        column.columnId
+      }`,
+      err => {
+        if (err) return console.log(err);
+      }
+    );
+  }
+  res.sendStatus(201);
+};
+
 module.exports = {
   getAllAccounts,
   createAndUpdateAccounts,
   deleteAccounts,
   getColumnsOfAccounts,
-  updateHiddenColumnsOfAccounts
+  updateHiddenColumnsOfAccounts,
+  updateColumnOrdersOfAccounts
 };

@@ -14,7 +14,8 @@ import {
   createAndUpdateAccounts,
   deleteAccounts,
   getColumnsOfAccounts,
-  updateHiddenColumnsOfAccounts
+  updateHiddenColumnsOfAccounts,
+  updateColumnOrderOfAccounts
 } from '../actions/accountsActions';
 
 const TableWrap = styled.div`
@@ -66,9 +67,9 @@ class Accounts extends React.Component {
         this.props.dispatch(deleteAccounts(index, amount).bind(this));
       },
       afterColumnMove: (columns, target) => {
-        // this.props.dispatch(
-        //   updateColumnOrderOfOpportunities(columns, target).bind(this)
-        // );
+        this.props.dispatch(
+          updateColumnOrderOfAccounts(columns, target).bind(this)
+        );
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
