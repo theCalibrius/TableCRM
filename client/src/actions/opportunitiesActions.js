@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-import {
-  getNewAndUpdatedRows,
-  getRemovedIds,
-  getHiddenCols,
-  colPropsToIndices
-} from '../lib/helper';
+import { getNewAndUpdatedRows, getRemovedIds, getHiddenCols, colPropsToIndices } from '../lib/helper';
 
 export function getAllOpportunities() {
   const request = axios.get('/api/opportunities');
@@ -81,13 +76,29 @@ export function getAllOpportunityIDsNames() {
   };
 }
 
-export function relateOppToContact(changes,source,oppID) {
+export function relateOppToContact(changes, source, oppID) {
   return function(dispatch) {
     // get ID of the opportunity name that was selected
     if (changes) {
       const rowIndex = changes[0][0];
       const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      axios.get('/api/opportunity/'+ oppID + '/' + contactID).then(response => console.log(response));
+      axios.get(`/api/opportunity/${oppID}/${contactID}`).then(response => console.log(response));
+    }
+  };
+}
+
+export function relateOppToAccount(changes, source, oppID) {
+  console.log('relateOppToContact invoked: ');
+  return function(dispatch) {
+    // get ID of the opportunity name that was selected
+    if (changes) {
+      console.log('opp change: ', changes);
+      const rowIndex = changes[0][0];
+      const accountID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+      console.log('rowIndex: ', rowIndex, '\n', 'oppID: ', oppID, 'accountID: ', accountID);
+      axios
+        .get(`/api/opportunity/account/${oppID}/${accountID}`)
+        .then(response => console.log('THE RESPONSE: ', response));
     }
   };
 }

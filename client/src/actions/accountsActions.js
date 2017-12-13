@@ -29,8 +29,29 @@ export function getAllAccounts(dispatch) {
       return response;
     })
     .then(response => {
+      console.log('HERE IS THE RESPONSE', response.data);
       dispatch({
         type: 'GET_ALL_ACCOUNTS',
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
+    });
+}
+
+export function getAllLeads(dispatch) {
+  axios
+    .get('/api/leads')
+    .then(response => {
+      for (const row of response.data) {
+        if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
+      }
+      return response;
+    })
+    .then(response => {
+      dispatch({
+        type: 'GET_ALL_LEADS',
         payload: response.data
       });
     })
