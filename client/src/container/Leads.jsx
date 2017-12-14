@@ -103,6 +103,22 @@ class Leads extends React.Component {
                   this.props.dispatch(
                     updateColumnsOfLeads(columns, target).bind(this)
                   );
+                },
+                afterOnCellMouseOver: (event, coords, td) => {
+                  console.log(event);
+                  const node = document.createElement('button');
+                  const textnode = document.createTextNode('Water');
+                  node.appendChild(textnode);
+                  console.log(event.target.parentNode.appendChild(node));
+                  // console.log(coords);
+                  // console.log(event.path[1]);
+                  // const parser = new DOMParser();
+                  // const dom = parser.parseFromString(
+                  //   event.path[1],
+                  //   'text/html'
+                  // );
+                  // console.log(dom);
+                  // console.log(td.insertAdjacentHTML('beforebegin', 'text'));
                 }
               }}
             />
