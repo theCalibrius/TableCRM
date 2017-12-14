@@ -21,6 +21,11 @@ body {
   overflow: hidden;
   color: #363636;
 }
+.detail_button{
+  position:absolute;
+  left: 0;
+  z-index: 1000;
+}
 `;
 
 const AppWrap = styled.div`

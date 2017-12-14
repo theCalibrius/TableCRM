@@ -107,7 +107,8 @@ class Leads extends React.Component {
                 afterOnCellMouseOver: (event, coords, td) => {
                   console.log(event);
                   const node = document.createElement('button');
-                  const textnode = document.createTextNode('Water');
+                  node.className = 'detail_button';
+                  const textnode = document.createTextNode('open');
                   node.appendChild(textnode);
                   console.log(event.target.parentNode.appendChild(node));
                   // console.log(coords);
