@@ -51,7 +51,9 @@ class Leads extends React.Component {
           readOnly: true
         },
         { data: 'ownerId' }
-      ]
+      ],
+      currentHoverOverRow: null,
+      currentHoverOutRow: null
     };
   }
   componentDidMount() {
@@ -106,38 +108,42 @@ class Leads extends React.Component {
                   );
                 },
                 afterOnCellMouseOver: (event, coords, td) => {
-                  // console.log(event);
-                  console.log(coords);
-                  // console.log(td);
+                  const hoverRow = coords.row;
                   const button = event.target.parentNode.getElementsByClassName(
                     'detail_button'
                   );
-                  if (button.length === 0) {
-                    const button = document.createElement('button');
-                    button.className = 'detail_button';
-                    button.onclick = () => {
-                      this.props.dispatch(
-                        clickedDetailButton(event, coords, td).bind(this)
-                      );
-                    };
-                    const textnode = document.createTextNode('open');
-                    button.appendChild(textnode);
-                    event.target.parentNode.appendChild(button);
+                  if (this.state.currentHoverOverRow !== hoverRow) {
+                    this.setState({ currentHoverOverRow: hoverRow });
+                    if (coords.row !== -1 && button.length === 0) {
+                      const button = document.createElement('button');
+                      button.className = 'detail_button';
+                      button.onclick = () => {
+                        this.props.dispatch(
+                          clickedDetailButton(event, coords, td).bind(this)
+                        );
+                      };
+                      const textnode = document.createTextNode('open');
+                      button.appendChild(textnode);
+                      if (coords.col !== -1) {
+                        event.target.parentNode.appendChild(button);
+                      } else if (event.target.classList.contains('relative')) {
+                        event.target.appendChild(button);
+                      }
+                    }
                   }
                 },
                 afterOnCellMouseOut: (event, coords, td) => {
-                  // const buttons = document.getElementsByClassName(
-                  //   'detail_button'
-                  // );
-                  // if (buttons.length > 0) {
-                  //   const buttonArray = Array.from(buttons);
-                  //   buttonArray.map(button => button.remove());
-                  // }
-                  const button = event.target.parentNode.getElementsByClassName(
-                    'detail_button'
-                  );
-                  if (button.length > 0) {
-                    button[0].remove();
+                  const hoverRow = coords.row;
+                  if (coords.col === -1) {
+                    if (this.state.currentHoverOutRow !== hoverRow) {
+                      this.setState({ currentHoverOutRow: hoverRow });
+                      const button = event.target.parentNode.getElementsByClassName(
+                        'detail_button'
+                      );
+                      if (button.length > 0) {
+                        button[0].remove();
+                      }
+                    }
                   }
                 }
               }}
