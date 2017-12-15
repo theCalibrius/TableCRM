@@ -113,3 +113,9 @@ export function updateColumnsOfLeads(columns, target) {
     }
   };
 }
+
+export function clickedDetailButton(event, coords, td) {
+  return function(dispatch) {
+    console.log(coords);
+  };
+}

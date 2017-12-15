@@ -23,7 +23,7 @@ body {
 }
 .detail_button{
   position:absolute;
-  left: 0;
+  left: 0px;
   z-index: 1000;
 }
 `;

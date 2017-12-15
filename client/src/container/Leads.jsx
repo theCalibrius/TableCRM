@@ -13,7 +13,8 @@ import {
   createAndUpdateLeads,
   deleteLeads,
   getColumnsOfLeads,
-  updateColumnsOfLeads
+  updateColumnsOfLeads,
+  clickedDetailButton
 } from '../actions/leadsActions';
 
 const TableWrap = styled.div`
@@ -105,21 +106,39 @@ class Leads extends React.Component {
                   );
                 },
                 afterOnCellMouseOver: (event, coords, td) => {
-                  console.log(event);
-                  const node = document.createElement('button');
-                  node.className = 'detail_button';
-                  const textnode = document.createTextNode('open');
-                  node.appendChild(textnode);
-                  console.log(event.target.parentNode.appendChild(node));
-                  // console.log(coords);
-                  // console.log(event.path[1]);
-                  // const parser = new DOMParser();
-                  // const dom = parser.parseFromString(
-                  //   event.path[1],
-                  //   'text/html'
+                  // console.log(event);
+                  console.log(coords);
+                  // console.log(td);
+                  const button = event.target.parentNode.getElementsByClassName(
+                    'detail_button'
+                  );
+                  if (button.length === 0) {
+                    const button = document.createElement('button');
+                    button.className = 'detail_button';
+                    button.onclick = () => {
+                      this.props.dispatch(
+                        clickedDetailButton(event, coords, td).bind(this)
+                      );
+                    };
+                    const textnode = document.createTextNode('open');
+                    button.appendChild(textnode);
+                    event.target.parentNode.appendChild(button);
+                  }
+                },
+                afterOnCellMouseOut: (event, coords, td) => {
+                  // const buttons = document.getElementsByClassName(
+                  //   'detail_button'
                   // );
-                  // console.log(dom);
-                  // console.log(td.insertAdjacentHTML('beforebegin', 'text'));
+                  // if (buttons.length > 0) {
+                  //   const buttonArray = Array.from(buttons);
+                  //   buttonArray.map(button => button.remove());
+                  // }
+                  const button = event.target.parentNode.getElementsByClassName(
+                    'detail_button'
+                  );
+                  if (button.length > 0) {
+                    button[0].remove();
+                  }
                 }
               }}
             />
