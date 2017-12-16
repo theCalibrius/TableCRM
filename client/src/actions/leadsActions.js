@@ -116,6 +116,10 @@ export function updateColumnsOfLeads(columns, target) {
 
 export function clickedDetailButton(event, coords, td) {
   return function(dispatch) {
+    // move right panel
+    const rightPanel = document.getElementsByClassName('right_panel')[0];
+    rightPanel.style.webkitTransform = 'translateX(-800px)';
+    // get data
     const rowIndex = coords.row;
     const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
     const rowId = rowData[0];

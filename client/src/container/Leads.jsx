@@ -16,6 +16,8 @@ import {
   updateColumnsOfLeads,
   clickedDetailButton
 } from '../actions/leadsActions';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;
@@ -124,6 +126,7 @@ class Leads extends React.Component {
             />
           )}
         </div>
+        <RightPanel />
       </TableWrap>
     );
   }
