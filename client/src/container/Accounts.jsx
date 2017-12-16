@@ -35,6 +35,7 @@ class Accounts extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+
     this.props.dispatch(getAllAccounts);
     this.props.dispatch(getAllOpportunityIDsNames());
     this.props.dispatch(getAllContactIDsNames());
@@ -52,7 +53,7 @@ class Accounts extends React.Component {
           ) : (
             <HotTable
               root="hot"
-              ref={(c) => {this.hot = c}} // this reflects the new syntax, ref="hot" is deprecated
+              ref="hot" 
               settings={{
                 licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.accounts,
@@ -113,7 +114,7 @@ class Accounts extends React.Component {
                   indicators: false
                 },
                 rowHeaders: true,
-                minSpareRows: 1,
+                minSpareRows: false,
                 stretchH: 'all',
                 contextMenu: ['remove_row'],
                 filters: true,
@@ -154,6 +155,14 @@ class Accounts extends React.Component {
                 beforeRemoveRow: (index, amount) => {
                   this.props.dispatch(deleteAccounts(index, amount).bind(this));
                 }
+                // beforeRenderer: () => {
+                  // this.hot ? console.log('THIS IS THIS: ', this.hot.hotInstance) : console.log('NOT DEFINED YET');
+
+                  // this.hot ? this.hot.hotInstance.updateSettings({
+                  //   minSpareRows: 1
+                  // }) : console.log('THIS not valid yet: ')
+                  // this.hot ? console.log('THIS: ', this.hot) : console.log('THIS is not valid yet');
+                // }
               }}
             />
           )}

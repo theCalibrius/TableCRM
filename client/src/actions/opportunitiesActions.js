@@ -82,23 +82,19 @@ export function relateOppToContact(changes, source, oppID) {
     if (changes) {
       const rowIndex = changes[0][0];
       const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      axios.get(`/api/opportunity/${oppID}/${contactID}`).then(response => console.log(response));
+      axios.get(`/api/opportunity/${oppID}/${contactID}`);
     }
   };
 }
 
 export function relateOppToAccount(changes, source, oppID) {
-  console.log('relateOppToContact invoked: ');
   return function(dispatch) {
     // get ID of the opportunity name that was selected
     if (changes) {
-      console.log('opp change: ', changes);
       const rowIndex = changes[0][0];
       const accountID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      console.log('rowIndex: ', rowIndex, '\n', 'oppID: ', oppID, 'accountID: ', accountID);
       axios
-        .get(`/api/opportunity/account/${oppID}/${accountID}`)
-        .then(response => console.log('THE RESPONSE: ', response));
+        .get(`/api/opportunity/account/${oppID}/${accountID}`);
     }
   };
 }

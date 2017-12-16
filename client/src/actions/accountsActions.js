@@ -29,7 +29,6 @@ export function getAllAccounts(dispatch) {
       return response;
     })
     .then(response => {
-      console.log('HERE IS THE RESPONSE', response.data);
       dispatch({
         type: 'GET_ALL_ACCOUNTS',
         payload: response.data

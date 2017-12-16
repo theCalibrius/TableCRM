@@ -69,8 +69,8 @@ export function relateContactToAccount(changes, source, contactID) {
       const rowIndex = changes[0][0];
       const accountID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
       axios
-        .put(`/api/contacts/account/${contactID}/${accountID}`)
-        .then(response => console.log('THE RESPONSE: ', response));
+        .put(`/api/contacts/account/${contactID}/${accountID}`);
+        // .then(response => console.log('THE RESPONSE: ', response));
     }
   };
 }

@@ -32,7 +32,6 @@ export default function(
 ) {
   switch (action.type) {
     case 'GET_ALL_ACCOUNTS':
-    console.log('NOW IN THE REDUCER: ', action.payload);
       return {
         ...state,
         accounts: [...action.payload]
