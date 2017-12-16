@@ -21,11 +21,41 @@ body {
   overflow: hidden;
   color: #363636;
 }
-.detail_button{
-  position:absolute;
-  left: 0px;
-  z-index: 1000;
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
+.detail_button{
+  position: absolute;
+  left: 16px;
+  font-size: 14px;
+  z-index: 1000;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24);
+  border-radius: 50%;
+  padding: 4px;
+  transition: 0.2s all ease;
+  > *:hover {
+		background-color: #ededed;
+	}
 `;
 
 const AppWrap = styled.div`

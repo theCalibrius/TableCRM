@@ -47,13 +47,13 @@ app.put(
 app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
 app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
 
-
 app.get('/api/accounts', accounts.getAllAccounts);
 app.delete('/api/accounts', accounts.deleteAccounts);
 app.post('/api/accounts', accounts.createAndUpdateAccounts);
 app.put('/api/accounts', accounts.createAndUpdateAccounts);
 
 app.get('/api/leads', leads.getAllLeads);
+app.get('/api/lead', leads.getLeadById);
 app.post('/api/leads', leads.createAndUpdateLeads);
 app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);

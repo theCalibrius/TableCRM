@@ -75,10 +75,19 @@ const updateColumnOrders = (req, res) => {
   res.sendStatus(201);
 };
 
+const getLeadById = (req, res) => {
+  const id = req.query.id;
+  db.query(`SELECT * from leads WHERE id = ${id}`, (err, rows) => {
+    if (err) console.log(err);
+    res.json(rows);
+  });
+};
+
 module.exports = {
   getAllLeads,
   createAndUpdateLeads,
   deleteLeads,
   getColumnOrders,
-  updateColumnOrders
+  updateColumnOrders,
+  getLeadById
 };

@@ -116,6 +116,32 @@ export function updateColumnsOfLeads(columns, target) {
 
 export function clickedDetailButton(event, coords, td) {
   return function(dispatch) {
-    console.log(coords);
+    const rowIndex = coords.row;
+    const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
+    const rowId = rowData[0];
+    dispatch(getLeadById(rowId));
+  };
+}
+
+export function getLeadById(id) {
+  return function(dispatch) {
+    axios.get('/api/lead', { params: { id } }).then(response => {
+      const returnedEntity = response.data[0];
+      console.log(returnedEntity);
+      // for (const row of response.data) {
+      //   if (row.createdAt)
+      //     row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
+      // }
+      // return response;
+    });
+    // .then(response => {
+    //   dispatch({
+    //     type: 'GET_ALL_LEADS',
+    //     payload: response.data
+    //   });
+    // })
+    // .catch(err => {
+    //   console.error.bind(err);
+    // });
   };
 }

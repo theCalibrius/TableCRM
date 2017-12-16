@@ -51,9 +51,7 @@ class Leads extends React.Component {
           readOnly: true
         },
         { data: 'ownerId' }
-      ],
-      currentHoverOverRow: null,
-      currentHoverOutRow: null
+      ]
     };
   }
   componentDidMount() {
@@ -108,42 +106,18 @@ class Leads extends React.Component {
                   );
                 },
                 afterOnCellMouseOver: (event, coords, td) => {
-                  const hoverRow = coords.row;
-                  const button = event.target.parentNode.getElementsByClassName(
-                    'detail_button'
-                  );
-                  if (this.state.currentHoverOverRow !== hoverRow) {
-                    this.setState({ currentHoverOverRow: hoverRow });
-                    if (coords.row !== -1 && button.length === 0) {
-                      const button = document.createElement('button');
-                      button.className = 'detail_button';
-                      button.onclick = () => {
-                        this.props.dispatch(
-                          clickedDetailButton(event, coords, td).bind(this)
-                        );
-                      };
-                      const textnode = document.createTextNode('open');
-                      button.appendChild(textnode);
-                      if (coords.col !== -1) {
-                        event.target.parentNode.appendChild(button);
-                      } else if (event.target.classList.contains('relative')) {
-                        event.target.appendChild(button);
-                      }
-                    }
-                  }
-                },
-                afterOnCellMouseOut: (event, coords, td) => {
-                  const hoverRow = coords.row;
-                  if (coords.col === -1) {
-                    if (this.state.currentHoverOutRow !== hoverRow) {
-                      this.setState({ currentHoverOutRow: hoverRow });
-                      const button = event.target.parentNode.getElementsByClassName(
-                        'detail_button'
-                      );
-                      if (button.length > 0) {
-                        button[0].remove();
-                      }
-                    }
+                  this.setState({});
+                  const button = document.createElement('i');
+                  button.className = 'detail_button material-icons';
+                  const textnode = document.createTextNode('open_in_new');
+                  button.appendChild(textnode);
+                  button.onclick = () => {
+                    this.props.dispatch(
+                      clickedDetailButton(event, coords, td).bind(this)
+                    );
+                  };
+                  if (event.target.parentNode.nodeName.toLowerCase() === 'tr') {
+                    event.target.parentNode.insertBefore(button, null);
                   }
                 }
               }}
