@@ -49,6 +49,7 @@ class RightPanel extends React.Component {
             >
 							arrow_forward
             </i>
+            <p>${JSON.stringify(this.props.selectedLead)}</p>
           </HidePanelButton>
         </RightPanelInner>
       </RightPanelWrap>
@@ -57,8 +58,6 @@ class RightPanel extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leadsReducer.leads,
-  leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader,
   selectedLead: state.leadsReducer.selectedLead
 });
 
