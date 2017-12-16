@@ -125,23 +125,20 @@ export function clickedDetailButton(event, coords, td) {
 
 export function getLeadById(id) {
   return function(dispatch) {
-    axios.get('/api/lead', { params: { id } }).then(response => {
-      const returnedEntity = response.data[0];
-      console.log(returnedEntity);
-      // for (const row of response.data) {
-      //   if (row.createdAt)
-      //     row.createdAt = moment(new Date(row.createdAt)).format('MM/DD/YYYY');
-      // }
-      // return response;
-    });
-    // .then(response => {
-    //   dispatch({
-    //     type: 'GET_ALL_LEADS',
-    //     payload: response.data
-    //   });
-    // })
-    // .catch(err => {
-    //   console.error.bind(err);
-    // });
+    axios
+      .get('/api/lead', { params: { id } })
+      .then(response => {
+        const returnedEntity = response.data[0];
+        return returnedEntity;
+      })
+      .then(returnedEntity => {
+        dispatch({
+          type: 'GET_LEAD_BY_ID',
+          payload: returnedEntity
+        });
+      })
+      .catch(err => {
+        console.error.bind(err);
+      });
   };
 }

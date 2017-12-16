@@ -25,5 +25,12 @@ export default function(
       leadsColumnsHeader: action.payload
     };
   }
+  switch (action.type) {
+  case 'GET_LEAD_BY_ID':
+    return {
+      ...state,
+      selectedLead: action.payload
+    };
+  }
   return state;
 }

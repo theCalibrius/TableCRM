@@ -131,7 +131,8 @@ class Leads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.leadsReducer.leads,
-  leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader
+  leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader,
+  selectedLead: state.leadsReducer.selectedLead
 });
 
 export default connect(mapStateToProps, null)(Leads);
