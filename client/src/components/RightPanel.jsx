@@ -49,8 +49,20 @@ class RightPanel extends React.Component {
             >
 							arrow_forward
             </i>
-            <p>${JSON.stringify(this.props.selectedLead)}</p>
           </HidePanelButton>
+          {this.props.selectedLead
+            ? Object.keys(this.props.selectedLead).map(i => (
+              <div>
+                <p>{i}:</p>
+                <input
+                  className="field_input"
+                  type="field"
+                  placeholder=""
+                  value={this.props.selectedLead[i]}
+                />
+              </div>
+            ))
+            : null}
         </RightPanelInner>
       </RightPanelWrap>
     );
