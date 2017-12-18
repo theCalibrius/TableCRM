@@ -6,6 +6,8 @@ import Leads from '../container/Leads.jsx';
 import Opportunities from '../container/Opportunities.jsx';
 import Contacts from '../container/Contacts.jsx';
 import Accounts from '../container/Accounts.jsx';
+import RightPanel from './RightPanel.jsx';
+import RightPanelLead from './RightPanelLead.jsx';
 import styled from 'styled-components';
 import { injectGlobal } from 'styled-components';
 
