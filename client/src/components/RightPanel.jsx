@@ -72,7 +72,7 @@ class RightPanel extends React.Component {
     return (
       <RightPanelWrap className="right_panel">
         <RightPanelInner>
-          <Route exact path="/leads/:id" component={RightPanelLead} />
+          {/* <Route exact path="/leads/:id" component={RightPanelLead} /> */}
           <HidePanelButton>
             <i
               className="material-icons hide_panel"

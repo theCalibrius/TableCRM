@@ -51,7 +51,7 @@ class Nav extends React.Component {
             </NavLink>
           </ListItem>
           <ListItem>
-            <NavLink activeStyle={activeStyle} to="/leads">
+            <NavLink activeStyle={activeStyle} to="/leads/test">
               <i className="material-icons">navigation</i>
               <p>Leads</p>
             </NavLink>

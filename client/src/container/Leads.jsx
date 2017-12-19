@@ -1,3 +1,4 @@
+import { Link, Switch, Route } from 'react-router-dom';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
@@ -126,7 +127,13 @@ class Leads extends React.Component {
             />
           )}
         </div>
-        <RightPanel />
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
+        {/* <Route exact path="/leadss" component={Leads} /> */}
+        {/* <Route exact path="/leads" component={RightPanel} /> */}
+        {/* {console.log(`${this.props.match.url}/:id`)} */}
+        {/* <Route path={`${this.props.match.url}/:id`} component={RightPanel} /> */}
+        {/* <Route path="/:id" component={RightPanel} /> */}
+        {/* <RightPanel /> */}
       </TableWrap>
     );
   }

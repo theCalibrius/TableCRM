@@ -10,6 +10,7 @@ module.exports = merge(common, {
   devServer: {
     contentBase: './client/dist',
     historyApiFallback: true,
+    publicPath: '/',
     proxy: {
       '/api/**': {
         target: 'http://localhost:5000',

@@ -7,7 +7,6 @@ import Opportunities from '../container/Opportunities.jsx';
 import Contacts from '../container/Contacts.jsx';
 import Accounts from '../container/Accounts.jsx';
 import RightPanel from './RightPanel.jsx';
-import RightPanelLead from './RightPanelLead.jsx';
 import styled from 'styled-components';
 import { injectGlobal } from 'styled-components';
 
@@ -71,13 +70,11 @@ class App extends React.Component {
     return (
       <AppWrap>
         <Nav />
-        <Switch>
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/leads" component={Leads} />
-          <Route exact path="/contacts" component={Contacts} />
-          <Route exact path="/accounts" component={Accounts} />
-          <Route exact path="/opportunities" component={Opportunities} />
-        </Switch>
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/leads" component={Leads} />
+        <Route path="/contacts" component={Contacts} />
+        <Route path="/accounts" component={Accounts} />
+        <Route path="/opportunities" component={Opportunities} />
       </AppWrap>
     );
   }
