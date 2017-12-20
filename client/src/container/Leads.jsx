@@ -1,4 +1,4 @@
-import { Link, Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';

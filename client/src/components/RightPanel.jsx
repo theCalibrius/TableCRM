@@ -14,7 +14,7 @@ const RightPanelWrap = styled.div`
 	background-color: #fff;
 	z-index: 1000000000;
 	width: 800px;
-	right: -700px;
+	right: -800px;
 	bottom: 0;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.24);
 	border-radius: 2px;
