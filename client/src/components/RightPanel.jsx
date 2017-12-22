@@ -98,16 +98,16 @@ class RightPanel extends React.Component {
             </i>
           </HidePanelButton>
           {this.props.selectedLead
-            ? Object.keys(this.props.selectedLead).map(i => (
-              <div key={i}>
-                <p>{i}:</p>
+            ? this.props.selectedLead.map(i => (
+              <div key={Object.keys(i)[0]}>
+                <p>{Object.keys(i)[0]}</p>
                 <InputWrap>
                   <InputField
                     className="field_input"
                     type="field"
                     placeholder=""
-                    defaultValue={this.props.selectedLead[i]}
-                    key={this.props.selectedLead[i]}
+                    defaultValue={i[Object.keys(i)[0]]}
+                    key={i[Object.keys(i)[0]]}
                   />
                 </InputWrap>
               </div>

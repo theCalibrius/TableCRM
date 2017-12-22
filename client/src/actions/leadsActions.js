@@ -139,13 +139,38 @@ export function getLeadById(id) {
         return returnedEntity;
       })
       .then(returnedEntity => {
-        dispatch({
-          type: 'GET_LEAD_BY_ID',
-          payload: returnedEntity
-        });
-      })
-      .catch(err => {
-        console.error.bind(err);
+        axios
+          .get('/api/leads/columns')
+          .then(response => {
+            const columnOrder = response.data;
+            const compare = (a, b) => {
+              if (a.rank < b.rank) return -1;
+              if (a.rank > b.rank) return 1;
+              return 0;
+            };
+            columnOrder.sort(compare);
+            return [columnOrder, returnedEntity];
+          })
+          .then(response => {
+            const columnOrder = response[0];
+            const returnedEntity = response[1];
+            const rankedFields = [];
+            for (const i of columnOrder) {
+              const tempObj = {};
+              tempObj[i.name] = returnedEntity[i.name];
+              rankedFields.push(tempObj);
+            }
+            return rankedFields;
+          })
+          .then(rankedFields => {
+            dispatch({
+              type: 'GET_LEAD_BY_ID',
+              payload: rankedFields
+            });
+          })
+          .catch(err => {
+            console.error.bind(err);
+          });
       });
   };
 }
