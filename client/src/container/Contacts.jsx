@@ -8,7 +8,10 @@ import { getContacts,
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
-  relateOppToContact
+  relateOppToContact,
+  handleRelateOppToContact,
+  handleRelateOppsToContacts,
+  getCopiedOpportunities
 } from '../actions/opportunitiesActions';
 
 // api call
@@ -27,6 +30,7 @@ class Contacts extends React.Component {
   componentDidMount() {
     this.props.dispatch(getContacts);
     this.props.dispatch(getAllOpportunityIDsNames());
+
   }
   render() {
     const opportunityIDsNames = this.props.opportunityIDsNames
@@ -45,7 +49,8 @@ class Contacts extends React.Component {
                 licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.contacts,
                 colHeaders: [
-                  'ID',
+                  'Contact ID',
+                  'Opportunity ID',
                   'Opportunity Name',
                   'First Name',
                   'Last Name',
@@ -61,6 +66,7 @@ class Contacts extends React.Component {
                 ],
                 columns: [
                   { data: 'id' },
+                  { data: 'opportunityID' },
                   {
                     data: 'name',
                     type: 'autocomplete',
@@ -92,7 +98,7 @@ class Contacts extends React.Component {
                   }
                 ],
                 hiddenColumns: {
-                  columns: [0],
+                  columns: [0,1],
                   indicators: false
                 },
                 rowHeaders: true,
@@ -102,41 +108,38 @@ class Contacts extends React.Component {
                 filters: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
-                afterChange: (changes, source,index, amount) => {
-                  const opportunityIDsNames = this.props.opportunityIDsNames;
-                  if (changes && changes[0][1] != 'name') {
-                    this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
-                  }
-                  if (changes) {
-                     //handle relating opp to multiple contacts after paste
-                    if (changes.length > 1) {
-                      const selectedOpportunities = changes.map((selectedOpp) => {
-                        return selectedOpp[3];
-                      });
-                      const oppIDs = [];
-                      for (const selectedOpportunity of selectedOpportunities) {
-                          for (const opportunityIDName of opportunityIDsNames) {
-                            if (opportunityIDName.name === selectedOpportunity) {
-                              oppIDs.push(opportunityIDName.id)
-                            }
-                          }
-                      }
-                      if (changes[0][1] === 'name' && selectedOpportunities && opportunityIDsNames.find(o => selectedOpportunities.indexOf(o.name) !== -1)) {
-                          this.props.dispatch(relateOppToContact(changes, source, oppIDs).bind(this));
-                      }
-                    } else {
-                      //handle dropdown select and assign to a single contact
-                      //get oppID
-                      const selectedOpportunityName = changes[0][3];
-                      const oppIDs = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
-                      if (changes[0][1] === 'name' && selectedOpportunityName !== null && (opportunityIDsNames.find(o => o.name === selectedOpportunityName) || selectedOpportunityName === ""))  {
-                          this.props.dispatch(relateOppToContact(changes, source, oppIDs).bind(this));
-                      }
+                beforeCopy: (data, coords) => {
+                  const oppNames = this.props.opportunityIDsNames.map((opp) => {
+                    return opp.name;
+                  });
+                  // check if copied data is valid
+                  const revisedData = data.map((d) => { return d[0]; });
+                  if ( revisedData.every(elem => oppNames.indexOf(elem) > -1) ) {
+                    const copiedRows = coords[0];
+                    const opportunityIDs = [];
+                    for (let i = copiedRows.startRow; i <= copiedRows.endRow; i++) {
+                      opportunityIDs.push(this.refs.hot.hotInstance.getSourceDataAtRow(i).opportunityID);
                     }
+                    this.props.dispatch(getCopiedOpportunities(opportunityIDs));
+                  }
+                },
+                afterChange: (changes, source,index, amount) => {
+                  if (changes) {
+                    if (changes[0][1] != 'name') {
+                      this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
+                    }
+                    const opportunityIDsNames = this.props.opportunityIDsNames;
+                    if (source == 'edit') {
+                      this.props.dispatch(handleRelateOppToContact(changes, opportunityIDsNames,opportunityIDsNames).bind(this));
+                    }
+                    if (source == 'CopyPaste.paste') {
+                      const oppotunityIDs = this.props.copiedOpportunities;
+                      this.props.dispatch(handleRelateOppsToContacts(changes, oppotunityIDs, opportunityIDsNames).bind(this));
+                    }
+
                   }
                 },
                 beforeRemoveRow: (index, amount) => {
-                  console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
                   this.props.dispatch(deleteContacts(index, amount).bind(this));
                 }
               }}
@@ -151,6 +154,7 @@ class Contacts extends React.Component {
 const mapStateToProps = state => ({
   contacts: state.contactsReducer.contacts,
   opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
+  copiedOpportunities: state.opportunitiesReducer.copiedOpportunities
 });
 
 export default connect(mapStateToProps, null)(Contacts);

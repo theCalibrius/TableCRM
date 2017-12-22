@@ -2,7 +2,7 @@ const db = require('./config');
 const lib = require('../lib/helper');
 
 const getAllContacts = (req, res) => {
-  db.query('SELECT c.*,o.name FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id ORDER BY c.id', (err, rows) => {
+  db.query('SELECT c.*,o.name,o.id as opportunityID FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id ORDER BY c.id', (err, rows) => {
     if (err) console.log(err);
     res.json(rows);
   });
@@ -39,6 +39,8 @@ const deleteContacts = (req, res) => {
     if (err) return console.log(err);
     res.sendStatus(200);
   });
+  //Also delete these contact relation if found in opportunity_contact
+
 };
 
 module.exports = {

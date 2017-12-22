@@ -4,7 +4,8 @@ import {
   getNewAndUpdatedRows,
   getRemovedIds,
   getHiddenCols,
-  colPropsToIndices
+  colPropsToIndices,
+  buildObjToAssignOpportunityToContact
 } from '../lib/helper';
 
 export function getAllOpportunities() {
@@ -81,34 +82,45 @@ export function getAllOpportunityIDsNames() {
   };
 }
 
-export function relateOppToContact(changes,source,oppIDs) {
+export function getCopiedOpportunities(opportunityIDs) {
+  return {
+    type: 'GET_COPIED_OPPORTUNITIES',
+    payload: opportunityIDs
+  };
+}
+
+export function handleRelateOppsToContacts(changes, opportunityIDs,opportunityIDsNames) {
+  return function(dispatch) {
+    this.props.dispatch(relateOppToContact(changes, opportunityIDs,opportunityIDsNames).bind(this));
+  }
+}
+
+export function handleRelateOppToContact(changes,opportunityIDsNames) {
+  return function(dispatch) {
+    //handle dropdown select and assign to a single contact
+    const selectedOpportunityName = changes[0][3];
+    const oppIDs = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
+    if (changes[0][1] === 'name' && selectedOpportunityName !== null && (opportunityIDsNames.find(o => o.name === selectedOpportunityName) || selectedOpportunityName === ""))  {
+        this.props.dispatch(relateOppToContact(changes, oppIDs,opportunityIDsNames).bind(this));
+    }
+
+  };
+}
+export function relateOppToContact(changes,opportunityIDs,opportunityIDsNames) {
   return function(dispatch) {
     if (changes) {
       // if changing multiple rows
       if (changes.length > 1) {
-        // build object to store OppIDs and contactIDs
-        const contactIDs = [];
-        for (const change of changes) {
-          const rowIndex = change[0];
-          const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-          contactIDs.push(contactID);
-        }
-        const data = {};
-        contactIDs.forEach(function(contactID, oppID) {
-            data[contactID] = oppIDs[oppID];
-        });
-        axios.post('/api/opportunities/contacts', data )
-          .then(response => console.log(response))
-          .catch(e => {console.log(e);});
+        const bound = buildObjToAssignOpportunityToContact.bind(this);
+        const data = bound(changes,opportunityIDs,opportunityIDsNames);
+        axios.post('/api/opportunity/contact', data );
       }
       // if changing one row
       else {
-        const oppID = oppIDs[0];
+        const oppID = opportunityIDs[0];
         const rowIndex = changes[0][0];
         const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-        axios.post('/api/opportunity/contact', {oppID: oppID, contactID: contactID} )
-          .then(response => console.log(response))
-          .catch(e => {console.log(e);});
+        axios.post('/api/opportunity/contact', {oppID: oppID, contactID: contactID} );
       }
     }
   };
