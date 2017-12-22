@@ -28,37 +28,36 @@ const RightPanelInner = styled.div`
 
 const HidePanelButton = styled.div`
 	cursor: pointer;
+	margin: 0 0 20px 0;
+	width: 40px;
 `;
 
 const InputWrap = styled.div`
-	/*
-	position: relative;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	width: 100%;
-	max-width: 400px;
-	margin: 0 auto;
-	border-radius: 2px;
-	padding: 1.4rem 2rem 1.6rem;
-	background: rgba(57, 63, 84, 0.8);
-  */
+	margin: 0 0 8px 0;
+`;
+
+const InputTitle = styled.p`
+	margin-bottom: 4px;
+	color: #888;
 `;
 
 const InputField = styled.input`
-	/*
-	-webkit-box-flex: 1;
-	-ms-flex-positive: 1;
-	flex-grow: 1;
-	color: #bfd2ff;
-	font-size: 1.8rem;
-	line-height: 2.4rem;
-	vertical-align: middle;
-  */
+	border-radius: 2px;
+	margin-bottom: 16px;
+	font-size: 13px;
+	color: #363636;
+	border-bottom: 1px solid #ccc;
+	width: 100%;
+	max-width: 400px;
+	padding: 0 0 5px 0;
+	border-radius: 0;
+	font-size: 14px;
+	font-family: inherit;
+	line-height: inherit;
+	background-image: none;
+	&:focus {
+		border-bottom: 2px solid #3f51b5;
+	}
 `;
 
 const Test = () => <div>test</div>;
@@ -100,7 +99,7 @@ class RightPanel extends React.Component {
           {this.props.selectedLead
             ? this.props.selectedLead.map(i => (
               <div key={Object.keys(i)[0]}>
-                <p>{Object.keys(i)[0]}</p>
+                <InputTitle>{Object.keys(i)[0]}</InputTitle>
                 <InputWrap>
                   <InputField
                     className="field_input"
