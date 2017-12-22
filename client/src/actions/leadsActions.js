@@ -120,7 +120,6 @@ export function clickedDetailButton(event, coords, td) {
     const rowIndex = coords.row;
     const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
     const rowId = rowData[0];
-    console.log(rowId);
     // change route with id
     this.props.history.push(`${this.props.match.url}/${rowId}`);
     // move right panel

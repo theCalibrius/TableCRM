@@ -5,6 +5,7 @@ import { Link, Switch, Route } from 'react-router-dom';
 import RightPanelLead from './RightPanelLead.jsx';
 // styled-component
 import styled from 'styled-components';
+import { getLeadById } from '../actions/leadsActions';
 
 const RightPanelWrap = styled.div`
 	overflow-x: hidden;
@@ -67,7 +68,16 @@ class RightPanel extends React.Component {
     super(props);
     this.state = {};
   }
-  componentDidMount() {}
+  componentDidMount() {
+    if (!this.props.selectedLead) {
+      const rowId = this.props.match.params.id;
+      this.props.dispatch(getLeadById(rowId));
+    }
+    const rightPanel = document.getElementsByClassName('right_panel')[0];
+    if (rightPanel.style.webkitTransform === '') {
+      rightPanel.style.webkitTransform = 'translateX(-800px)';
+    }
+  }
   render() {
     return (
       <RightPanelWrap className="right_panel">
@@ -77,6 +87,7 @@ class RightPanel extends React.Component {
             <i
               className="material-icons hide_panel"
               onClick={() => {
+                this.props.history.push('/leads');
                 const rightPanel = document.getElementsByClassName(
                   'right_panel'
                 )[0];
