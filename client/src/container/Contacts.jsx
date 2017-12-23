@@ -97,10 +97,10 @@ class Contacts extends React.Component {
                     readOnly: true
                   }
                 ],
-                hiddenColumns: {
+                /*hiddenColumns: {
                   columns: [0,1],
                   indicators: false
-                },
+                },*/
                 rowHeaders: true,
                 minSpareRows: 1,
                 stretchH: 'all',
@@ -129,10 +129,10 @@ class Contacts extends React.Component {
                       this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
                     }
                     const opportunityIDsNames = this.props.opportunityIDsNames;
-                    if (source == 'edit') {
+                    if (source == 'edit' || source == 'Autofill.fill') {
                       this.props.dispatch(handleRelateOppToContact(changes, opportunityIDsNames,opportunityIDsNames).bind(this));
                     }
-                    if (source == 'CopyPaste.paste') {
+                    if (source == 'CopyPaste.paste' || source == 'Autofill.fill') {
                       const oppotunityIDs = this.props.copiedOpportunities;
                       this.props.dispatch(handleRelateOppsToContacts(changes, oppotunityIDs, opportunityIDsNames).bind(this));
                     }

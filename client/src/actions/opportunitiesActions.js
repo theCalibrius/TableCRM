@@ -100,7 +100,7 @@ export function handleRelateOppToContact(changes,opportunityIDsNames) {
     //handle dropdown select and assign to a single contact
     const selectedOpportunityName = changes[0][3];
     const oppIDs = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
-    if (changes[0][1] === 'name' && selectedOpportunityName !== null && (opportunityIDsNames.find(o => o.name === selectedOpportunityName) || selectedOpportunityName === ""))  {
+    if (changes[0][1] === 'name'  && (opportunityIDsNames.find(o => o.name === selectedOpportunityName) || selectedOpportunityName === ""))  {
         this.props.dispatch(relateOppToContact(changes, oppIDs,opportunityIDsNames).bind(this));
     }
 
@@ -117,10 +117,12 @@ export function relateOppToContact(changes,opportunityIDs,opportunityIDsNames) {
       }
       // if changing one row
       else {
-        const oppID = opportunityIDs[0];
-        const rowIndex = changes[0][0];
-        const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-        axios.post('/api/opportunity/contact', {oppID: oppID, contactID: contactID} );
+        if (opportunityIDs) {
+          const oppID = opportunityIDs[0];
+          const rowIndex = changes[0][0];
+          const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+          axios.post('/api/opportunity/contact', {oppID: oppID, contactID: contactID} );
+        }
       }
     }
   };

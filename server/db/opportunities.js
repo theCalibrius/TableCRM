@@ -99,23 +99,32 @@ module.exports.relateOppToContact = (req, res) => {
       });
     }
   } else {
-    //handle relating opp to multiple contacts after paste
-    for (const pair in req.body) {
-      const contactID = pair;
-      const oppID = req.body[pair];
-      db.query(`SELECT contactID from opportunity_contact WHERE contactID = ${contactID};`, (err, rows) => {
-        if (!err) {
-          if (rows.length != 0) {
-            // check if any duplicate contact ID is found, update Opp ID
-            db.query(`UPDATE opportunity_contact SET opportunityID='${oppID}' WHERE contactID='${contactID}';`);
-          }
-          else {
-            //if not found, insert
-            db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${contactID},${oppID});`);
-          }
-        }
+    //handle deleting multiple relations
+    const contactIDs = JSON.stringify(Object.keys(req.body)).replace(/\[/g, '(').replace(/]/g, ')');
+    if (Object.values(req.body).every(value => value === 'delete' ) === true) {
+      db.query(`DELETE FROM opportunity_contact WHERE contactID IN ${contactIDs};`, (err) => {
+        if (!err) { res.sendStatus(200); }
       });
     }
-    res.sendStatus(201);
+    //handle relating opp to multiple contacts after paste
+    else {
+      for (const pair in req.body) {
+        const contactID = pair;
+        const oppID = req.body[pair];
+        db.query(`SELECT contactID from opportunity_contact WHERE contactID = ${contactID};`, (err, rows) => {
+          if (!err) {
+            if (rows.length != 0) {
+              // check if any duplicate contact ID is found, update Opp ID
+              db.query(`UPDATE opportunity_contact SET opportunityID='${oppID}' WHERE contactID='${contactID}';`);
+            }
+            else {
+              //if not found, insert
+              db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${contactID},${oppID});`);
+            }
+          }
+        });
+      }
+      res.sendStatus(201);
+    }
   }
 };

@@ -231,5 +231,9 @@ export function buildObjToAssignOpportunityToContact(changes,opportunityIDs,oppo
   contactIDs.forEach(function(contactID, oppID) {
       data[contactID] = opportunityIDs[oppID];
   });
+  // check if data has undefined values, meaning multiple relations were deleted
+  if (Object.values(data).every(value => value === undefined ) === true) {
+    Object.keys(data).map(value => data[value] = 'delete' );
+  }
   return data;
 }
