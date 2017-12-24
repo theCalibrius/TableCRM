@@ -28,7 +28,7 @@ export function createAndUpdateContacts(changes, source) {
   return function(dispatch) {
     const getNewAndUpdatedRowsBound = getNewAndUpdatedRows.bind(this);
     const newAndUpdatedRows = getNewAndUpdatedRowsBound(changes, source);
-    console.log(changes);
+    console.log('createAndUpdateFunction changes: [row, prop, oldVal, newVal]', changes);
     if (newAndUpdatedRows) {
       const newRows = newAndUpdatedRows.newRows;
       const updatedRows = newAndUpdatedRows.updatedRows;
@@ -40,9 +40,7 @@ export function createAndUpdateContacts(changes, source) {
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/contacts', { updatedRows }).then(() => {
-          dispatch(getContacts);
-        });
+        axios.put('/api/contacts', {updatedRows});
       }
     }
   };
@@ -51,6 +49,7 @@ export function createAndUpdateContacts(changes, source) {
 export function deleteContacts(index, amount) {
   return function(dispatch) {
     // get deleted row ID(s)
+    console.log('DELETE CONTACT activated');
     const getRemovedIdsBound = getRemovedIds.bind(this);
     const removedIds = getRemovedIdsBound();
     axios({

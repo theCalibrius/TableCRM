@@ -48,9 +48,7 @@ export function createAndUpdateLeads(changes, source) {
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/leads', { updatedRows }).then(() => {
-          dispatch(getAllLeads);
-        });
+        axios.put('/api/leads', { updatedRows });
       }
     }
   };
