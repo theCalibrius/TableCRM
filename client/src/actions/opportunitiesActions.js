@@ -4,7 +4,8 @@ import {
   getNewAndUpdatedRows,
   getRemovedIds,
   getHiddenCols,
-  colPropsToIndices
+  colPropsToIndices,
+  buildObjToAssignOpportunityToContact
 } from '../lib/helper';
 
 export function getAllOpportunities() {
@@ -81,13 +82,48 @@ export function getAllOpportunityIDsNames() {
   };
 }
 
-export function relateOppToContact(changes,source,oppID) {
+export function getCopiedOpportunities(opportunityIDs) {
+  return {
+    type: 'GET_COPIED_OPPORTUNITIES',
+    payload: opportunityIDs
+  };
+}
+
+export function handleRelateOppsToContacts(changes, opportunityIDs,opportunityIDsNames) {
   return function(dispatch) {
-    // get ID of the opportunity name that was selected
+    this.props.dispatch(relateOppToContact(changes, opportunityIDs,opportunityIDsNames).bind(this));
+  }
+}
+
+export function handleRelateOppToContact(changes,opportunityIDsNames) {
+  return function(dispatch) {
+    //handle dropdown select and assign to a single contact
+    const selectedOpportunityName = changes[0][3];
+    const oppIDs = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
+    if (changes[0][1] === 'name'  && (opportunityIDsNames.find(o => o.name === selectedOpportunityName) || selectedOpportunityName === ""))  {
+        this.props.dispatch(relateOppToContact(changes, oppIDs,opportunityIDsNames).bind(this));
+    }
+
+  };
+}
+export function relateOppToContact(changes,opportunityIDs,opportunityIDsNames) {
+  return function(dispatch) {
     if (changes) {
-      const rowIndex = changes[0][0];
-      const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      axios.get('/api/opportunity/'+ oppID + '/' + contactID).then(response => console.log(response));
+      // if changing multiple rows
+      if (changes.length > 1) {
+        const bound = buildObjToAssignOpportunityToContact.bind(this);
+        const data = bound(changes,opportunityIDs,opportunityIDsNames);
+        axios.post('/api/opportunity/contact', data );
+      }
+      // if changing one row
+      else {
+        if (opportunityIDs) {
+          const oppID = opportunityIDs[0];
+          const rowIndex = changes[0][0];
+          const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+          axios.post('/api/opportunity/contact', {oppID: oppID, contactID: contactID} );
+        }
+      }
     }
   };
 }

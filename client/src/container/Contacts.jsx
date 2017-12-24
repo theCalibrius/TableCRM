@@ -8,7 +8,10 @@ import { getContacts,
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
-  relateOppToContact
+  relateOppToContact,
+  handleRelateOppToContact,
+  handleRelateOppsToContacts,
+  getCopiedOpportunities
 } from '../actions/opportunitiesActions';
 
 // api call
@@ -27,6 +30,7 @@ class Contacts extends React.Component {
   componentDidMount() {
     this.props.dispatch(getContacts);
     this.props.dispatch(getAllOpportunityIDsNames());
+
   }
   render() {
     const opportunityIDsNames = this.props.opportunityIDsNames
@@ -35,8 +39,7 @@ class Contacts extends React.Component {
     return (
       <div>
         <div id="table">
-          {!this.props.contacts &&
-          !this.props.opportunityIDsNames ? (
+          {!this.props.contacts && !this.props.opportunityIDsNames ? (
             <p>loading...</p>
           ) : (
             <HotTable
@@ -46,7 +49,8 @@ class Contacts extends React.Component {
                 licenseKey: '7fb69-d3720-89c63-24040-8e45b',
                 data: this.props.contacts,
                 colHeaders: [
-                  'ID',
+                  'Contact ID',
+                  'Opportunity ID',
                   'Opportunity Name',
                   'First Name',
                   'Last Name',
@@ -62,6 +66,7 @@ class Contacts extends React.Component {
                 ],
                 columns: [
                   { data: 'id' },
+                  { data: 'opportunityID' },
                   {
                     data: 'name',
                     type: 'autocomplete',
@@ -92,10 +97,10 @@ class Contacts extends React.Component {
                     readOnly: true
                   }
                 ],
-                hiddenColumns: {
-                  columns: [0],
+                /*hiddenColumns: {
+                  columns: [0,1],
                   indicators: false
-                },
+                },*/
                 rowHeaders: true,
                 minSpareRows: 1,
                 stretchH: 'all',
@@ -103,29 +108,39 @@ class Contacts extends React.Component {
                 filters: true,
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
-                afterChange: (changes, source) => {
-                  const opportunityIDsNames = this.props.opportunityIDsNames;
-                  if (changes && changes[0][1] != 'name') {
-                    this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
-                  }
-                  if (changes) {
-                    const selectedOpportunityName = changes[0][3];
-                    //get Opp ID
-                    const oppID = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id)[0];
-                    if (changes[0][1] === 'name' && selectedOpportunityName !== null && opportunityIDsNames.find(o => o.name === selectedOpportunityName)) {
-                      this.props.dispatch(relateOppToContact(changes, source, oppID).bind(this));
+                beforeCopy: (data, coords) => {
+                  const oppNames = this.props.opportunityIDsNames.map((opp) => {
+                    return opp.name;
+                  });
+                  // check if copied data is valid
+                  const revisedData = data.map((d) => { return d[0]; });
+                  if ( revisedData.every(elem => oppNames.indexOf(elem) > -1) ) {
+                    const copiedRows = coords[0];
+                    const opportunityIDs = [];
+                    for (let i = copiedRows.startRow; i <= copiedRows.endRow; i++) {
+                      opportunityIDs.push(this.refs.hot.hotInstance.getSourceDataAtRow(i).opportunityID);
                     }
+                    this.props.dispatch(getCopiedOpportunities(opportunityIDs));
+                  }
+                },
+                afterChange: (changes, source,index, amount) => {
+                  if (changes) {
+                    if (changes[0][1] != 'name') {
+                      this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
+                    }
+                    const opportunityIDsNames = this.props.opportunityIDsNames;
+                    if (source == 'edit' || source == 'Autofill.fill') {
+                      this.props.dispatch(handleRelateOppToContact(changes, opportunityIDsNames,opportunityIDsNames).bind(this));
+                    }
+                    if (source == 'CopyPaste.paste' || source == 'Autofill.fill') {
+                      const oppotunityIDs = this.props.copiedOpportunities;
+                      this.props.dispatch(handleRelateOppsToContacts(changes, oppotunityIDs, opportunityIDsNames).bind(this));
+                    }
+
                   }
                 },
                 beforeRemoveRow: (index, amount) => {
-                  console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
                   this.props.dispatch(deleteContacts(index, amount).bind(this));
-                },
-                afterCopy: (index, amount) => {
-                  console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-                },
-                afterPaste: (index, amount) => {
-                  console.log(`afterPaste: index: ${index}, amount: ${amount}`);
                 }
               }}
             />
@@ -139,6 +154,7 @@ class Contacts extends React.Component {
 const mapStateToProps = state => ({
   contacts: state.contactsReducer.contacts,
   opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
+  copiedOpportunities: state.opportunitiesReducer.copiedOpportunities
 });
 
 export default connect(mapStateToProps, null)(Contacts);

@@ -206,3 +206,34 @@ export function getUpdatedColumnsObj(entityColumnsObj, movedRangeIndexes, afterC
     resolve(updatedColumnOrders);
   });
 }
+
+export function buildObjToAssignOpportunityToContact(changes,opportunityIDs,opportunityIDsNames) {
+  // build object to store OppIDs and contactIDs
+  const contactIDs = [];
+  for (const change of changes) {
+    const rowIndex = change[0];
+    const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+    contactIDs.push(contactID);
+  }
+  if (!opportunityIDs) {
+    const selectedOpportunities = changes.map((selectedOpp) => {
+      return selectedOpp[3];
+    });
+    if (selectedOpportunities.every( (val, i, arr) => val === arr[0] ) === true) {
+      const oppIDArray = opportunityIDsNames.filter(({name}) => name === selectedOpportunities[0]).map(({id}) => id);
+      const oppID = Number(oppIDArray);
+      opportunityIDs = selectedOpportunities.map((selectedOpp) => {
+        return oppID;
+      });
+    }
+  }
+  const data = {};
+  contactIDs.forEach(function(contactID, oppID) {
+      data[contactID] = opportunityIDs[oppID];
+  });
+  // check if data has undefined values, meaning multiple relations were deleted
+  if (Object.values(data).every(value => value === undefined ) === true) {
+    Object.keys(data).map(value => data[value] = 'delete' );
+  }
+  return data;
+}
