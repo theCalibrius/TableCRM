@@ -154,13 +154,6 @@ export function relateOppToContact(
 ) {
   return function(dispatch) {
     if (changes) {
-      const rowIndex = changes[0][0];
-      const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex)
-        .id;
-      axios
-        .get(`/api/opportunity/${oppID}/${contactID}`)
-        .then(response => console.log(response));
-
       // if changing multiple rows
       if (changes.length > 1) {
         const bound = buildObjToAssignOpportunityToContact.bind(this);

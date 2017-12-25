@@ -94,16 +94,52 @@ module.exports.getAllOpportunityIDsNames = (req, res) => {
 };
 
 module.exports.relateOppToContact = (req, res) => {
-  const contactID = req.params.contactID;
-  const selectedOpportunityID = req.params.oppID;
-  // store opp id and contact id in joint table   //use on dup key update
-  db.query(
-    `INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${
-      contactID
-    },${selectedOpportunityID}) ON DUPLICATE KEY UPDATE opportunityID=${
-      selectedOpportunityID
-    };`
-  );
+  //Remove if anything is passed as NULL
+  Object.keys(req.body).forEach((key) => (key == 'null') && delete req.body[key]);
+  const contactID = req.body.contactID;
+  const selectedOpportunityID = req.body.oppID;
+  if (contactID) {
+    if (selectedOpportunityID) {
+      //handle dropdown select and assign to a single contact
+      const values = contactID + ',' + selectedOpportunityID;
+      //store opp id and contact id in joint table
+      db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${values}) ON DUPLICATE KEY UPDATE opportunityID=${selectedOpportunityID};`);
+      res.sendStatus(201);
+    } else {
+      // Handle deleting a relation between contact ID and opportunity ID
+      db.query(`DELETE FROM opportunity_contact WHERE contactID = ${contactID};`, (err) => {
+        if (!err) { res.sendStatus(200); }
+      });
+    }
+  } else {
+    //handle deleting multiple relations
+    const contactIDs = JSON.stringify(Object.keys(req.body)).replace(/\[/g, '(').replace(/]/g, ')');
+    if (Object.values(req.body).every(value => value === 'delete' ) === true) {
+      db.query(`DELETE FROM opportunity_contact WHERE contactID IN ${contactIDs};`, (err) => {
+        if (!err) { res.sendStatus(200); }
+      });
+    }
+    //handle relating opp to multiple contacts after paste
+    else {
+      for (const pair in req.body) {
+        const contactID = pair;
+        const oppID = req.body[pair];
+        db.query(`SELECT contactID from opportunity_contact WHERE contactID = ${contactID};`, (err, rows) => {
+          if (!err) {
+            if (rows.length != 0) {
+              // check if any duplicate contact ID is found, update Opp ID
+              db.query(`UPDATE opportunity_contact SET opportunityID='${oppID}' WHERE contactID='${contactID}';`);
+            }
+            else {
+              //if not found, insert
+              db.query(`INSERT INTO opportunity_contact(contactID,opportunityID) VALUES (${contactID},${oppID});`);
+            }
+          }
+        });
+      }
+      res.sendStatus(201);
+    }
+  }
 };
 
 module.exports.updateColumnOrdersOfOpportunities = (req, res) => {

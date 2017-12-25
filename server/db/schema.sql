@@ -132,7 +132,7 @@ INSERT INTO leadsColumns (rank, name) VALUES
 
 INSERT INTO contactsColumns (rank, name) VALUES
 (0, 'contactId'),
-(1, 'opportunityId'),
+(1, 'opportunityID'),
 (2, 'name'),
 (3, 'firstName'),
 (4, 'lastName'),

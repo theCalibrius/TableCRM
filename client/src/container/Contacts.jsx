@@ -91,22 +91,6 @@ class Contacts extends React.Component {
         columns: this.props.contactsHiddenColIndices,
         indicators: true
       },
-      // colHeaders: [
-      //   'Contact ID',
-      //   'Opportunity ID',
-      //   'Opportunity Name',
-      //   'First Name',
-      //   'Last Name',
-      //   'Suffix',
-      //   'Title',
-      //   'Department',
-      //   'Description',
-      //   'Email',
-      //   'Work Phone Number',
-      //   'Personal Phone Number',
-      //   'Created Date',
-      //   'Updated Date'
-      // ],
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteContacts(index, amount).bind(this));
       },
