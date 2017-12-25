@@ -91,30 +91,6 @@ class Contacts extends React.Component {
         columns: this.props.contactsHiddenColIndices,
         indicators: true
       },
-      // afterChange: (changes, source) => {
-      //   const opportunityIDsNames = this.props.opportunityIDsNames;
-      //   if (changes && changes[0][1] != 'name') {
-      //     this.props.dispatch(
-      //       createAndUpdateContacts(changes, source).bind(this)
-      //     );
-      //   }
-      //   if (changes) {
-      //     const selectedOpportunityName = changes[0][3];
-      //     // get Opp ID
-      //     const oppID = opportunityIDsNames
-      //       .filter(({ name }) => name === selectedOpportunityName)
-      //       .map(({ id }) => id)[0];
-      //     if (
-      //       changes[0][1] === 'name' &&
-      // 			selectedOpportunityName !== null &&
-      // 			opportunityIDsNames.find(o => o.name === selectedOpportunityName)
-      //     ) {
-      //       this.props.dispatch(
-      //         relateOppToContact(changes, source, oppID).bind(this)
-      //       );
-      //     }
-      //   }
-      // },
       // colHeaders: [
       //   'Contact ID',
       //   'Opportunity ID',

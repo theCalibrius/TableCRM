@@ -131,19 +131,20 @@ INSERT INTO leadsColumns (rank, name) VALUES
 (10, 'ownerId');
 
 INSERT INTO contactsColumns (rank, name) VALUES
-(0, 'id'),
-(1, 'name'),
-(2, 'firstName'),
-(3, 'lastName'),
-(4, 'suffix'),
-(5, 'title'),
-(6, 'department'),
-(7, 'description'),
-(8, 'email'),
-(9, 'workPhoneNumber'),
-(10, 'personalPhoneNumber'),
-(11, 'createdAt'),
-(12, 'updatedAt');
+(0, 'contactId'),
+(1, 'opportunityId'),
+(2, 'name'),
+(3, 'firstName'),
+(4, 'lastName'),
+(5, 'suffix'),
+(6, 'title'),
+(7, 'department'),
+(8, 'description'),
+(9, 'email'),
+(10, 'workPhoneNumber'),
+(11, 'personalPhoneNumber'),
+(12, 'createdAt'),
+(13, 'updatedAt');
 
 INSERT INTO accountsColumns (rank, name) VALUES
 (0, 'id'),
