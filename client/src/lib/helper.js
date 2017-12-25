@@ -12,7 +12,7 @@ export function getNewAndUpdatedRows(changes, source) {
     for (const change of changes) {
       // get change's corresponding row's index (per spreadsheet) and id (per database)
       const rowIndex = change[0];
-      const rowId = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+      const rowId = this.refs.hot.hotInstance.getDataAtRow(rowIndex)[0];
       // get change's field-newValue pair
       const field = change[1];
       let newValue = change[3];
@@ -222,3 +222,36 @@ export const commonTableSetting = {
   minSpareRows: 1,
   fixedRowsBottom: 1
 };
+
+export function buildObjToAssignOpportunityToContact(
+  changes,
+  opportunityIDs,
+  opportunityIDsNames
+) {
+  // build object to store OppIDs and contactIDs
+  const contactIDs = [];
+  for (const change of changes) {
+    const rowIndex = change[0];
+    const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+    contactIDs.push(contactID);
+  }
+  if (!opportunityIDs) {
+    const selectedOpportunities = changes.map(selectedOpp => selectedOpp[3]);
+    if (selectedOpportunities.every((val, i, arr) => val === arr[0]) === true) {
+      const oppIDArray = opportunityIDsNames
+        .filter(({ name }) => name === selectedOpportunities[0])
+        .map(({ id }) => id);
+      const oppID = Number(oppIDArray);
+      opportunityIDs = selectedOpportunities.map(selectedOpp => oppID);
+    }
+  }
+  const data = {};
+  contactIDs.forEach((contactID, oppID) => {
+    data[contactID] = opportunityIDs[oppID];
+  });
+  // check if data has undefined values, meaning multiple relations were deleted
+  if (Object.values(data).every(value => value === undefined) === true) {
+    Object.keys(data).map(value => (data[value] = 'delete'));
+  }
+  return data;
+}
