@@ -96,9 +96,21 @@ class Accounts extends React.Component {
                   { data: 'updatedAt', type: 'date', readOnly: true }
                 ],
                 rowHeaders: true,
-                minSpareRows: 1,
+                minSpareRows: false,
+                height: window.innerHeight - 60,
                 stretchH: 'all',
-                contextMenu: ['remove_row'],
+                contextMenu: {
+                  callback: (key, options) => {
+                    console.log('this: ', this);
+                    if (key === 'insertRowsBelow') {
+                        this.refs.hot.hotInstance.alter('insert_row', this.refs.hot.hotInstance.getSelected()[2]+1, this.state.numberOfRowsSelected);                        
+                    }
+
+                  },
+                  items: {
+                    "insertRowsBelow": {name: 'Insert ' + this.state.numberOfRowsSelected + ' below'}
+                  }
+                },
                 filters: true,
                 dropdownMenu: [
                   'filter_by_condition',
@@ -106,6 +118,22 @@ class Accounts extends React.Component {
                   'filter_action_bar'
                 ],
                 columnSorting: true,
+                afterSelectionEnd: (r, c, r2, c2) => {
+                  // console.log('number rows selected: ', r2 - r + 1, ' starting with row: ', r, ' ending with row: ', r2);
+                  if (r > r2) {
+                    this.state.numberOfRowsSelected = 1 + (r - r2);
+                  } else {
+                    this.state.numberOfRowsSelected = 1 + (r2 - r);
+                  }
+                  this.refs.hot.hotInstance.updateSettings({
+                    contextMenu: {
+                      items: {
+                        "insertRowsBelow": {name: 'Insert ' + this.state.numberOfRowsSelected + ' below'}
+                      }
+                    }
+                  });
+                  
+                },
                 afterChange: (changes, source) => {
                   this.props.dispatch(
                     createAndUpdateAccounts(changes, source).bind(this)
