@@ -29,36 +29,44 @@ app.get('/api/contacts', contacts.getAllContacts);
 app.post('/api/contacts', contacts.createAndUpdateContacts);
 app.put('/api/contacts', contacts.createAndUpdateContacts);
 app.delete('/api/contacts', contacts.deleteContacts);
+app.get('/api/contacts/columns', contacts.getColumnsOfContacts);
+app.put('/api/contacts/columns/order', contacts.updateColumnOrdersOfContacts);
+app.put('/api/contacts/columns/hidden', contacts.updateHiddenColumnsOfContacts);
 
 app.get('/api/opportunities', opportunities.getAllOpportunities);
 app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.put('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.delete('/api/opportunities', opportunities.deleteOpportunities);
 
-app.get(
-  '/api/opportunities/columns',
-  opportunities.getHiddenColumnsOfOpportunities
-);
+app.get('/api/opportunities/columns', opportunities.getColumnsOfOpportunities);
 app.put(
-  '/api/opportunities/columns',
+  '/api/opportunities/columns/hidden',
   opportunities.updateHiddenColumnsOfOpportunities
 );
-
+app.put(
+  '/api/opportunities/columns/order',
+  opportunities.updateColumnOrdersOfOpportunities
+);
 app.get('/api/opportunities/names', opportunities.getAllOpportunityIDsNames);
 app.get('/api/opportunity/:oppID/:contactID', opportunities.relateOppToContact);
+app.post('/api/opportunity/contact', opportunities.relateOppToContact);
 
 app.get('/api/accounts', accounts.getAllAccounts);
 app.delete('/api/accounts', accounts.deleteAccounts);
 app.post('/api/accounts', accounts.createAndUpdateAccounts);
 app.put('/api/accounts', accounts.createAndUpdateAccounts);
+app.get('/api/accounts/columns', accounts.getColumnsOfAccounts);
+app.put('/api/accounts/columns/order', accounts.updateColumnOrdersOfAccounts);
+app.put('/api/accounts/columns/hidden', accounts.updateHiddenColumnsOfAccounts);
 
 app.get('/api/leads', leads.getAllLeads);
 app.get('/api/lead', leads.getLeadById);
 app.post('/api/leads', leads.createAndUpdateLeads);
 app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);
-app.get('/api/leads/columns', leads.getColumnOrders);
-app.put('/api/leads/columns', leads.updateColumnOrders);
+app.get('/api/leads/columns', leads.getColumnsOfLeads);
+app.put('/api/leads/columns/order', leads.updateColumnOrdersOfLeads);
+app.put('/api/leads/columns/hidden', leads.updateHiddenColumnsOfLeads);
 
 app.get(
   '/api/dashboard/totaloppvalueperstatus',

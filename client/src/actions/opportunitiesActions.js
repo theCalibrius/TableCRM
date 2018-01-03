@@ -3,8 +3,15 @@ import axios from 'axios';
 import {
   getNewAndUpdatedRows,
   getRemovedIds,
+  getHiddenColsFromContext,
+  colPropsToIndices,
+  getHiddenColsFromResponse,
+  getSortedColumnsByRank,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
+  getUpdatedColumnsObj,
   getHiddenCols,
-  colPropsToIndices
+  buildObjToAssignOpportunityToContact
 } from '../lib/helper';
 
 export function getAllOpportunities() {
@@ -51,43 +58,149 @@ export function deleteOpportunities(index, amount) {
   };
 }
 
-export function getHiddenColumnsOfOpportunities(dispatch) {
-  const colPropsToIndicesBound = colPropsToIndices.bind(this);
-
-  axios.get('/api/opportunities/columns').then(response => {
-    const hiddenColIndices = colPropsToIndicesBound(response.data);
-    dispatch({
-      type: 'GET_HIDDENCOLUMNS_OF_OPPORTUNITIES',
-      payload: hiddenColIndices
+export function getColumnsOfOpportunities(dispatch) {
+  axios
+    .get('/api/opportunities/columns')
+    .then(response => {
+      const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+      dispatch({
+        type: 'GET_OPPORTUNITIES_HIDDENCOLUMNS',
+        payload: hiddenColumnsIndexes
+      });
+      return response;
+    })
+    .then(response => {
+      const columns = response.data;
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
+    })
+    .then(columnsHeader => {
+      dispatch({
+        type: 'GET_ALL_OPPORTUNITIES_COLUMNS_HEADER',
+        payload: columnsHeader
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
     });
-  });
 }
 
 export function updateHiddenColumnsOfOpportunities(context) {
   return function(dispatch) {
-    const getHiddenColsBound = getHiddenCols.bind(this);
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
     const hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/opportunities/columns', { hiddenColumns }).then(() => {
-      dispatch(getHiddenColumnsOfOpportunities.bind(this));
-    });
+    axios
+      .put('/api/opportunities/columns/hidden', { hiddenColumns })
+      .then(() => {
+        dispatch(getColumnsOfOpportunities.bind(this));
+      });
   };
 }
 
 export function getAllOpportunityIDsNames() {
-  const request = axios.get('/api/opportunities/names');
-  return {
-    type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
-    payload: request
+  return function(dispatch) {
+    axios.get('/api/opportunities/names').then(res => {
+      dispatch({
+        type: 'GET_ALL_OPPORTUNITY_IDS_NAMES',
+        payload: res
+      });
+    });
   };
 }
 
-export function relateOppToContact(changes,source,oppID) {
+export function getCopiedOpportunities(opportunityIDs) {
+  return {
+    type: 'GET_COPIED_OPPORTUNITIES',
+    payload: opportunityIDs
+  };
+}
+
+export function handleRelateOppsToContacts(
+  changes,
+  opportunityIDs,
+  opportunityIDsNames
+) {
   return function(dispatch) {
-    // get ID of the opportunity name that was selected
+    this.props.dispatch(
+      relateOppToContact(changes, opportunityIDs, opportunityIDsNames).bind(
+        this
+      )
+    );
+  };
+}
+
+export function handleRelateOppToContact(changes, opportunityIDsNames) {
+  return function(dispatch) {
+    // handle dropdown select and assign to a single contact
+    const selectedOpportunityName = changes[0][3];
+    const oppIDs = opportunityIDsNames
+      .filter(({ name }) => name === selectedOpportunityName)
+      .map(({ id }) => id);
+    if (
+      changes[0][1] === 'name' &&
+			(opportunityIDsNames.find(o => o.name === selectedOpportunityName) ||
+				selectedOpportunityName === '')
+    ) {
+      this.props.dispatch(
+        relateOppToContact(changes, oppIDs, opportunityIDsNames).bind(this)
+      );
+    }
+  };
+}
+export function relateOppToContact(
+  changes,
+  opportunityIDs,
+  opportunityIDsNames
+) {
+  return function(dispatch) {
     if (changes) {
-      const rowIndex = changes[0][0];
-      const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
-      axios.get('/api/opportunity/'+ oppID + '/' + contactID).then(response => console.log(response));
+      // if changing multiple rows
+      if (changes.length > 1) {
+        const bound = buildObjToAssignOpportunityToContact.bind(this);
+        const data = bound(changes, opportunityIDs, opportunityIDsNames);
+        axios.post('/api/opportunity/contact', data);
+      } else {
+        // if changing one row
+        if (opportunityIDs) {
+          const oppID = opportunityIDs[0];
+          const rowIndex = changes[0][0];
+          const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(
+            rowIndex
+          ).id;
+          axios.post('/api/opportunity/contact', {
+            oppID,
+            contactID
+          });
+        }
+      }
+    }
+  };
+}
+
+export function updateColumnOrderOfOpportunities(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
+              ColumnIdToNameObj,
+              movedRangeIndexes,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              axios
+                .put('/api/opportunities/columns/order', {
+                  updatedColumnOrders
+                })
+                .then(dispatch(getColumnsOfOpportunities));
+            });
+          });
+      });
     }
   };
 }

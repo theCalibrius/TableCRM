@@ -6,6 +6,8 @@ import {
   getSortedColumnsByRank,
   getMovedColumnsIndexRange,
   mapColumnIdToName,
+  getHiddenColsFromResponse,
+  getHiddenColsFromContext,
   getUpdatedColumnsObj
 } from '../lib/helper';
 
@@ -73,6 +75,14 @@ export function getColumnsOfLeads(dispatch) {
   axios
     .get('/api/leads/columns')
     .then(response => {
+      const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+      dispatch({
+        type: 'GET_LEADS_HIDDENCOLUMNS',
+        payload: hiddenColumnsIndexes
+      });
+      return response;
+    })
+    .then(response => {
       const columns = response.data;
       const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
       return getSortedColumnsByRankBind(columns);
@@ -88,7 +98,7 @@ export function getColumnsOfLeads(dispatch) {
     });
 }
 
-export function updateColumnsOfLeads(columns, target) {
+export function updateColumnOrderOfLeads(columns, target) {
   return function(dispatch) {
     if (target) {
       getMovedColumnsIndexRange(columns, target).then(movedRange => {
@@ -105,7 +115,7 @@ export function updateColumnsOfLeads(columns, target) {
               afterColumnsArray
             ).then(updatedColumnOrders => {
               axios
-                .put('/api/leads/columns', { updatedColumnOrders })
+                .put('/api/leads/columns/order', { updatedColumnOrders })
                 .then(dispatch(getColumnsOfLeads));
             });
           });
@@ -172,5 +182,15 @@ export function getLeadById(id) {
             console.error.bind(err);
           });
       });
+  };
+}
+
+export function updateHiddenColumnsOfLeads(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/leads/columns/hidden', { hiddenColumns }).then(() => {
+      dispatch(getColumnsOfLeads.bind(this));
+    });
   };
 }

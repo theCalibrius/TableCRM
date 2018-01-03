@@ -21,7 +21,11 @@ export function getNewAndUpdatedRows(changes, source) {
       const cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
       // if change is of valid data type
-      if (!cell.classList.value.split(' ').includes('htInvalid')) {
+      if (
+        cell === null ||
+				cell === undefined ||
+				!cell.classList.value.split(' ').includes('htInvalid')
+      ) {
         // format date for persisting in database
         if (field === 'expectedCloseDate' || field === 'closeDate') {
           newValue = moment(newValue).format('YYYY-MM-DD');
@@ -110,30 +114,6 @@ export function getRemovedIds() {
   return removedIds;
 }
 
-export function getHiddenCols(context) {
-  const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
-  const hiddenColProps = [];
-
-  for (const hiddenColIndex of hiddenColIndices) {
-    const hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
-    hiddenColProps.push(hiddenColProp);
-  }
-
-  return hiddenColProps;
-}
-
-export function colPropsToIndices(colProps) {
-  const colIndices = [];
-
-  for (const colProp of colProps) {
-    const prop = colProp.name;
-    const index = this.refs.hot.hotInstance.propToCol(prop);
-    colIndices.push(index);
-  }
-
-  return colIndices;
-}
-
 export function getSortedColumnsByRank(columns) {
   // set columns state sorted by rank
   const rankedColumns = [];
@@ -188,7 +168,11 @@ export function mapColumnIdToName() {
   });
 }
 
-export function getUpdatedColumnsObj(entityColumnsObj, movedRangeIndexes, afterColumnsArray) {
+export function getUpdatedColumnsObj(
+  entityColumnsObj,
+  movedRangeIndexes,
+  afterColumnsArray
+) {
   return new Promise(resolve => {
     const updatedColumnOrders = [];
     const movedRangeStart = movedRangeIndexes[0];
@@ -205,4 +189,69 @@ export function getUpdatedColumnsObj(entityColumnsObj, movedRangeIndexes, afterC
     }
     resolve(updatedColumnOrders);
   });
+}
+
+export function getHiddenColsFromResponse(response) {
+  const hiddenColumnsIndexes = response.data
+    .filter(column => column.hidden === 1)
+    .map(column => column.rank);
+  return hiddenColumnsIndexes;
+}
+
+export function getHiddenColsFromContext(context) {
+  const hiddenColIndices = context.hot.getPlugin('hiddenColumns').hiddenColumns;
+  const hiddenColProps = [];
+  for (const hiddenColIndex of hiddenColIndices) {
+    const hiddenColProp = this.refs.hot.hotInstance.colToProp(hiddenColIndex);
+    hiddenColProps.push(hiddenColProp);
+  }
+  return hiddenColProps;
+}
+
+export const commonTableSetting = {
+  licenseKey: '7fb69-d3720-89c63-24040-8e45b',
+  manualColumnMove: true,
+  rowHeaders: true,
+  height: window.innerHeight - 60,
+  colWidths: 120,
+  wordWrap: false,
+  contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
+  dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+  filters: true,
+  columnSorting: true,
+  minSpareRows: 1,
+  fixedRowsBottom: 1
+};
+
+export function buildObjToAssignOpportunityToContact(
+  changes,
+  opportunityIDs,
+  opportunityIDsNames
+) {
+  // build object to store OppIDs and contactIDs
+  const contactIDs = [];
+  for (const change of changes) {
+    const rowIndex = change[0];
+    const contactID = this.refs.hot.hotInstance.getSourceDataAtRow(rowIndex).id;
+    contactIDs.push(contactID);
+  }
+  if (!opportunityIDs) {
+    const selectedOpportunities = changes.map(selectedOpp => selectedOpp[3]);
+    if (selectedOpportunities.every((val, i, arr) => val === arr[0]) === true) {
+      const oppIDArray = opportunityIDsNames
+        .filter(({ name }) => name === selectedOpportunities[0])
+        .map(({ id }) => id);
+      const oppID = Number(oppIDArray);
+      opportunityIDs = selectedOpportunities.map(selectedOpp => oppID);
+    }
+  }
+  const data = {};
+  contactIDs.forEach((contactID, oppID) => {
+    data[contactID] = opportunityIDs[oppID];
+  });
+  // check if data has undefined values, meaning multiple relations were deleted
+  if (Object.values(data).every(value => value === undefined) === true) {
+    Object.keys(data).map(value => (data[value] = 'delete'));
+  }
+  return data;
 }

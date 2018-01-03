@@ -2,12 +2,11 @@ const db = require('./config');
 const lib = require('../lib/helper');
 const moment = require('moment');
 
-
 const getAllAccounts = (req, res) => {
   db.query('SELECT * from accounts', (err, rows) => {
     if (!err) {
       res.json(rows);
-    } 
+    }
   });
 };
 
@@ -20,7 +19,10 @@ const createAndUpdateAccounts = (req, res) => {
   }
 
   for (const row of rows) {
-    if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('YYYY-MM-DD HH:mm:ss');
+    if (row.createdAt)
+      row.createdAt = moment(new Date(row.createdAt)).format(
+        'YYYY-MM-DD HH:mm:ss'
+      );
     const fieldsArr = lib.getFieldsArr(row);
     const fields = lib.getFields(fieldsArr);
     const values = lib.getValues(row, fieldsArr);
@@ -29,7 +31,11 @@ const createAndUpdateAccounts = (req, res) => {
       db.query(`INSERT INTO accounts(${fields}) VALUES (${values});`);
     } else if (req.method === 'PUT') {
       const updateQuery = lib.getUpdateQuery(fieldsArr);
-      db.query(`INSERT INTO accounts(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
+      db.query(
+        `INSERT INTO accounts(${fields}) VALUES (${
+          values
+        }) ON DUPLICATE KEY UPDATE ${updateQuery};`
+      );
     }
   }
 
@@ -44,10 +50,57 @@ const deleteAccounts = (req, res) => {
   });
 };
 
+const getColumnsOfAccounts = (req, res) => {
+  db.query('SELECT * from accountsColumns ORDER BY id ASC', (err, rows) => {
+    if (err) return console.log(err);
+    res.json(rows);
+  });
+};
 
+const updateHiddenColumnsOfAccounts = (req, res) => {
+  const hiddenColumns = req.body.hiddenColumns;
+  db.query('SELECT name, hidden FROM accountsColumns;', (err, columns) => {
+    if (!err) {
+      for (const column of columns) {
+        const name = column.name;
+        const hidden = column.hidden;
+        if (hidden && !hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE accountsColumns SET hidden=false WHERE name='${name}';`
+          );
+        } else if (!hidden && hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE accountsColumns SET hidden=true WHERE name='${name}';`
+          );
+        }
+      }
+      res.sendStatus(201);
+    } else {
+      console.log(err);
+    }
+  });
+};
+
+const updateColumnOrdersOfAccounts = (req, res) => {
+  const updatedColumnOrders = req.body.updatedColumnOrders;
+  for (const column of updatedColumnOrders) {
+    db.query(
+      `UPDATE accountsColumns SET rank = ${column.columnOrder} WHERE id = ${
+        column.columnId
+      }`,
+      err => {
+        if (err) return console.log(err);
+      }
+    );
+  }
+  res.sendStatus(201);
+};
 
 module.exports = {
   getAllAccounts,
   createAndUpdateAccounts,
-  deleteAccounts
+  deleteAccounts,
+  getColumnsOfAccounts,
+  updateHiddenColumnsOfAccounts,
+  updateColumnOrdersOfAccounts
 };
