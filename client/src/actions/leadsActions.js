@@ -8,7 +8,9 @@ import {
   mapColumnIdToName,
   getHiddenColsFromResponse,
   getHiddenColsFromContext,
-  getUpdatedColumnsObj
+  getUpdatedColumnsObj,
+  prepareRightPanel,
+  prepareDetailedButton
 } from '../lib/helper';
 
 export function getAllLeads(dispatch) {
@@ -124,6 +126,16 @@ export function updateColumnOrderOfLeads(columns, target) {
   };
 }
 
+export function updateHiddenColumnsOfLeads(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/leads/columns/hidden', { hiddenColumns }).then(() => {
+      dispatch(getColumnsOfLeads.bind(this));
+    });
+  };
+}
+
 export function getLeadById(id) {
   return function(dispatch) {
     axios
@@ -169,40 +181,18 @@ export function getLeadById(id) {
   };
 }
 
-export function updateHiddenColumnsOfLeads(context) {
-  return function(dispatch) {
-    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
-    const hiddenColumns = getHiddenColsBound(context);
-    axios.put('/api/leads/columns/hidden', { hiddenColumns }).then(() => {
-      dispatch(getColumnsOfLeads.bind(this));
-    });
-  };
-}
-
 export function clickedDetailButton(event, coords, td) {
   return function(dispatch) {
-    // get row data
-    const rowIndex = coords.row;
-    const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
-    const rowId = rowData[0];
-    // change route with id
-    this.props.history.push(`${this.props.match.url}/${rowId}`);
-    // move right panel
-    const rightPanel = document.getElementsByClassName('right_panel')[0];
-    rightPanel.style.webkitTransform = 'translateX(-800px)';
-    // get data
+    const prepareRightPanelBound = prepareRightPanel.bind(this);
+    const rowId = prepareRightPanelBound(event, coords, td);
     dispatch(getLeadById(rowId));
   };
 }
 
 export function displayDetailButton(event, coords, td) {
   return function(dispatch) {
-    this.setState({});
-    // create button
-    const button = document.createElement('i');
-    button.className = 'detail_button material-icons';
-    const textnode = document.createTextNode('open_in_new');
-    button.appendChild(textnode);
+    const prepareDetailedButtonBound = prepareDetailedButton.bind(this);
+    const button = prepareDetailedButtonBound(event, coords, td);
     // attach onclick event to button
     button.onclick = () => {
       this.props.dispatch(clickedDetailButton(event, coords, td).bind(this));
