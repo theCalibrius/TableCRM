@@ -48,7 +48,7 @@ const InputField = styled.input`
 	color: #363636;
 	border-bottom: 1px solid #ccc;
 	width: 100%;
-	max-width: 400px;
+	max-width: 600px;
 	padding: 0 0 5px 0;
 	border-radius: 0;
 	font-size: 14px;
@@ -107,6 +107,7 @@ class RightPanel extends React.Component {
                     placeholder=""
                     defaultValue={i[Object.keys(i)[0]]}
                     key={i[Object.keys(i)[0]]}
+                    disabled
                   />
                 </InputWrap>
               </div>

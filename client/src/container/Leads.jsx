@@ -18,7 +18,8 @@ import {
   updateColumnsOfLeads,
   clickedDetailButton,
   updateColumnOrderOfLeads,
-  updateHiddenColumnsOfLeads
+  updateHiddenColumnsOfLeads,
+  displayDetailButton
 } from '../actions/leadsActions';
 // right panel
 import RightPanel from '../components/RightPanel.jsx';
@@ -88,19 +89,7 @@ class Leads extends React.Component {
         this.props.dispatch(updateHiddenColumnsOfLeads(context).bind(this));
       },
       afterOnCellMouseOver: (event, coords, td) => {
-        this.setState({});
-        const button = document.createElement('i');
-        button.className = 'detail_button material-icons';
-        const textnode = document.createTextNode('open_in_new');
-        button.appendChild(textnode);
-        button.onclick = () => {
-          this.props.dispatch(
-            clickedDetailButton(event, coords, td).bind(this)
-          );
-        };
-        if (event.target.parentNode.nodeName.toLowerCase() === 'tr') {
-          event.target.parentNode.insertBefore(button, null);
-        }
+        this.props.dispatch(displayDetailButton(event, coords, td).bind(this));
       }
     };
     const tableSettingMerged = Object.assign(
