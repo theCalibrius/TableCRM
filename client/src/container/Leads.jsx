@@ -16,10 +16,9 @@ import {
   deleteLeads,
   getColumnsOfLeads,
   updateColumnsOfLeads,
-  clickedDetailButton,
   updateColumnOrderOfLeads,
   updateHiddenColumnsOfLeads,
-  displayDetailButton
+  displayDetailButtonOnLeads
 } from '../actions/leadsActions';
 // right panel
 import RightPanel from '../components/RightPanel.jsx';
@@ -89,7 +88,9 @@ class Leads extends React.Component {
         this.props.dispatch(updateHiddenColumnsOfLeads(context).bind(this));
       },
       afterOnCellMouseOver: (event, coords, td) => {
-        this.props.dispatch(displayDetailButton(event, coords, td).bind(this));
+        this.props.dispatch(
+          displayDetailButtonOnLeads(event, coords, td).bind(this)
+        );
       }
     };
     const tableSettingMerged = Object.assign(

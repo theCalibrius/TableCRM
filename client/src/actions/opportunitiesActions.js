@@ -11,7 +11,9 @@ import {
   mapColumnIdToName,
   getUpdatedColumnsObj,
   getHiddenCols,
-  buildObjToAssignOpportunityToContact
+  buildObjToAssignOpportunityToContact,
+  prepareRightPanel,
+  prepareDetailedButton
 } from '../lib/helper';
 
 export function getAllOpportunities() {
@@ -201,6 +203,31 @@ export function updateColumnOrderOfOpportunities(columns, target) {
             });
           });
       });
+    }
+  };
+}
+
+export function clickedDetailButtonOnOpportunities(event, coords, td) {
+  return function(dispatch) {
+    const prepareRightPanelBound = prepareRightPanel.bind(this);
+    const rowId = prepareRightPanelBound(event, coords, td);
+    dispatch(getLeadById(rowId));
+  };
+}
+
+export function displayDetailButtonOnOpportunities(event, coords, td) {
+  return function(dispatch) {
+    const prepareDetailedButtonBound = prepareDetailedButton.bind(this);
+    const button = prepareDetailedButtonBound(event, coords, td);
+    // attach onclick event to button
+    button.onclick = () => {
+      this.props.dispatch(
+        clickedDetailButtonOnOpportunities(event, coords, td).bind(this)
+      );
+    };
+    // insert button
+    if (event.target.parentNode.nodeName.toLowerCase() === 'tr') {
+      event.target.parentNode.insertBefore(button, null);
     }
   };
 }

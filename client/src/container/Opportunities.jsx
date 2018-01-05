@@ -15,7 +15,8 @@ import {
   deleteOpportunities,
   getColumnsOfOpportunities,
   updateHiddenColumnsOfOpportunities,
-  updateColumnOrderOfOpportunities
+  updateColumnOrderOfOpportunities,
+  displayDetailButtonOnOpportunities
 } from '../actions/opportunitiesActions';
 
 const TableWrap = styled.div`
@@ -106,6 +107,11 @@ class Opportunities extends React.Component {
       afterContextMenuHide: context => {
         this.props.dispatch(
           updateHiddenColumnsOfOpportunities(context).bind(this)
+        );
+      },
+      afterOnCellMouseOver: (event, coords, td) => {
+        this.props.dispatch(
+          displayDetailButtonOnOpportunities(event, coords, td).bind(this)
         );
       }
     };

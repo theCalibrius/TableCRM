@@ -181,7 +181,7 @@ export function getLeadById(id) {
   };
 }
 
-export function clickedDetailButton(event, coords, td) {
+export function clickedDetailButtonOnLeads(event, coords, td) {
   return function(dispatch) {
     const prepareRightPanelBound = prepareRightPanel.bind(this);
     const rowId = prepareRightPanelBound(event, coords, td);
@@ -189,13 +189,15 @@ export function clickedDetailButton(event, coords, td) {
   };
 }
 
-export function displayDetailButton(event, coords, td) {
+export function displayDetailButtonOnLeads(event, coords, td) {
   return function(dispatch) {
     const prepareDetailedButtonBound = prepareDetailedButton.bind(this);
     const button = prepareDetailedButtonBound(event, coords, td);
     // attach onclick event to button
     button.onclick = () => {
-      this.props.dispatch(clickedDetailButton(event, coords, td).bind(this));
+      this.props.dispatch(
+        clickedDetailButtonOnLeads(event, coords, td).bind(this)
+      );
     };
     // insert button
     if (event.target.parentNode.nodeName.toLowerCase() === 'tr') {
