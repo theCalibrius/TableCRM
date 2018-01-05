@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
   entry: ['./client/src/main.js'],
   output: {
-    filename: 'bundle/bundle.js',
-    path: __dirname
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'bundle')
   },
   module: {
     loaders: [

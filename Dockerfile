@@ -9,7 +9,7 @@ ADD . /code
 # For npm@5 or later, copy package-lock.json as well
 COPY package.json yarn.lock ./
 
-RUN npm install --global yarn && \
+RUN npm install -g -s --no-progress yarn && \
 	yarn && \
 	yarn run build && \
 	yarn run prune && \
