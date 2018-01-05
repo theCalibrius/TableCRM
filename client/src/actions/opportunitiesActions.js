@@ -207,11 +207,56 @@ export function updateColumnOrderOfOpportunities(columns, target) {
   };
 }
 
+export function getOpportunityById(id) {
+  return function(dispatch) {
+    axios
+      .get('/api/opportunity', { params: { id } })
+      .then(response => {
+        const returnedEntity = response.data[0];
+        return returnedEntity;
+      })
+      .then(returnedEntity => {
+        axios
+          .get('/api/opportunities/columns')
+          .then(response => {
+            const columnOrder = response.data;
+            const compare = (a, b) => {
+              if (a.rank < b.rank) return -1;
+              if (a.rank > b.rank) return 1;
+              return 0;
+            };
+            columnOrder.sort(compare);
+            return [columnOrder, returnedEntity];
+          })
+          .then(response => {
+            const columnOrder = response[0];
+            const returnedEntity = response[1];
+            const rankedFields = [];
+            for (const i of columnOrder) {
+              const tempObj = {};
+              tempObj[i.name] = returnedEntity[i.name];
+              rankedFields.push(tempObj);
+            }
+            return rankedFields;
+          })
+          .then(rankedFields => {
+            dispatch({
+              type: 'GET_LEAD_BY_ID',
+              payload: rankedFields
+            });
+          })
+          .catch(err => {
+            console.error.bind(err);
+          });
+      });
+  };
+}
+
 export function clickedDetailButtonOnOpportunities(event, coords, td) {
   return function(dispatch) {
     const prepareRightPanelBound = prepareRightPanel.bind(this);
     const rowId = prepareRightPanelBound(event, coords, td);
-    dispatch(getLeadById(rowId));
+    dispatch(getOpportunityById(rowId));
   };
 }
 

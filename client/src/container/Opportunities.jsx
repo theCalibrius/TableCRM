@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
@@ -18,6 +19,8 @@ import {
   updateColumnOrderOfOpportunities,
   displayDetailButtonOnOpportunities
 } from '../actions/opportunitiesActions';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;
@@ -128,6 +131,7 @@ class Opportunities extends React.Component {
             <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
           )}
         </div>
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
       </TableWrap>
     );
   }

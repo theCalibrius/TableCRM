@@ -33,6 +33,7 @@ app.get('/api/contacts/columns', contacts.getColumnsOfContacts);
 app.put('/api/contacts/columns/order', contacts.updateColumnOrdersOfContacts);
 app.put('/api/contacts/columns/hidden', contacts.updateHiddenColumnsOfContacts);
 
+app.get('/api/opportunity', opportunities.getOpportunityById);
 app.get('/api/opportunities', opportunities.getAllOpportunities);
 app.post('/api/opportunities', opportunities.createAndUpdateOpportunities);
 app.put('/api/opportunities', opportunities.createAndUpdateOpportunities);

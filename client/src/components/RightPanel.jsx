@@ -86,7 +86,11 @@ class RightPanel extends React.Component {
             <i
               className="material-icons hide_panel"
               onClick={() => {
-                this.props.history.push('/leads');
+                if (this.props.match.path === '/opportunities/:id') {
+                  this.props.history.push('/opportunities');
+                } else if (this.props.match.path === '/leads/:id') {
+                  this.props.history.push('/leads');
+                }
                 const rightPanel = document.getElementsByClassName(
                   'right_panel'
                 )[0];
