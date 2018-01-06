@@ -21,7 +21,7 @@ const DashboardWrap = styled.div`
 const DashboardCard = styled.div`
 	background: #ffffff;
 	padding: 28px;
-	height: 300px;
+	height: 400px;
 	border-radius: 2px;
 	margin: 0 0 40px 0;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);

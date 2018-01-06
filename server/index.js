@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 /* * * * * * * * * * * * * * * * * * * * * * * * * * *
   Router
 * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+app.get('/api/contact', contacts.getContactById);
 app.get('/api/contacts', contacts.getAllContacts);
 app.post('/api/contacts', contacts.createAndUpdateContacts);
 app.put('/api/contacts', contacts.createAndUpdateContacts);
@@ -60,8 +60,8 @@ app.get('/api/accounts/columns', accounts.getColumnsOfAccounts);
 app.put('/api/accounts/columns/order', accounts.updateColumnOrdersOfAccounts);
 app.put('/api/accounts/columns/hidden', accounts.updateHiddenColumnsOfAccounts);
 
-app.get('/api/leads', leads.getAllLeads);
 app.get('/api/lead', leads.getLeadById);
+app.get('/api/leads', leads.getAllLeads);
 app.post('/api/leads', leads.createAndUpdateLeads);
 app.put('/api/leads', leads.createAndUpdateLeads);
 app.delete('/api/leads', leads.deleteLeads);
