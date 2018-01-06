@@ -6,9 +6,11 @@ import { Link, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { getLeadById } from '../actions/leadsActions';
 import { getOpportunityById } from '../actions/opportunitiesActions';
+import { getContactById } from '../actions/contactsActions';
 // right panel fields
 import LeadsRightPanelFields from './LeadsRightPanelFields.jsx';
 import OpportunitiesRightPanelFields from './OpportunitiesRightPanelFields.jsx';
+import ContactsRightPanelFields from './ContactsRightPanelFields.jsx';
 //
 // ContactsRightPanelFields
 // AccountsRightPanelFields
@@ -59,6 +61,8 @@ class RightPanel extends React.Component {
       const rowId = this.props.match.params.id;
       this.props.dispatch(getLeadById(rowId));
     } else if (this.props.match.path === '/contacts/:id') {
+      const rowId = this.props.match.params.id;
+      this.props.dispatch(getContactById(rowId));
     }
     const rightPanel = document.getElementsByClassName('right_panel')[0];
     if (rightPanel.style.webkitTransform === '') {
@@ -95,6 +99,7 @@ class RightPanel extends React.Component {
             path="/opportunities"
             component={OpportunitiesRightPanelFields}
           />
+          <Route path="/contacts" component={ContactsRightPanelFields} />
         </RightPanelInner>
       </RightPanelWrap>
     );
