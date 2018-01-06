@@ -136,20 +136,36 @@ class Contacts extends React.Component {
             this.props.dispatch(
               handleRelateOppToContact(
                 changes,
-                opportunityIDsNames,
                 opportunityIDsNames
               ).bind(this)
             );
           }
           if (source == 'CopyPaste.paste' || source == 'Autofill.fill') {
             const oppotunityIDs = this.props.copiedOpportunities;
-            this.props.dispatch(
-              handleRelateOppsToContacts(
-                changes,
-                oppotunityIDs,
-                opportunityIDsNames
-              ).bind(this)
-            );
+            if (this.props.copiedOpportunities) {
+                const opportunityIDs = this.props.copiedOpportunities;
+                this.props.dispatch(
+                  handleRelateOppsToContacts(
+                    changes,
+                    opportunityIDs,
+                    opportunityIDsNames
+                  ).bind(this)
+                );
+            } else {
+              let opportunityIDs = [];
+              const selectedOpportunityName = changes[0][3];
+              const opportunityID = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
+              for (const change of changes) {
+                opportunityIDs.push(opportunityID[0])
+              }
+              this.props.dispatch(
+                handleRelateOppsToContacts(
+                  changes,
+                  opportunityIDs,
+                  opportunityIDsNames
+                ).bind(this)
+              );
+            }
           }
         }
       },
