@@ -25,7 +25,7 @@ const TableWrap = styled.div`
 `;
 
 // start of class
-class Opportunities extends React.Component {
+export class Opportunities extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
