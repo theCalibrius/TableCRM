@@ -2,10 +2,13 @@ const db = require('./config');
 const lib = require('../lib/helper');
 
 const getAllContacts = (req, res) => {
-  db.query('SELECT c.*,o.name,o.id as opportunityID FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id ORDER BY c.id', (err, rows) => {
-    if (err) console.log(err);
-    res.json(rows);
-  });
+  db.query(
+    'SELECT c.*,o.name,o.id as opportunityID FROM contacts c LEFT JOIN opportunity_contact oc ON c.id=oc.contactID LEFT JOIN opportunities o ON oc.opportunityID=o.id ORDER BY c.id',
+    (err, rows) => {
+      if (err) console.log(err);
+      res.json(rows);
+    }
+  );
 };
 
 const createAndUpdateContacts = (req, res) => {
@@ -17,7 +20,10 @@ const createAndUpdateContacts = (req, res) => {
   }
 
   for (const row of rows) {
-    if (row.createdAt) row.createdAt = moment(new Date(row.createdAt)).format('YYYY-MM-DD HH:mm:ss');
+    if (row.createdAt)
+      row.createdAt = moment(new Date(row.createdAt)).format(
+        'YYYY-MM-DD HH:mm:ss'
+      );
     const fieldsArr = lib.getFieldsArr(row);
     const fields = lib.getFields(fieldsArr);
     const values = lib.getValues(row, fieldsArr);
@@ -26,7 +32,11 @@ const createAndUpdateContacts = (req, res) => {
       db.query(`INSERT INTO contacts(${fields}) VALUES (${values});`);
     } else if (req.method === 'PUT') {
       const updateQuery = lib.getUpdateQuery(fieldsArr);
-      db.query(`INSERT INTO contacts(${fields}) VALUES (${values}) ON DUPLICATE KEY UPDATE ${updateQuery};`);
+      db.query(
+        `INSERT INTO contacts(${fields}) VALUES (${
+          values
+        }) ON DUPLICATE KEY UPDATE ${updateQuery};`
+      );
     }
   }
 
@@ -39,12 +49,61 @@ const deleteContacts = (req, res) => {
     if (err) return console.log(err);
     res.sendStatus(200);
   });
-  //Also delete these contact relation if found in opportunity_contact
+  // Also delete these contact relation if found in opportunity_contact
+};
 
+const getColumnsOfContacts = (req, res) => {
+  db.query('SELECT * from contactsColumns ORDER BY id ASC', (err, rows) => {
+    if (err) return console.log(err);
+    res.json(rows);
+  });
+};
+
+const updateColumnOrdersOfContacts = (req, res) => {
+  const updatedColumnOrders = req.body.updatedColumnOrders;
+  for (const column of updatedColumnOrders) {
+    db.query(
+      `UPDATE contactsColumns SET rank = ${column.columnOrder} WHERE id = ${
+        column.columnId
+      }`,
+      err => {
+        if (err) return console.log(err);
+      }
+    );
+  }
+  res.sendStatus(201);
+};
+
+const updateHiddenColumnsOfContacts = (req, res) => {
+  const hiddenColumns = req.body.hiddenColumns;
+
+  db.query('SELECT name, hidden FROM contactsColumns;', (err, columns) => {
+    if (!err) {
+      for (const column of columns) {
+        const name = column.name;
+        const hidden = column.hidden;
+        if (hidden && !hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE contactsColumns SET hidden=false WHERE name='${name}';`
+          );
+        } else if (!hidden && hiddenColumns.includes(name)) {
+          db.query(
+            `UPDATE contactsColumns SET hidden=true WHERE name='${name}';`
+          );
+        }
+      }
+      res.sendStatus(201);
+    } else {
+      console.log(err);
+    }
+  });
 };
 
 module.exports = {
   getAllContacts,
   deleteContacts,
-  createAndUpdateContacts
+  createAndUpdateContacts,
+  getColumnsOfContacts,
+  updateColumnOrdersOfContacts,
+  updateHiddenColumnsOfContacts
 };

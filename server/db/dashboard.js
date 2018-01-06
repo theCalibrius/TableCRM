@@ -1,7 +1,7 @@
 const db = require('./config');
 // const lib = require('../lib/helper');
 
-const getTotalOppValuePerStatus = (req, res) => {
+module.exports.getTotalOppValuePerStatus = (req, res) => {
   db.query(
     'SELECT status, SUM (estimatedValue) from opportunities group by status',
     (err, values) => {
@@ -15,7 +15,7 @@ const getTotalOppValuePerStatus = (req, res) => {
   );
 };
 
-const getTotalOppValuePerStage = (req, res) => {
+module.exports.getTotalOppValuePerStage = (req, res) => {
   db.query(
     'SELECT stage, SUM (estimatedValue) from opportunities group by stage',
     (err, values) => {
@@ -27,9 +27,4 @@ const getTotalOppValuePerStage = (req, res) => {
       res.json(mappedObj);
     }
   );
-};
-
-module.exports = {
-  getTotalOppValuePerStatus,
-  getTotalOppValuePerStage
 };

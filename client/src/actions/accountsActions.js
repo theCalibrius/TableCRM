@@ -9,13 +9,21 @@ below, the function getAccounts is an action creator.
 it's customary for redux action types to be all upper-case with words separated by
 underscores (snake-casing), like GET_ALL_ACCOUNTS below
 
-
 */
 
 import axios from 'axios';
 import moment from 'moment';
 
-import { getNewAndUpdatedRows, getRemovedIds } from '../lib/helper';
+import {
+  getNewAndUpdatedRows,
+  getRemovedIds,
+  getHiddenColsFromResponse,
+  getSortedColumnsByRank,
+  getHiddenColsFromContext,
+  getMovedColumnsIndexRange,
+  mapColumnIdToName,
+  getUpdatedColumnsObj
+} from '../lib/helper';
 
 export function getAllAccounts(dispatch) {
   axios
@@ -72,5 +80,68 @@ export function deleteAccounts(index, amount) {
       url: '/api/accounts',
       data: { removedIds }
     });
+  };
+}
+
+export function getColumnsOfAccounts(dispatch) {
+  axios
+    .get('/api/accounts/columns')
+    .then(response => {
+      const hiddenColumnsIndexes = getHiddenColsFromResponse(response);
+      dispatch({
+        type: 'GET_ACCOUNTS_HIDDENCOLUMNS',
+        payload: hiddenColumnsIndexes
+      });
+      return response;
+    })
+    .then(response => {
+      const columns = response.data;
+      const getSortedColumnsByRankBind = getSortedColumnsByRank.bind(this);
+      return getSortedColumnsByRankBind(columns);
+    })
+    .then(columnsHeader => {
+      dispatch({
+        type: 'GET_ALL_ACCOUNTS_COLUMNS_HEADER',
+        payload: columnsHeader
+      });
+    })
+    .catch(err => {
+      console.error.bind(err);
+    });
+}
+
+export function updateHiddenColumnsOfAccounts(context) {
+  return function(dispatch) {
+    const getHiddenColsBound = getHiddenColsFromContext.bind(this);
+    const hiddenColumns = getHiddenColsBound(context);
+    axios.put('/api/accounts/columns/hidden', { hiddenColumns }).then(() => {
+      dispatch(getColumnsOfAccounts.bind(this));
+    });
+  };
+}
+
+export function updateColumnOrderOfAccounts(columns, target) {
+  return function(dispatch) {
+    if (target) {
+      getMovedColumnsIndexRange(columns, target).then(movedRange => {
+        const mapColumnIdToNameBind = mapColumnIdToName.bind(this);
+        mapColumnIdToNameBind()
+          .then(ColumnIdToNameObj => [ColumnIdToNameObj, movedRange])
+          .then(resArray => {
+            const ColumnIdToNameObj = resArray[0];
+            const movedRangeIndexes = resArray[1];
+            const afterColumnsArray = this.refs.hot.hotInstance.getColHeader();
+            getUpdatedColumnsObj(
+              ColumnIdToNameObj,
+              movedRangeIndexes,
+              afterColumnsArray
+            ).then(updatedColumnOrders => {
+              axios
+                .put('/api/accounts/columns/order', { updatedColumnOrders })
+                .then(dispatch(getColumnsOfAccounts));
+            });
+          });
+      });
+    }
   };
 }
