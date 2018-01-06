@@ -9,7 +9,6 @@ import {
   getHiddenColsFromResponse,
   getHiddenColsFromContext,
   getUpdatedColumnsObj,
-  prepareRightPanel,
   prepareDetailedButton
 } from '../lib/helper';
 
@@ -183,8 +182,16 @@ export function getLeadById(id) {
 
 export function clickedDetailButtonOnLeads(event, coords, td) {
   return function(dispatch) {
-    const prepareRightPanelBound = prepareRightPanel.bind(this);
-    const rowId = prepareRightPanelBound(event, coords, td);
+    // get row data
+    const rowIndex = coords.row;
+    const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
+    const rowId = rowData[0];
+    // change route with id
+    this.props.history.push(`${this.props.match.url}/${rowId}`);
+    // move right panel
+    const rightPanel = document.getElementsByClassName('right_panel')[0];
+    rightPanel.style.webkitTransform = 'translateX(-800px)';
+    // const rowId = prepareRightPanelBound(event, coords, td);
     dispatch(getLeadById(rowId));
   };
 }

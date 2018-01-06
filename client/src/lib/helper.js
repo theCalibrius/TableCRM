@@ -256,19 +256,6 @@ export function buildObjToAssignOpportunityToContact(
   return data;
 }
 
-export function prepareRightPanel(event, coords, td) {
-  // get row data
-  const rowIndex = coords.row;
-  const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
-  const rowId = rowData[0];
-  // change route with id
-  this.props.history.push(`${this.props.match.url}/${rowId}`);
-  // move right panel
-  const rightPanel = document.getElementsByClassName('right_panel')[0];
-  rightPanel.style.webkitTransform = 'translateX(-800px)';
-  return rowId;
-}
-
 export function prepareDetailedButton(event, coords, td) {
   this.setState({});
   // create button
