@@ -142,7 +142,8 @@ const mapStateToProps = state => ({
   opportunitiesColumnsHeader:
 		state.opportunitiesReducer.opportunitiesColumnsHeader,
   opportunitiesHiddenColIndices:
-		state.opportunitiesReducer.opportunitiesHiddenColIndices
+		state.opportunitiesReducer.opportunitiesHiddenColIndices,
+  selectedOpportunity: state.opportunitiesReducer.selectedOpportunity
 });
 
 export default connect(mapStateToProps)(Opportunities);

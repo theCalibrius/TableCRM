@@ -95,3 +95,11 @@ module.exports.updateColumnOrdersOfAccounts = (req, res) => {
   }
   res.sendStatus(201);
 };
+
+module.exports.getAccountById = (req, res) => {
+  const id = req.query.id;
+  db.query(`SELECT * from accounts WHERE id = ${id}`, (err, rows) => {
+    if (err) console.log(err);
+    res.json(rows);
+  });
+};

@@ -7,7 +7,9 @@ import {
   getHiddenColsFromContext,
   getMovedColumnsIndexRange,
   mapColumnIdToName,
-  getUpdatedColumnsObj
+  getUpdatedColumnsObj,
+  prepareRightPanel,
+  prepareDetailedButton
 } from '../lib/helper';
 
 export function getContacts(dispatch) {
@@ -133,5 +135,75 @@ export function updateHiddenColumnsOfContacts(context) {
     axios.put('/api/contacts/columns/hidden', { hiddenColumns }).then(() => {
       dispatch(getColumnsOfContacts.bind(this));
     });
+  };
+}
+
+export function getContactById(id) {
+  return function(dispatch) {
+    axios
+      .get('/api/contact', { params: { id } })
+      .then(response => {
+        const returnedEntity = response.data[0];
+        return returnedEntity;
+      })
+      .then(returnedEntity => {
+        axios
+          .get('/api/opportunities/columns')
+          .then(response => {
+            const columnOrder = response.data;
+            const compare = (a, b) => {
+              if (a.rank < b.rank) return -1;
+              if (a.rank > b.rank) return 1;
+              return 0;
+            };
+            columnOrder.sort(compare);
+            return [columnOrder, returnedEntity];
+          })
+          .then(response => {
+            const columnOrder = response[0];
+            const returnedEntity = response[1];
+            const rankedFields = [];
+            for (const i of columnOrder) {
+              const tempObj = {};
+              tempObj[i.name] = returnedEntity[i.name];
+              rankedFields.push(tempObj);
+            }
+            return rankedFields;
+          })
+          .then(rankedFields => {
+            dispatch({
+              type: 'GET_CONTACT_BY_ID',
+              payload: rankedFields
+            });
+          })
+          .catch(err => {
+            console.error.bind(err);
+          });
+      });
+  };
+}
+
+export function clickedDetailButtonOnContacts(event, coords, td) {
+  return function(dispatch) {
+    const prepareRightPanelBound = prepareRightPanel.bind(this);
+    const rowId = prepareRightPanelBound(event, coords, td);
+    dispatch(getContactById(rowId));
+  };
+}
+
+export function displayDetailButtonOnContacts(event, coords, td) {
+  return function(dispatch) {
+    const prepareDetailedButtonBound = prepareDetailedButton.bind(this);
+    const button = prepareDetailedButtonBound(event, coords, td);
+    // attach onclick event to button
+    button.onclick = () => {
+      this.props.dispatch(
+        clickedDetailButtonOnContacts(event, coords, td).bind(this)
+      );
+    };
+    // insert button
+    if (event.target.parentNode.nodeName.toLowerCase() === 'tr') {
+      event.target.parentNode.insertBefore(button, null);
+    }
   };
 }

@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
@@ -11,7 +12,8 @@ import {
   getColumnsOfContacts,
   updateSource,
   updateHiddenColumnsOfContacts,
-  updateColumnOrderOfContacts
+  updateColumnOrderOfContacts,
+  displayDetailButtonOnContacts
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
@@ -28,6 +30,8 @@ import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
 // import 'handsontable-pro/dist/handsontable.full.css';
 import { commonTableSetting } from '../lib/helper';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;
@@ -148,6 +152,11 @@ class Contacts extends React.Component {
             );
           }
         }
+      },
+      afterOnCellMouseOver: (event, coords, td) => {
+        this.props.dispatch(
+          displayDetailButtonOnContacts(event, coords, td).bind(this)
+        );
       }
     };
     const tableSettingMerged = Object.assign(
@@ -163,6 +172,7 @@ class Contacts extends React.Component {
             <HotTable root="hot" ref="hot" settings={contactsTableSetting} />
           )}
         </div>
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
       </TableWrap>
     );
   }
@@ -173,7 +183,8 @@ const mapStateToProps = state => ({
   opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
   contactsHiddenColIndices: state.contactsReducer.contactsHiddenColIndices,
   contactsColumnsHeader: state.contactsReducer.contactsColumnsHeader,
-  copiedOpportunities: state.opportunitiesReducer.copiedOpportunities
+  copiedOpportunities: state.opportunitiesReducer.copiedOpportunities,
+  selectedContact: state.contactsReducer.selectedContact
 });
 
 export default connect(mapStateToProps, null)(Contacts);

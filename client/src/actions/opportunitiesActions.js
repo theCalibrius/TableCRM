@@ -241,7 +241,7 @@ export function getOpportunityById(id) {
           })
           .then(rankedFields => {
             dispatch({
-              type: 'GET_LEAD_BY_ID',
+              type: 'GET_OPPORTUNITY_BY_ID',
               payload: rankedFields
             });
           })

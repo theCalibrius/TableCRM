@@ -2,10 +2,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Switch, Route } from 'react-router-dom';
-import RightPanelLead from './RightPanelLead.jsx';
 // styled-component
 import styled from 'styled-components';
 import { getLeadById } from '../actions/leadsActions';
+import { getOpportunityById } from '../actions/opportunitiesActions';
+// right panel fields
+import LeadsRightPanelFields from './LeadsRightPanelFields.jsx';
+import OpportunitiesRightPanelFields from './OpportunitiesRightPanelFields.jsx';
+//
+// ContactsRightPanelFields
+// AccountsRightPanelFields
 
 const RightPanelWrap = styled.div`
 	overflow-x: hidden;
@@ -32,34 +38,6 @@ const HidePanelButton = styled.div`
 	width: 40px;
 `;
 
-const InputWrap = styled.div`
-	margin: 0 0 8px 0;
-`;
-
-const InputTitle = styled.p`
-	margin-bottom: 4px;
-	color: #888;
-`;
-
-const InputField = styled.input`
-	border-radius: 2px;
-	margin-bottom: 16px;
-	font-size: 13px;
-	color: #363636;
-	border-bottom: 1px solid #ccc;
-	width: 100%;
-	max-width: 600px;
-	padding: 0 0 5px 0;
-	border-radius: 0;
-	font-size: 14px;
-	font-family: inherit;
-	line-height: inherit;
-	background-image: none;
-	&:focus {
-		border-bottom: 2px solid #3f51b5;
-	}
-`;
-
 const Test = () => <div>test</div>;
 
 class RightPanel extends React.Component {
@@ -68,9 +46,19 @@ class RightPanel extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    if (!this.props.selectedLead) {
+    if (
+      this.props.match.path === '/opportunities/:id' &&
+			!this.props.selectedOpportunity
+    ) {
+      const rowId = this.props.match.params.id;
+      this.props.dispatch(getOpportunityById(rowId));
+    } else if (
+      this.props.match.path === '/leads/:id' &&
+			!this.props.selectedLead
+    ) {
       const rowId = this.props.match.params.id;
       this.props.dispatch(getLeadById(rowId));
+    } else if (this.props.match.path === '/contacts/:id') {
     }
     const rightPanel = document.getElementsByClassName('right_panel')[0];
     if (rightPanel.style.webkitTransform === '') {
@@ -90,6 +78,8 @@ class RightPanel extends React.Component {
                   this.props.history.push('/opportunities');
                 } else if (this.props.match.path === '/leads/:id') {
                   this.props.history.push('/leads');
+                } else if (this.props.match.path === '/contacts/:id') {
+                  this.props.history.push('/contacts');
                 }
                 const rightPanel = document.getElementsByClassName(
                   'right_panel'
@@ -100,23 +90,11 @@ class RightPanel extends React.Component {
 							arrow_forward
             </i>
           </HidePanelButton>
-          {this.props.selectedLead
-            ? this.props.selectedLead.map(i => (
-              <div key={Object.keys(i)[0]}>
-                <InputTitle>{Object.keys(i)[0]}</InputTitle>
-                <InputWrap>
-                  <InputField
-                    className="field_input"
-                    type="field"
-                    placeholder=""
-                    defaultValue={i[Object.keys(i)[0]]}
-                    key={i[Object.keys(i)[0]]}
-                    disabled
-                  />
-                </InputWrap>
-              </div>
-            ))
-            : null}
+          <Route path="/leads" component={LeadsRightPanelFields} />
+          <Route
+            path="/opportunities"
+            component={OpportunitiesRightPanelFields}
+          />
         </RightPanelInner>
       </RightPanelWrap>
     );
