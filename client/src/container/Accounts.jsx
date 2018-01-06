@@ -1,13 +1,16 @@
+import { Route } from 'react-router-dom';
+// handsontable
 import 'handsontable-pro/dist/handsontable.full';
 import HotTable from 'react-handsontable';
 import { commonTableSetting } from '../lib/helper';
-
+// react
 import React from 'react';
 // connects the Accounts component to the redux store
 import { connect } from 'react-redux';
-
 // styled-component
 import styled from 'styled-components';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
 
 import {
   getAllAccounts,
@@ -15,7 +18,8 @@ import {
   deleteAccounts,
   getColumnsOfAccounts,
   updateHiddenColumnsOfAccounts,
-  updateColumnOrderOfAccounts
+  updateColumnOrderOfAccounts,
+  displayDetailButtonOnAccounts
 } from '../actions/accountsActions';
 
 const TableWrap = styled.div`
@@ -73,6 +77,11 @@ class Accounts extends React.Component {
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
+      },
+      afterOnCellMouseOver: (event, coords, td) => {
+        this.props.dispatch(
+          displayDetailButtonOnAccounts(event, coords, td).bind(this)
+        );
       }
     };
     const tableSettingMerged = Object.assign(
@@ -88,6 +97,7 @@ class Accounts extends React.Component {
             <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
           )}
         </div>
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
       </TableWrap>
     );
   }

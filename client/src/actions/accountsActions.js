@@ -22,7 +22,8 @@ import {
   getHiddenColsFromContext,
   getMovedColumnsIndexRange,
   mapColumnIdToName,
-  getUpdatedColumnsObj
+  getUpdatedColumnsObj,
+  prepareDetailedButton
 } from '../lib/helper';
 
 export function getAllAccounts(dispatch) {
@@ -142,6 +143,84 @@ export function updateColumnOrderOfAccounts(columns, target) {
             });
           });
       });
+    }
+  };
+}
+
+export function getAccountById(id) {
+  return function(dispatch) {
+    axios
+      .get('/api/account', { params: { id } })
+      .then(response => {
+        const returnedEntity = response.data[0];
+        return returnedEntity;
+      })
+      .then(returnedEntity => {
+        axios
+          .get('/api/accounts/columns')
+          .then(response => {
+            const columnOrder = response.data;
+            const compare = (a, b) => {
+              if (a.rank < b.rank) return -1;
+              if (a.rank > b.rank) return 1;
+              return 0;
+            };
+            columnOrder.sort(compare);
+            return [columnOrder, returnedEntity];
+          })
+          .then(response => {
+            const columnOrder = response[0];
+            const returnedEntity = response[1];
+            const rankedFields = [];
+            for (const i of columnOrder) {
+              const tempObj = {};
+              tempObj[i.name] = returnedEntity[i.name];
+              rankedFields.push(tempObj);
+            }
+            return rankedFields;
+          })
+          .then(rankedFields => {
+            dispatch({
+              type: 'GET_ACCOUNT_BY_ID',
+              payload: rankedFields
+            });
+          })
+          .catch(err => {
+            console.error.bind(err);
+          });
+      });
+  };
+}
+
+export function clickedDetailButtonOnAccounts(event, coords, td) {
+  return function(dispatch) {
+    // get row data
+    const rowIndex = coords.row;
+    const rowData = this.refs.hot.hotInstance.getDataAtRow(rowIndex);
+    const rowId = rowData[0];
+    // change route with id
+    this.props.history.push(`${this.props.match.url}/${rowId}`);
+    // move right panel
+    const rightPanel = document.getElementsByClassName('right_panel')[0];
+    rightPanel.style.webkitTransform = 'translateX(-800px)';
+    // const rowId = prepareRightPanelBound(event, coords, td);
+    dispatch(getAccountById(rowId));
+  };
+}
+
+export function displayDetailButtonOnAccounts(event, coords, td) {
+  return function(dispatch) {
+    const prepareDetailedButtonBound = prepareDetailedButton.bind(this);
+    const button = prepareDetailedButtonBound(event, coords, td);
+    // attach onclick event to button
+    button.onclick = () => {
+      this.props.dispatch(
+        clickedDetailButtonOnAccounts(event, coords, td).bind(this)
+      );
+    };
+    // insert button
+    if (event.target.parentNode.nodeName.toLowerCase() === 'tr') {
+      event.target.parentNode.insertBefore(button, null);
     }
   };
 }

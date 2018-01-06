@@ -7,13 +7,12 @@ import styled from 'styled-components';
 import { getLeadById } from '../actions/leadsActions';
 import { getOpportunityById } from '../actions/opportunitiesActions';
 import { getContactById } from '../actions/contactsActions';
+import { getAccountById } from '../actions/accountsActions';
 // right panel fields
 import LeadsRightPanelFields from './LeadsRightPanelFields.jsx';
 import OpportunitiesRightPanelFields from './OpportunitiesRightPanelFields.jsx';
 import ContactsRightPanelFields from './ContactsRightPanelFields.jsx';
-//
-// ContactsRightPanelFields
-// AccountsRightPanelFields
+import AccountsRightPanelFields from './AccountsRightPanelFields.jsx';
 
 const RightPanelWrap = styled.div`
 	overflow-x: hidden;
@@ -63,6 +62,9 @@ class RightPanel extends React.Component {
     } else if (this.props.match.path === '/contacts/:id') {
       const rowId = this.props.match.params.id;
       this.props.dispatch(getContactById(rowId));
+    } else if (this.props.match.path === '/accounts/:id') {
+      const rowId = this.props.match.params.id;
+      this.props.dispatch(getAccountById(rowId));
     }
     const rightPanel = document.getElementsByClassName('right_panel')[0];
     if (rightPanel.style.webkitTransform === '') {
@@ -84,6 +86,8 @@ class RightPanel extends React.Component {
                   this.props.history.push('/leads');
                 } else if (this.props.match.path === '/contacts/:id') {
                   this.props.history.push('/contacts');
+                } else if (this.props.match.path === '/accounts/:id') {
+                  this.props.history.push('/accounts');
                 }
                 const rightPanel = document.getElementsByClassName(
                   'right_panel'
@@ -100,6 +104,7 @@ class RightPanel extends React.Component {
             component={OpportunitiesRightPanelFields}
           />
           <Route path="/contacts" component={ContactsRightPanelFields} />
+          <Route path="/accounts" component={AccountsRightPanelFields} />
         </RightPanelInner>
       </RightPanelWrap>
     );

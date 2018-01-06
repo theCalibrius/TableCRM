@@ -20,6 +20,11 @@ export default function(
       ...state,
       accountsColumnsHeader: action.payload
     };
+  case 'GET_ACCOUNT_BY_ID':
+    return {
+      ...state,
+      selectedAccount: action.payload
+    };
   }
   return state;
 }
