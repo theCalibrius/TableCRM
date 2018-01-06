@@ -1,5 +1,7 @@
 FROM node:6.10.2-alpine
 
+ENV NODE_DEBUG=fs,module,http,https
+
 # Create app directory
 RUN mkdir -p /code
 WORKDIR /code

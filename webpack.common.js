@@ -3,16 +3,15 @@ const path = require('path');
 module.exports = {
   entry: ['./client/src/main.js'],
   output: {
-    path: path.resolve(__dirname, 'bundle'),
-    filename: 'bundle.js'
+    filename: 'bundle/bundle.js',
+    path: __dirname
   },
   module: {
-    // rules and loaders are the same thing
-    rules: [
+    loaders: [
       {
-        use: 'babel-loader',
+        test: /.jsx?$/,
         exclude: /node_modules/,
-        test: /.js$/,
+        loader: 'babel-loader',
         query: {
           presets: ['es2015', 'flow', 'react'],
           plugins: [
@@ -23,6 +22,7 @@ module.exports = {
         }
       },
       {
+        test: /\.css$/,
         use: [
           'style-loader',
           {
@@ -31,8 +31,7 @@ module.exports = {
               url: false
             }
           }
-        ],
-        test: /\.css$/,
+        ]
       }
     ]
   },
