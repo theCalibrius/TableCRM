@@ -47,6 +47,10 @@ class RightPanel extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    const rightPanel = document.getElementsByClassName('right_panel')[0];
+    if (rightPanel.style.webkitTransform === '') {
+      rightPanel.style.webkitTransform = 'translateX(-800px)';
+    }
     if (
       this.props.match.path === '/opportunities/:id' &&
 			!this.props.selectedOpportunity
@@ -66,16 +70,11 @@ class RightPanel extends React.Component {
       const rowId = this.props.match.params.id;
       this.props.dispatch(getAccountById(rowId));
     }
-    const rightPanel = document.getElementsByClassName('right_panel')[0];
-    if (rightPanel.style.webkitTransform === '') {
-      rightPanel.style.webkitTransform = 'translateX(-800px)';
-    }
   }
   render() {
     return (
       <RightPanelWrap className="right_panel">
         <RightPanelInner>
-          {/* <Route exact path="/leads/:id" component={RightPanelLead} /> */}
           <HidePanelButton>
             <i
               className="material-icons hide_panel"

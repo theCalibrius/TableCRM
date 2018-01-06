@@ -259,10 +259,6 @@ export function clickedDetailButtonOnOpportunities(event, coords, td) {
     const rowId = rowData[0];
     // change route with id
     this.props.history.push(`${this.props.match.url}/${rowId}`);
-    // move right panel
-    const rightPanel = document.getElementsByClassName('right_panel')[0];
-    rightPanel.style.webkitTransform = 'translateX(-800px)';
-    // const rowId = prepareRightPanelBound(event, coords, td);
     dispatch(getOpportunityById(rowId));
   };
 }
