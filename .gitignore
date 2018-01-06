@@ -11,7 +11,7 @@ yarn-error.log*
 
 # Dependency directories
 node_modules
-__test__/__snapshots__
+__test__/__snapshots__/App.test.js.snap
 
 # Optional npm cache directory
 .npm
