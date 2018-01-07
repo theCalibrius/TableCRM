@@ -26,7 +26,7 @@ const RightPanelWrap = styled.div`
 	bottom: 0;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.24);
 	border-radius: 2px;
-	transition: transform 0.3s ease;
+	transition: transform 0.2s ease;
 `;
 
 const RightPanelInner = styled.div`
@@ -47,10 +47,12 @@ class RightPanel extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    const rightPanel = document.getElementsByClassName('right_panel')[0];
-    if (rightPanel.style.webkitTransform === '') {
-      rightPanel.style.webkitTransform = 'translateX(-800px)';
-    }
+    setTimeout(() => {
+      const rightPanel = document.getElementsByClassName('right_panel')[0];
+      if (rightPanel.style.webkitTransform === '') {
+        rightPanel.style.webkitTransform = 'translateX(-800px)';
+      }
+    }, 400);
     if (
       this.props.match.path === '/opportunities/:id' &&
 			!this.props.selectedOpportunity
@@ -79,19 +81,21 @@ class RightPanel extends React.Component {
             <i
               className="material-icons hide_panel"
               onClick={() => {
-                if (this.props.match.path === '/opportunities/:id') {
-                  this.props.history.push('/opportunities');
-                } else if (this.props.match.path === '/leads/:id') {
-                  this.props.history.push('/leads');
-                } else if (this.props.match.path === '/contacts/:id') {
-                  this.props.history.push('/contacts');
-                } else if (this.props.match.path === '/accounts/:id') {
-                  this.props.history.push('/accounts');
-                }
                 const rightPanel = document.getElementsByClassName(
                   'right_panel'
                 )[0];
                 rightPanel.style.webkitTransform = 'translateX(800px)';
+                setTimeout(() => {
+                  if (this.props.match.path === '/opportunities/:id') {
+                    this.props.history.push('/opportunities');
+                  } else if (this.props.match.path === '/leads/:id') {
+                    this.props.history.push('/leads');
+                  } else if (this.props.match.path === '/contacts/:id') {
+                    this.props.history.push('/contacts');
+                  } else if (this.props.match.path === '/accounts/:id') {
+                    this.props.history.push('/accounts');
+                  }
+                }, 400);
               }}
             >
 							arrow_forward
