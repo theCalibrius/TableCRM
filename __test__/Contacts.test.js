@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Contacts } from '../client/src/container/Contacts.jsx';
+import { Contacts } from '../client/src/containers/Contacts.jsx';
 
 describe('Contacts', () => {
   const contacts = shallow(<Contacts />);
