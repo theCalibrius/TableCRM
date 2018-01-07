@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Opportunities } from '../client/src/container/Opportunities.jsx';
+import { Opportunities } from '../client/src/containers/Opportunities.jsx';
 
 describe('Opportunities', () => {
   const opportunities = shallow(<Opportunities />);

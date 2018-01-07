@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
 import Nav from './Nav.jsx';
-import Leads from '../container/Leads.jsx';
-import Opportunities from '../container/Opportunities.jsx';
-import Contacts from '../container/Contacts.jsx';
-import Accounts from '../container/Accounts.jsx';
+import Leads from '../containers/Leads.jsx';
+import Opportunities from '../containers/Opportunities.jsx';
+import Contacts from '../containers/Contacts.jsx';
+import Accounts from '../containers/Accounts.jsx';
 import styled from 'styled-components';
 import { injectGlobal } from 'styled-components';
 
