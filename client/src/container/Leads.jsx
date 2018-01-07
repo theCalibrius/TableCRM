@@ -24,15 +24,13 @@ const TableWrap = styled.div`
   height: calc(100vh - 60px);
 `;
 
-class Leads extends React.Component {
+export class Leads extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       columns: [
         { data: 'id' },
-        {
-          data: 'firstName'
-        },
+        { data: 'firstName' },
         { data: 'lastName' },
         { data: 'suffix' },
         { data: 'title' },

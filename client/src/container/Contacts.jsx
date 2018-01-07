@@ -30,12 +30,12 @@ import 'handsontable-pro/dist/handsontable.full.js';
 import { commonTableSetting } from '../lib/helper';
 
 const TableWrap = styled.div`
-	overflow-x: scroll;
-	overflow-y: hidden;
-	height: calc(100vh - 60px);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: calc(100vh - 60px);
 `;
 
-class Contacts extends React.Component {
+export class Contacts extends React.Component {
   // start of class
   constructor(props) {
     super(props);
@@ -46,9 +46,7 @@ class Contacts extends React.Component {
         {
           data: 'name',
           type: 'autocomplete',
-          source: this.props.opportunityIDsNames
-            ? this.props.opportunityIDsNames.map(i => i.name)
-            : null,
+          source: this.props.opportunityIDsNames ? this.props.opportunityIDsNames.map(i => i.name) : null,
           strict: false
         },
         { data: 'firstName' },
@@ -98,9 +96,7 @@ class Contacts extends React.Component {
         this.props.dispatch(updateSource.bind(this));
       },
       afterColumnMove: (columns, target) => {
-        this.props.dispatch(
-          updateColumnOrderOfContacts(columns, target).bind(this)
-        );
+        this.props.dispatch(updateColumnOrderOfContacts(columns, target).bind(this));
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfContacts(context).bind(this));
@@ -113,9 +109,7 @@ class Contacts extends React.Component {
           const copiedRows = coords[0];
           const opportunityIDs = [];
           for (let i = copiedRows.startRow; i <= copiedRows.endRow; i++) {
-            opportunityIDs.push(
-              this.refs.hot.hotInstance.getSourceDataAtRow(i).opportunityID
-            );
+            opportunityIDs.push(this.refs.hot.hotInstance.getSourceDataAtRow(i).opportunityID);
           }
           this.props.dispatch(getCopiedOpportunities(opportunityIDs));
         }
@@ -123,37 +117,20 @@ class Contacts extends React.Component {
       afterChange: (changes, source, index, amount) => {
         if (changes) {
           if (changes[0][1] != 'name') {
-            this.props.dispatch(
-              createAndUpdateContacts(changes, source).bind(this)
-            );
+            this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
           }
           const opportunityIDsNames = this.props.opportunityIDsNames;
           if (source == 'edit' || source == 'Autofill.fill') {
-            this.props.dispatch(
-              handleRelateOppToContact(
-                changes,
-                opportunityIDsNames,
-                opportunityIDsNames
-              ).bind(this)
-            );
+            this.props.dispatch(handleRelateOppToContact(changes, opportunityIDsNames, opportunityIDsNames).bind(this));
           }
           if (source == 'CopyPaste.paste' || source == 'Autofill.fill') {
             const oppotunityIDs = this.props.copiedOpportunities;
-            this.props.dispatch(
-              handleRelateOppsToContacts(
-                changes,
-                oppotunityIDs,
-                opportunityIDsNames
-              ).bind(this)
-            );
+            this.props.dispatch(handleRelateOppsToContacts(changes, oppotunityIDs, opportunityIDsNames).bind(this));
           }
         }
       }
     };
-    const tableSettingMerged = Object.assign(
-      contactsTableSetting,
-      commonTableSetting
-    );
+    const tableSettingMerged = Object.assign(contactsTableSetting, commonTableSetting);
     return (
       <TableWrap>
         <div id="table">
