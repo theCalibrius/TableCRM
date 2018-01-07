@@ -104,7 +104,6 @@ class Contacts extends React.Component {
                 dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
                 columnSorting: true,
                 afterChange: (changes, source) => {
-                  console.log('afterChange event activated');
                   const opportunityIDsNames = this.props.opportunityIDsNames;
                   if (changes && changes[0][1] != 'name') {
                     this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
@@ -119,14 +118,7 @@ class Contacts extends React.Component {
                   }
                 },
                 beforeRemoveRow: (index, amount) => {
-                  console.log(`beforeRemoveRow: index: ${index}, amount: ${amount}`);
                   this.props.dispatch(deleteContacts(index, amount).bind(this));
-                },
-                afterCopy: (index, amount) => {
-                  console.log(`afterCopy: index: ${index}, amount: ${amount}`);
-                },
-                afterPaste: (index, amount) => {
-                  console.log(`afterPaste: index: ${index}, amount: ${amount}`);
                 }
               }}
             />

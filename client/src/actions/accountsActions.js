@@ -57,14 +57,12 @@ export function createAndUpdateAccounts(changes, source) {
       const updatedRows = newAndUpdatedRows.updatedRows;
 
       if (newRows.length > 0) {
-        console.log('THIS IS A POST method, meaning CREATE');
         axios.post('/api/accounts', { newRows }).then(() => {
           dispatch(getAllAccounts);
         });
       }
 
       if (updatedRows.length > 0) {
-        console.log('THIS IS A PUT method, meaning UPDATE');
         axios.put('/api/accounts', { updatedRows });
       }
     }
@@ -75,7 +73,6 @@ export function deleteAccounts(index, amount) {
   return function(dispatch) {
     const getRemovedIdsBound = getRemovedIds.bind(this);
     const removedIds = getRemovedIdsBound();
-    console.log('deleteAccounts, removeIds Object: ', removedIds);
     axios({
       method: 'DELETE',
       url: '/api/accounts',

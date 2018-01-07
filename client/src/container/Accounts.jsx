@@ -81,7 +81,7 @@ class Accounts extends React.Component {
                   'updatedAt'
                 ],
                 columns: [
-                  { data: 'id' },
+                  { data: 'id', readOnly: true },
                   { data: 'description' },
                   { data: 'industryID', type: 'numeric' },
                   { data: 'email' },
@@ -109,17 +109,12 @@ class Accounts extends React.Component {
                 undo: true,
                 columnSorting: true,
                 afterChange: (changes, source) => {
-                  console.log('afterChange: ', 'changes: ', changes, 'source: ', source);
                   this.props.dispatch(
                     createAndUpdateAccounts(changes, source).bind(this)
                   );
                 },
                 beforeRemoveRow: (index, amount) => {
-                  console.log('beforeRemoveRow: ', 'index: ', index, 'amount: ', amount);
                   this.props.dispatch(deleteAccounts(index, amount).bind(this));
-                },
-                beforeUndo: (action) => {
-                  console.log('Undo: ', action);
                 }
               }}
             />
