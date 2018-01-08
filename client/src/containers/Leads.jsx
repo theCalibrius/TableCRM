@@ -1,7 +1,7 @@
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
-import 'handsontable-pro/dist/handsontable.full.css';
+// import 'handsontable-pro/dist/handsontable.full.css';
 import { commonTableSetting } from '../lib/helper';
 // react & redux
 import React from 'react';
@@ -19,20 +19,18 @@ import {
 } from '../actions/leadsActions';
 
 const TableWrap = styled.div`
-	overflow-x: scroll;
-	overflow-y: hidden;
-	height: calc(100vh - 60px);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: calc(100vh - 60px);
 `;
 
-class Leads extends React.Component {
+export class Leads extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       columns: [
         { data: 'id' },
-        {
-          data: 'firstName'
-        },
+        { data: 'firstName' },
         { data: 'lastName' },
         { data: 'suffix' },
         { data: 'title' },
@@ -75,28 +73,21 @@ class Leads extends React.Component {
         this.props.dispatch(deleteLeads(index, amount).bind(this));
       },
       afterColumnMove: (columns, target) => {
-        this.props.dispatch(
-          updateColumnOrderOfLeads(columns, target).bind(this)
-        );
+        this.props.dispatch(updateColumnOrderOfLeads(columns, target).bind(this));
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfLeads(context).bind(this));
       }
     };
-    const tableSettingMerged = Object.assign(
-      leadsTableSetting,
-      commonTableSetting
-    );
+    const tableSettingMerged = Object.assign(leadsTableSetting, commonTableSetting);
     return (
       <TableWrap>
         <div id="table">
-          {!this.props.leads ||
-					!this.props.leadsColumnsHeader ||
-					!this.props.leadsHiddenColIndices ? (
-              <p>loading...</p>
-            ) : (
-              <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
-            )}
+          {!this.props.leads || !this.props.leadsColumnsHeader || !this.props.leadsHiddenColIndices ? (
+            <p>loading...</p>
+          ) : (
+            <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
+          )}
         </div>
       </TableWrap>
     );

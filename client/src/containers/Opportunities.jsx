@@ -1,7 +1,7 @@
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
-import 'handsontable-pro/dist/handsontable.full.css';
+// import 'handsontable-pro/dist/handsontable.full.css';
 import { commonTableSetting } from '../lib/helper';
 // react & redux
 import React from 'react';
@@ -19,13 +19,13 @@ import {
 } from '../actions/opportunitiesActions';
 
 const TableWrap = styled.div`
-	overflow-x: scroll;
-	overflow-y: hidden;
-	height: calc(100vh - 60px);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  height: calc(100vh - 60px);
 `;
 
 // start of class
-class Opportunities extends React.Component {
+export class Opportunities extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,13 +53,7 @@ class Opportunities extends React.Component {
         {
           data: 'stage',
           type: 'dropdown',
-          source: [
-            'Qualified',
-            'Presentation',
-            'Negotiation',
-            'Contract Sent',
-            'Payment'
-          ]
+          source: ['Qualified', 'Presentation', 'Negotiation', 'Contract Sent', 'Payment']
         },
         { data: 'expectedCloseDate', type: 'date' },
         {
@@ -91,28 +85,19 @@ class Opportunities extends React.Component {
         indicators: true
       },
       afterChange: (changes, source) => {
-        this.props.dispatch(
-          createAndUpdateOpportunities(changes, source).bind(this)
-        );
+        this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
       },
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteOpportunities(index, amount).bind(this));
       },
       afterColumnMove: (columns, target) => {
-        this.props.dispatch(
-          updateColumnOrderOfOpportunities(columns, target).bind(this)
-        );
+        this.props.dispatch(updateColumnOrderOfOpportunities(columns, target).bind(this));
       },
       afterContextMenuHide: context => {
-        this.props.dispatch(
-          updateHiddenColumnsOfOpportunities(context).bind(this)
-        );
+        this.props.dispatch(updateHiddenColumnsOfOpportunities(context).bind(this));
       }
     };
-    const tableSettingMerged = Object.assign(
-      opportunitiesTableSetting,
-      commonTableSetting
-    );
+    const tableSettingMerged = Object.assign(opportunitiesTableSetting, commonTableSetting);
     return (
       <TableWrap>
         <div id="table">
@@ -129,10 +114,8 @@ class Opportunities extends React.Component {
 
 const mapStateToProps = state => ({
   opportunities: state.opportunitiesReducer.opportunities,
-  opportunitiesColumnsHeader:
-		state.opportunitiesReducer.opportunitiesColumnsHeader,
-  opportunitiesHiddenColIndices:
-		state.opportunitiesReducer.opportunitiesHiddenColIndices
+  opportunitiesColumnsHeader: state.opportunitiesReducer.opportunitiesColumnsHeader,
+  opportunitiesHiddenColIndices: state.opportunitiesReducer.opportunitiesHiddenColIndices
 });
 
 export default connect(mapStateToProps)(Opportunities);
