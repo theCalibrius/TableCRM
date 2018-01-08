@@ -10,6 +10,9 @@ import {
 } from '../actions/dashboardActions';
 // highcharts
 import ReactHighcharts from 'react-highcharts';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const DashboardWrap = styled.div`
 	background: #ededed;
@@ -33,6 +36,14 @@ const CardTitle = styled.p`
 	font-weight: 500;
 `;
 
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -48,7 +59,9 @@ class Dashboard extends React.Component {
         <DashboardCard>
           <CardTitle>Sales Performance</CardTitle>
           {!this.props.totalOppValuePerStatus ? (
-            <p>loading...</p>
+            <Center>
+              <Spin />
+            </Center>
           ) : (
             <ReactHighcharts
               config={this.props.totalOppValuePerStatus}
@@ -59,7 +72,9 @@ class Dashboard extends React.Component {
         <DashboardCard>
           <CardTitle>Pipeline Summary Total</CardTitle>
           {!this.props.totalOppValuePerStage ? (
-            <p>loading...</p>
+            <Center>
+              <Spin />
+            </Center>
           ) : (
             <ReactHighcharts
               config={this.props.totalOppValuePerStage}

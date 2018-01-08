@@ -26,7 +26,7 @@ const RightPanelWrap = styled.div`
 	bottom: 0;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.24);
 	border-radius: 2px;
-	transition: transform 0.2s ease;
+	transition: transform 0.3s ease;
 `;
 
 const RightPanelInner = styled.div`
@@ -52,7 +52,7 @@ class RightPanel extends React.Component {
       if (rightPanel.style.webkitTransform === '') {
         rightPanel.style.webkitTransform = 'translateX(-800px)';
       }
-    }, 400);
+    }, 300);
     if (
       this.props.match.path === '/opportunities/:id' &&
 			!this.props.selectedOpportunity
@@ -95,7 +95,7 @@ class RightPanel extends React.Component {
                   } else if (this.props.match.path === '/accounts/:id') {
                     this.props.history.push('/accounts');
                   }
-                }, 400);
+                }, 300);
               }}
             >
 							arrow_forward

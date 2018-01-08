@@ -3,6 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 // styled-component
 import styled from 'styled-components';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const InputTitle = styled.p`
 	margin-bottom: 4px;
@@ -32,6 +35,14 @@ const InputField = styled.input`
 	}
 `;
 
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
 class OpportunitiesRightPanelFields extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +68,9 @@ class OpportunitiesRightPanelFields extends React.Component {
             </div>
           ))
         ) : (
-          <p>loading...</p>
+					<Center>
+						<Spin />
+					</Center>
         )}
       </div>
     );

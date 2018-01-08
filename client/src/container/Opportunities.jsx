@@ -21,11 +21,22 @@ import {
 } from '../actions/opportunitiesActions';
 // right panel
 import RightPanel from '../components/RightPanel.jsx';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;
 	overflow-y: hidden;
 	height: calc(100vh - 60px);
+`;
+
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 // start of class
@@ -126,7 +137,9 @@ class Opportunities extends React.Component {
       <TableWrap>
         <div id="table">
           {!this.props.opportunities ? (
-            <p>loading...</p>
+            <Center>
+              <Spin />
+            </Center>
           ) : (
             <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
           )}

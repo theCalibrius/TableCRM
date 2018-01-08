@@ -22,11 +22,22 @@ import {
 } from '../actions/leadsActions';
 // right panel
 import RightPanel from '../components/RightPanel.jsx';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;
 	overflow-y: hidden;
 	height: calc(100vh - 60px);
+`;
+
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 class Leads extends React.Component {
@@ -103,7 +114,9 @@ class Leads extends React.Component {
           {!this.props.leads ||
 					!this.props.leadsColumnsHeader ||
 					!this.props.leadsHiddenColIndices ? (
-              <p>loading...</p>
+              <Center>
+                <Spin />
+              </Center>
             ) : (
               <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
             )}
