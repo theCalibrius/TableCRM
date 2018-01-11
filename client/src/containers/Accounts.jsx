@@ -29,7 +29,7 @@ export class Accounts extends React.Component {
     super(props);
     this.state = {
       columns: [
-        { data: 'id' },
+        { data: 'id', readOnly: true },
         { data: 'description' },
         { data: 'industryID', type: 'numeric' },
         { data: 'email' },
