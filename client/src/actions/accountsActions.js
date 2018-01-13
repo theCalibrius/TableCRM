@@ -64,9 +64,7 @@ export function createAndUpdateAccounts(changes, source) {
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/accounts', { updatedRows }).then(() => {
-          dispatch(getAllAccounts);
-        });
+        axios.put('/api/accounts', { updatedRows });
       }
     }
   };

@@ -22,6 +22,7 @@ import {
   handleRelateOppsToContacts,
   getCopiedOpportunities
 } from '../actions/opportunitiesActions';
+
 // api call
 import axios from 'axios';
 // handsontable
@@ -49,7 +50,7 @@ const Center = styled.div`
 	justify-content: center;
 `;
 
-class Contacts extends React.Component {
+export class Contacts extends React.Component {
   // start of class
   constructor(props) {
     super(props);
@@ -210,8 +211,7 @@ const mapStateToProps = state => ({
   opportunityIDsNames: state.opportunitiesReducer.opportunityIDsNames,
   contactsHiddenColIndices: state.contactsReducer.contactsHiddenColIndices,
   contactsColumnsHeader: state.contactsReducer.contactsColumnsHeader,
-  copiedOpportunities: state.opportunitiesReducer.copiedOpportunities,
-  selectedContact: state.contactsReducer.selectedContact
+  copiedOpportunities: state.opportunitiesReducer.copiedOpportunities
 });
 
 export default connect(mapStateToProps, null)(Contacts);

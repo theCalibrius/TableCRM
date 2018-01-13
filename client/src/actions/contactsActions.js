@@ -41,9 +41,7 @@ export function createAndUpdateContacts(changes, source) {
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/contacts', { updatedRows }).then(() => {
-          dispatch(getContacts);
-        });
+        axios.put('/api/contacts', {updatedRows});
       }
     }
   };

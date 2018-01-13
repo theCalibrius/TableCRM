@@ -39,9 +39,7 @@ export function createAndUpdateOpportunities(changes, source) {
       }
 
       if (updatedRows.length > 0) {
-        axios.put('/api/opportunities', { updatedRows }).then(() => {
-          dispatch(getAllOpportunities());
-        });
+        axios.put('/api/opportunities', { updatedRows });
       }
     }
   };

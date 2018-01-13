@@ -1,11 +1,11 @@
-// This is a Jest file for testing the App Component
-
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from '../client/src/components/App';
 
-const app = shallow(<App />);
+describe('App', () => {
+  const app = shallow(<App />);
 
-it('renders correctly', () => {
-  expect(app).toMatchSnapshot();
+  it('renders properly', () => {
+    expect(app).toMatchSnapshot();
+  });
 });

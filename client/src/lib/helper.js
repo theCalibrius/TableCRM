@@ -1,22 +1,18 @@
 import moment from 'moment';
 
-// given changes array
 export function getNewAndUpdatedRows(changes, source) {
   // if changes array is not null
   if (changes && source !== 'loadData') {
-    // create empty arrays to store new rows and updated rows as objects, respectively
-    const newRows = [];
-    const updatedRows = [];
+    // create empty objects to track new rows and updated rows
+    const newRowsObj = {};
+    const updatedRowsObj = {};
 
     // for each change array in changes array
     for (const change of changes) {
-      // get change's corresponding row's index (per spreadsheet) and id (per database)
-      const rowIndex = change[0];
-      const rowId = this.refs.hot.hotInstance.getDataAtRow(rowIndex)[0];
-      // get change's field-newValue pair
+      const rowIndex = change[0]; // per spreadsheet
+      const rowId = this.refs.hot.hotInstance.getDataAtRow(rowIndex)[0]; // per database
       const field = change[1];
       let newValue = change[3];
-      // get change's corresponding cell
       const colIndex = this.refs.hot.hotInstance.propToCol(field);
       const cell = this.refs.hot.hotInstance.getCell(rowIndex, colIndex);
 
@@ -32,69 +28,35 @@ export function getNewAndUpdatedRows(changes, source) {
         }
         // if change's corresponding row was empty prior to change
         if (rowId === null) {
-          // create a variable to check whether row index is found in newRows array & set its initial value to false
-          let found = false;
-
-          // for each row object in newRows array
-          for (const newRow of newRows) {
-            // if row object's index value is equal to row index
-            if (newRow.index === rowIndex) {
-              // add change's field-newValue pair to row object
-              newRow[field] = newValue;
-              // set check variable to true
-              found = true;
-              // exit loop
-              break;
-            }
-          }
-
-          // subsquent to loop, if check variable is false
-          if (!found) {
-            // create an object with key-value pair: {index: change's row index}
-            const newRow = { index: rowIndex };
-            // add change's field-newValue pair to the object
+          // if row index is not already a key in track object
+          if (!newRowsObj[rowIndex]) {
+            // add key-value pair to track object
+            const newRow = {};
             newRow[field] = newValue;
-            // push the object to newRows array
-            newRows.push(newRow);
+            newRowsObj[rowIndex] = newRow;
+            // otherwise
+          } else {
+            // get key's value and add field-newValue pair to the value
+            const newRow = newRowsObj[rowIndex];
+            newRow[field] = newValue;
           }
-
           // otherwise, if change's corresponding row was not empty prior to change
         } else {
-          // create a variable to check whether row id is found in updatedRows array & set its initial value to false
-          let found = false;
-
-          // for each row object in updatedRows array
-          for (const updatedRow of updatedRows) {
-            // if row object's id value is equal to row id
-            if (updatedRow.id === rowId) {
-              // add change's field-newValue pair to row object
-              updatedRow[field] = newValue;
-              // set check variable to true
-              found = true;
-              // exit loop
-              break;
-            }
-          }
-
-          // subsquent to loop, if check variable is false
-          if (!found) {
-            // create an object with key-value pair: {id: change's row id}
+          // similar to above
+          if (!updatedRowsObj[rowId]) {
             const updatedRow = { id: rowId };
-            // add change's field-newValue pair to the object
             updatedRow[field] = newValue;
-            // push the object to updatedRows array
-            updatedRows.push(updatedRow);
+            updatedRowsObj[rowId] = updatedRow;
+          } else {
+            const updatedRow = updatedRowsObj[rowId];
+            updatedRow[field] = newValue;
           }
         }
       }
     }
 
-    // for each new row in newRows array, remove row index before ajax call
-    for (const newRow of newRows) {
-      if ('index' in newRow) {
-        delete newRow.index;
-      }
-    }
+    const newRows = Object.values(newRowsObj);
+    const updatedRows = Object.values(updatedRowsObj);
     return { newRows, updatedRows };
   }
 }
@@ -220,7 +182,7 @@ export const commonTableSetting = {
   filters: true,
   columnSorting: true,
   minSpareRows: 1,
-  fixedRowsBottom: 1
+  fixedRowsBottom: 0
 };
 
 export function buildObjToAssignOpportunityToContact(

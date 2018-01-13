@@ -1,5 +1,4 @@
 import { Route } from 'react-router-dom';
-// handsontable
 import 'handsontable-pro/dist/handsontable.full';
 import HotTable from 'react-handsontable';
 import { commonTableSetting } from '../lib/helper';
@@ -9,12 +8,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 // styled-component
 import styled from 'styled-components';
-// right panel
-import RightPanel from '../components/RightPanel.jsx';
-// ant ui
-import 'antd/dist/antd.css';
-import { Spin } from 'antd';
-
 import {
   getAllAccounts,
   createAndUpdateAccounts,
@@ -24,6 +17,11 @@ import {
   updateColumnOrderOfAccounts,
   displayDetailButtonOnAccounts
 } from '../actions/accountsActions';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const TableWrap = styled.div`
 	overflow-x: scroll;
@@ -39,12 +37,12 @@ const Center = styled.div`
 	justify-content: center;
 `;
 
-class Accounts extends React.Component {
+export class Accounts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       columns: [
-        { data: 'id' },
+        { data: 'id', readOnly: true },
         { data: 'description' },
         { data: 'industryID', type: 'numeric' },
         { data: 'email' },
@@ -87,7 +85,7 @@ class Accounts extends React.Component {
         );
       },
       afterContextMenuHide: context => {
-        this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
+        // this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
       },
       afterOnCellMouseOver: (event, coords, td) => {
         this.props.dispatch(

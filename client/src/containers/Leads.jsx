@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
-import 'handsontable-pro/dist/handsontable.full.css';
+// import 'handsontable-pro/dist/handsontable.full.css';
 import { commonTableSetting } from '../lib/helper';
 // react & redux
 import React from 'react';
@@ -46,9 +46,7 @@ class Leads extends React.Component {
     this.state = {
       columns: [
         { data: 'id' },
-        {
-          data: 'firstName'
-        },
+        { data: 'firstName' },
         { data: 'lastName' },
         { data: 'suffix' },
         { data: 'title' },
