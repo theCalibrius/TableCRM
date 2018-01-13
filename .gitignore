@@ -18,3 +18,8 @@ __test__/__snapshots__/App.test.js.snap
 
 # dotenv environment variables file
 .env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

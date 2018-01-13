@@ -29,7 +29,7 @@ export class Accounts extends React.Component {
     super(props);
     this.state = {
       columns: [
-        { data: 'id' },
+        { data: 'id', readOnly: true },
         { data: 'description' },
         { data: 'industryID', type: 'numeric' },
         { data: 'email' },
@@ -68,7 +68,7 @@ export class Accounts extends React.Component {
         this.props.dispatch(updateColumnOrderOfAccounts(columns, target).bind(this));
       },
       afterContextMenuHide: context => {
-        this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
+        // this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
       }
     };
     const tableSettingMerged = Object.assign(accountsTableSetting, commonTableSetting);
