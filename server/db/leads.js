@@ -75,6 +75,14 @@ module.exports.updateColumnOrdersOfLeads = (req, res) => {
   res.sendStatus(201);
 };
 
+module.exports.getLeadById = (req, res) => {
+  const id = req.query.id;
+  db.query(`SELECT * from leads WHERE id = ${id}`, (err, rows) => {
+    if (err) console.log(err);
+    res.json(rows);
+  });
+};
+
 module.exports.updateHiddenColumnsOfLeads = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
   db.query('SELECT name, hidden FROM leadsColumns;', (err, columns) => {

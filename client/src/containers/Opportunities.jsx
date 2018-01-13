@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
@@ -15,17 +16,31 @@ import {
   deleteOpportunities,
   getColumnsOfOpportunities,
   updateHiddenColumnsOfOpportunities,
-  updateColumnOrderOfOpportunities
+  updateColumnOrderOfOpportunities,
+  displayDetailButtonOnOpportunities
 } from '../actions/opportunitiesActions';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const TableWrap = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  height: calc(100vh - 60px);
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
+`;
+
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 // start of class
-export class Opportunities extends React.Component {
+class Opportunities extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,7 +68,13 @@ export class Opportunities extends React.Component {
         {
           data: 'stage',
           type: 'dropdown',
-          source: ['Qualified', 'Presentation', 'Negotiation', 'Contract Sent', 'Payment']
+          source: [
+            'Qualified',
+            'Presentation',
+            'Negotiation',
+            'Contract Sent',
+            'Payment'
+          ]
         },
         { data: 'expectedCloseDate', type: 'date' },
         {
@@ -85,28 +106,45 @@ export class Opportunities extends React.Component {
         indicators: true
       },
       afterChange: (changes, source) => {
-        this.props.dispatch(createAndUpdateOpportunities(changes, source).bind(this));
+        this.props.dispatch(
+          createAndUpdateOpportunities(changes, source).bind(this)
+        );
       },
       beforeRemoveRow: (index, amount) => {
         this.props.dispatch(deleteOpportunities(index, amount).bind(this));
       },
       afterColumnMove: (columns, target) => {
-        this.props.dispatch(updateColumnOrderOfOpportunities(columns, target).bind(this));
+        this.props.dispatch(
+          updateColumnOrderOfOpportunities(columns, target).bind(this)
+        );
       },
       afterContextMenuHide: context => {
-        this.props.dispatch(updateHiddenColumnsOfOpportunities(context).bind(this));
+        this.props.dispatch(
+          updateHiddenColumnsOfOpportunities(context).bind(this)
+        );
+      },
+      afterOnCellMouseOver: (event, coords, td) => {
+        this.props.dispatch(
+          displayDetailButtonOnOpportunities(event, coords, td).bind(this)
+        );
       }
     };
-    const tableSettingMerged = Object.assign(opportunitiesTableSetting, commonTableSetting);
+    const tableSettingMerged = Object.assign(
+      opportunitiesTableSetting,
+      commonTableSetting
+    );
     return (
       <TableWrap>
         <div id="table">
           {!this.props.opportunities ? (
-            <p>loading...</p>
+            <Center>
+              <Spin />
+            </Center>
           ) : (
             <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
           )}
         </div>
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
       </TableWrap>
     );
   }
@@ -114,8 +152,11 @@ export class Opportunities extends React.Component {
 
 const mapStateToProps = state => ({
   opportunities: state.opportunitiesReducer.opportunities,
-  opportunitiesColumnsHeader: state.opportunitiesReducer.opportunitiesColumnsHeader,
-  opportunitiesHiddenColIndices: state.opportunitiesReducer.opportunitiesHiddenColIndices
+  opportunitiesColumnsHeader:
+		state.opportunitiesReducer.opportunitiesColumnsHeader,
+  opportunitiesHiddenColIndices:
+		state.opportunitiesReducer.opportunitiesHiddenColIndices,
+  selectedOpportunity: state.opportunitiesReducer.selectedOpportunity
 });
 
 export default connect(mapStateToProps)(Opportunities);

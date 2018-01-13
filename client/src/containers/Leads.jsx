@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 // handsontable
 import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full';
@@ -14,17 +15,32 @@ import {
   createAndUpdateLeads,
   deleteLeads,
   getColumnsOfLeads,
+  updateColumnsOfLeads,
   updateColumnOrderOfLeads,
-  updateHiddenColumnsOfLeads
+  updateHiddenColumnsOfLeads,
+  displayDetailButtonOnLeads
 } from '../actions/leadsActions';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const TableWrap = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  height: calc(100vh - 60px);
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
 `;
 
-export class Leads extends React.Component {
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
+class Leads extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,22 +89,37 @@ export class Leads extends React.Component {
         this.props.dispatch(deleteLeads(index, amount).bind(this));
       },
       afterColumnMove: (columns, target) => {
-        this.props.dispatch(updateColumnOrderOfLeads(columns, target).bind(this));
+        this.props.dispatch(
+          updateColumnOrderOfLeads(columns, target).bind(this)
+        );
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfLeads(context).bind(this));
+      },
+      afterOnCellMouseOver: (event, coords, td) => {
+        this.props.dispatch(
+          displayDetailButtonOnLeads(event, coords, td).bind(this)
+        );
       }
     };
-    const tableSettingMerged = Object.assign(leadsTableSetting, commonTableSetting);
+    const tableSettingMerged = Object.assign(
+      leadsTableSetting,
+      commonTableSetting
+    );
     return (
       <TableWrap>
         <div id="table">
-          {!this.props.leads || !this.props.leadsColumnsHeader || !this.props.leadsHiddenColIndices ? (
-            <p>loading...</p>
-          ) : (
-            <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
-          )}
+          {!this.props.leads ||
+					!this.props.leadsColumnsHeader ||
+					!this.props.leadsHiddenColIndices ? (
+              <Center>
+                <Spin />
+              </Center>
+            ) : (
+              <HotTable root="hot" ref="hot" settings={tableSettingMerged} />
+            )}
         </div>
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
       </TableWrap>
     );
   }
@@ -97,6 +128,7 @@ export class Leads extends React.Component {
 const mapStateToProps = state => ({
   leads: state.leadsReducer.leads,
   leadsColumnsHeader: state.leadsReducer.leadsColumnsHeader,
+  selectedLead: state.leadsReducer.selectedLead,
   leadsHiddenColIndices: state.leadsReducer.leadsHiddenColIndices
 });
 

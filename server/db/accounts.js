@@ -2,7 +2,7 @@ const db = require('./config');
 const lib = require('../lib/helper');
 const moment = require('moment');
 
-const getAllAccounts = (req, res) => {
+module.exports.getAllAccounts = (req, res) => {
   db.query('SELECT * from accounts', (err, rows) => {
     if (!err) {
       res.json(rows);
@@ -10,7 +10,7 @@ const getAllAccounts = (req, res) => {
   });
 };
 
-const createAndUpdateAccounts = (req, res) => {
+module.exports.createAndUpdateAccounts = (req, res) => {
   let rows;
   if (req.method === 'POST') {
     rows = req.body.newRows;
@@ -42,7 +42,7 @@ const createAndUpdateAccounts = (req, res) => {
   res.sendStatus(201);
 };
 
-const deleteAccounts = (req, res) => {
+module.exports.deleteAccounts = (req, res) => {
   const removedIds = req.body.removedIds;
   db.query(`DELETE FROM accounts WHERE id IN (${removedIds});`, err => {
     if (err) return console.log(err);
@@ -50,14 +50,14 @@ const deleteAccounts = (req, res) => {
   });
 };
 
-const getColumnsOfAccounts = (req, res) => {
+module.exports.getColumnsOfAccounts = (req, res) => {
   db.query('SELECT * from accountsColumns ORDER BY id ASC', (err, rows) => {
     if (err) return console.log(err);
     res.json(rows);
   });
 };
 
-const updateHiddenColumnsOfAccounts = (req, res) => {
+module.exports.updateHiddenColumnsOfAccounts = (req, res) => {
   const hiddenColumns = req.body.hiddenColumns;
   db.query('SELECT name, hidden FROM accountsColumns;', (err, columns) => {
     if (!err) {
@@ -81,7 +81,7 @@ const updateHiddenColumnsOfAccounts = (req, res) => {
   });
 };
 
-const updateColumnOrdersOfAccounts = (req, res) => {
+module.exports.updateColumnOrdersOfAccounts = (req, res) => {
   const updatedColumnOrders = req.body.updatedColumnOrders;
   for (const column of updatedColumnOrders) {
     db.query(
@@ -96,11 +96,10 @@ const updateColumnOrdersOfAccounts = (req, res) => {
   res.sendStatus(201);
 };
 
-module.exports = {
-  getAllAccounts,
-  createAndUpdateAccounts,
-  deleteAccounts,
-  getColumnsOfAccounts,
-  updateHiddenColumnsOfAccounts,
-  updateColumnOrdersOfAccounts
+module.exports.getAccountById = (req, res) => {
+  const id = req.query.id;
+  db.query(`SELECT * from accounts WHERE id = ${id}`, (err, rows) => {
+    if (err) console.log(err);
+    res.json(rows);
+  });
 };

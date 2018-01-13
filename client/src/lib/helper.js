@@ -31,24 +31,24 @@ export function getNewAndUpdatedRows(changes, source) {
           // if row index is not already a key in track object
           if (!newRowsObj[rowIndex]) {
             // add key-value pair to track object
-            let newRow = {};
+            const newRow = {};
             newRow[field] = newValue;
             newRowsObj[rowIndex] = newRow;
-          // otherwise
+            // otherwise
           } else {
             // get key's value and add field-newValue pair to the value
-            let newRow = newRowsObj[rowIndex];
+            const newRow = newRowsObj[rowIndex];
             newRow[field] = newValue;
           }
-        // otherwise, if change's corresponding row was not empty prior to change
+          // otherwise, if change's corresponding row was not empty prior to change
         } else {
           // similar to above
           if (!updatedRowsObj[rowId]) {
-            let updatedRow = {id: rowId};
+            const updatedRow = { id: rowId };
             updatedRow[field] = newValue;
             updatedRowsObj[rowId] = updatedRow;
           } else {
-            let updatedRow = updatedRowsObj[rowId];
+            const updatedRow = updatedRowsObj[rowId];
             updatedRow[field] = newValue;
           }
         }
@@ -175,14 +175,14 @@ export const commonTableSetting = {
   manualColumnMove: true,
   rowHeaders: true,
   height: window.innerHeight - 60,
-  colWidths: 120,
+  autoColumnSize: true,
   wordWrap: false,
   contextMenu: ['remove_row', 'hidden_columns_show', 'hidden_columns_hide'],
   dropdownMenu: ['filter_by_condition', 'filter_by_value', 'filter_action_bar'],
   filters: true,
   columnSorting: true,
   minSpareRows: 1,
-  fixedRowsBottom: 1
+  fixedRowsBottom: 0
 };
 
 export function buildObjToAssignOpportunityToContact(
@@ -216,4 +216,14 @@ export function buildObjToAssignOpportunityToContact(
     Object.keys(data).map(value => (data[value] = 'delete'));
   }
   return data;
+}
+
+export function prepareDetailedButton(event, coords, td) {
+  this.setState({});
+  // create button
+  const button = document.createElement('i');
+  button.className = 'detail_button material-icons';
+  const textnode = document.createTextNode('open_in_new');
+  button.appendChild(textnode);
+  return button;
 }

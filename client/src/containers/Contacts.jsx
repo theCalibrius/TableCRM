@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 // react & redux
 import React from 'react';
 import { connect } from 'react-redux';
@@ -11,7 +12,8 @@ import {
   getColumnsOfContacts,
   updateSource,
   updateHiddenColumnsOfContacts,
-  updateColumnOrderOfContacts
+  updateColumnOrderOfContacts,
+  displayDetailButtonOnContacts
 } from '../actions/contactsActions';
 import {
   getAllOpportunityIDsNames,
@@ -28,11 +30,24 @@ import HotTable from 'react-handsontable';
 import 'handsontable-pro/dist/handsontable.full.js';
 // import 'handsontable-pro/dist/handsontable.full.css';
 import { commonTableSetting } from '../lib/helper';
+// right panel
+import RightPanel from '../components/RightPanel.jsx';
+// ant ui
+import 'antd/dist/antd.css';
+import { Spin } from 'antd';
 
 const TableWrap = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  height: calc(100vh - 60px);
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: calc(100vh - 60px);
+`;
+
+const Center = styled.div`
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 export class Contacts extends React.Component {
@@ -46,7 +61,9 @@ export class Contacts extends React.Component {
         {
           data: 'name',
           type: 'autocomplete',
-          source: this.props.opportunityIDsNames ? this.props.opportunityIDsNames.map(i => i.name) : null,
+          source: this.props.opportunityIDsNames
+            ? this.props.opportunityIDsNames.map(i => i.name)
+            : null,
           strict: false
         },
         { data: 'firstName' },
@@ -96,7 +113,9 @@ export class Contacts extends React.Component {
         this.props.dispatch(updateSource.bind(this));
       },
       afterColumnMove: (columns, target) => {
-        this.props.dispatch(updateColumnOrderOfContacts(columns, target).bind(this));
+        this.props.dispatch(
+          updateColumnOrderOfContacts(columns, target).bind(this)
+        );
       },
       afterContextMenuHide: context => {
         this.props.dispatch(updateHiddenColumnsOfContacts(context).bind(this));
@@ -109,7 +128,9 @@ export class Contacts extends React.Component {
           const copiedRows = coords[0];
           const opportunityIDs = [];
           for (let i = copiedRows.startRow; i <= copiedRows.endRow; i++) {
-            opportunityIDs.push(this.refs.hot.hotInstance.getSourceDataAtRow(i).opportunityID);
+            opportunityIDs.push(
+              this.refs.hot.hotInstance.getSourceDataAtRow(i).opportunityID
+            );
           }
           this.props.dispatch(getCopiedOpportunities(opportunityIDs));
         }
@@ -117,34 +138,35 @@ export class Contacts extends React.Component {
       afterChange: (changes, source, index, amount) => {
         if (changes) {
           if (changes[0][1] != 'name') {
-            this.props.dispatch(createAndUpdateContacts(changes, source).bind(this));
+            this.props.dispatch(
+              createAndUpdateContacts(changes, source).bind(this)
+            );
           }
           const opportunityIDsNames = this.props.opportunityIDsNames;
           if (source == 'edit' || source == 'Autofill.fill') {
             this.props.dispatch(
-              handleRelateOppToContact(
-                changes,
-                opportunityIDsNames
-              ).bind(this)
+              handleRelateOppToContact(changes, opportunityIDsNames).bind(this)
             );
           }
           if (source == 'CopyPaste.paste' || source == 'Autofill.fill') {
             const oppotunityIDs = this.props.copiedOpportunities;
             if (this.props.copiedOpportunities) {
-                const opportunityIDs = this.props.copiedOpportunities;
-                this.props.dispatch(
-                  handleRelateOppsToContacts(
-                    changes,
-                    opportunityIDs,
-                    opportunityIDsNames
-                  ).bind(this)
-                );
+              const opportunityIDs = this.props.copiedOpportunities;
+              this.props.dispatch(
+                handleRelateOppsToContacts(
+                  changes,
+                  opportunityIDs,
+                  opportunityIDsNames
+                ).bind(this)
+              );
             } else {
-              let opportunityIDs = [];
+              const opportunityIDs = [];
               const selectedOpportunityName = changes[0][3];
-              const opportunityID = opportunityIDsNames.filter(({name}) => name === selectedOpportunityName).map(({id}) => id);
+              const opportunityID = opportunityIDsNames
+                .filter(({ name }) => name === selectedOpportunityName)
+                .map(({ id }) => id);
               for (const change of changes) {
-                opportunityIDs.push(opportunityID[0])
+                opportunityIDs.push(opportunityID[0]);
               }
               this.props.dispatch(
                 handleRelateOppsToContacts(
@@ -156,18 +178,29 @@ export class Contacts extends React.Component {
             }
           }
         }
+      },
+      afterOnCellMouseOver: (event, coords, td) => {
+        this.props.dispatch(
+          displayDetailButtonOnContacts(event, coords, td).bind(this)
+        );
       }
     };
-    const tableSettingMerged = Object.assign(contactsTableSetting, commonTableSetting);
+    const tableSettingMerged = Object.assign(
+      contactsTableSetting,
+      commonTableSetting
+    );
     return (
       <TableWrap>
         <div id="table">
           {!this.props.contacts || !this.props.opportunityIDsNames ? (
-            <p>loading...</p>
+            <Center>
+              <Spin />
+            </Center>
           ) : (
             <HotTable root="hot" ref="hot" settings={contactsTableSetting} />
           )}
         </div>
+        <Route path={`${this.props.match.url}/:id`} component={RightPanel} />
       </TableWrap>
     );
   }

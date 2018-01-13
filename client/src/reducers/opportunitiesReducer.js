@@ -25,6 +25,11 @@ export default function(state = { opportunities: null }, action) {
       ...state,
       copiedOpportunities: action.payload
     };
+  case 'GET_OPPORTUNITY_BY_ID':
+    return {
+      ...state,
+      selectedOpportunity: action.payload
+    };
   }
   return state;
 }
