@@ -68,7 +68,6 @@ export class Accounts extends React.Component {
         this.props.dispatch(updateColumnOrderOfAccounts(columns, target).bind(this));
       },
       afterContextMenuHide: context => {
-        console.log('afterContextMenuHide:');
         // this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
       }
     };
