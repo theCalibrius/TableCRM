@@ -68,7 +68,8 @@ export class Accounts extends React.Component {
         this.props.dispatch(updateColumnOrderOfAccounts(columns, target).bind(this));
       },
       afterContextMenuHide: context => {
-        this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
+        console.log('afterContextMenuHide:');
+        // this.props.dispatch(updateHiddenColumnsOfAccounts(context).bind(this));
       }
     };
     const tableSettingMerged = Object.assign(accountsTableSetting, commonTableSetting);
